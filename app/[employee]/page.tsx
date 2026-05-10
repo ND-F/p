@@ -1,5 +1,3 @@
-
-
 import ContactGrid
 from "@/components/cards/ContactGrid";
 
@@ -13,9 +11,12 @@ import type {
   Metadata,
 } from "next";
 
-import { notFound } from "next/navigation";
+import {
+  notFound,
+} from "next/navigation";
 
-import Hero from "@/components/hero/Hero";
+import Hero
+from "@/components/hero/Hero";
 
 import FloatingDock
 from "@/components/controls/FloatingDock";
@@ -24,7 +25,9 @@ import {
   getEmployees,
 } from "@/lib/getEmployees";
 
-import { themes } from "@/themes";
+import {
+  themes,
+} from "@/themes";
 
 type Props = {
   params: Promise<{
@@ -93,7 +96,67 @@ export default async function EmployeePage({
   }
 
   const theme =
-    themes[data.theme as keyof typeof themes];
+    themes[
+      data.theme as keyof typeof themes
+    ];
+
+  const contacts: any[] = [
+
+    {
+      type: "phone",
+      title: "Phone",
+      value: data.phone,
+      href: `tel:${data.phone}`,
+    },
+
+    {
+      type: "email",
+      title: "Email",
+      value: data.email,
+      href: `mailto:${data.email}`,
+    },
+
+    {
+      type: "website",
+      title: "Website",
+      value: data.website,
+      href: data.website,
+    },
+
+  ];
+
+  if (data.whatsapp) {
+
+    contacts.push({
+
+      type: "whatsapp",
+
+      title: "WhatsApp",
+
+      value: data.whatsapp,
+
+      href:
+        `https://wa.me/${data.whatsapp}`,
+
+    });
+
+  }
+
+  if (data.linkedin) {
+
+    contacts.push({
+
+      type: "linkedin",
+
+      title: "LinkedIn",
+
+      value: "Profile",
+
+      href: data.linkedin,
+
+    });
+
+  }
 
   return (
 
@@ -104,25 +167,29 @@ export default async function EmployeePage({
         title={data.title}
         theme={theme}
       />
-    <ContactGrid
-            contacts={data.contacts}
-            />
 
-            <MapSection
-                address={data.address || ""}
-                />
+      <ContactGrid
+        contacts={contacts}
+      />
 
+      <MapSection
+        address={
+          data.address || ""
+        }
+      />
 
       <FloatingDock
-            employee={{
-                name: data.name,
-                title: data.title,
-                company: data.company,
-                email: data.email,
-                phone: data.phone,
-            }}
-            />
-                <Footer />
+        employee={{
+          name: data.name,
+          title: data.title,
+          company: data.company,
+          email: data.email,
+          phone: data.phone,
+        }}
+      />
+
+      <Footer />
+
     </main>
 
   );
