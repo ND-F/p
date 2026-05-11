@@ -15,11 +15,20 @@ type Props = {
   title: string;
 
   theme: {
-    background: string;
-    foreground: string;
-    muted: string;
-    accent: string;
-  };
+  background: string;
+
+  foreground: string;
+
+  muted: string;
+
+  accent: string;
+
+  logoLight: string;
+
+  logoDark: string;
+
+  brandName: string;
+};
 
 };
 
@@ -37,7 +46,8 @@ export default function Hero({
     <section
       className="
         relative
-        min-h-screen
+        h-[58vh]
+        min-h-[520px]
         overflow-hidden
         flex
         items-center
@@ -61,7 +71,7 @@ export default function Hero({
         className="
           absolute
           inset-0
-          opacity-[0.035]
+          opacity-[0.05]
           pointer-events-none
         "
         style={{
@@ -69,7 +79,7 @@ export default function Hero({
             ? "url('/patterns/pattern-light.svg')"
             : "url('/patterns/pattern-dark.svg')",
 
-          backgroundSize: "420px",
+          backgroundSize: "120px 120px",
         }}
       />
 
@@ -178,18 +188,18 @@ export default function Hero({
             <div
               className="
                 relative
-                w-[74px]
-                h-[74px]
+                w-[52px]
+                h-[52px]
               "
             >
 
               <Image
                 src={
-                  dark
-                    ? "/logos/logo-light.png"
-                    : "/logos/logo-dark.png"
-                }
-                alt="NADIM"
+                      dark
+                        ? theme.logoLight
+                        : theme.logoDark
+                    }
+                alt={theme.brandName}
                 fill
                 priority
                 sizes="74px"
@@ -202,7 +212,7 @@ export default function Hero({
 
               <h2
                 className="
-                  text-[20px]
+                  text-[16px]
                   font-semibold
                   tracking-tight
                 "
@@ -252,7 +262,7 @@ export default function Hero({
           relative
           z-10
           text-center
-          -translate-y-16
+          -translate-y-8
           md:-translate-y-10
         "
       >
@@ -282,13 +292,13 @@ export default function Hero({
         {/* NAME */}
         <h1
           className="
-            text-[46px]
-            sm:text-[58px]
-            md:text-[96px]
+            text-[42px]
+            sm:text-[52px]
+            md:text-[82px]
             leading-[0.92]
             tracking-[-0.07em]
             font-black
-            mb-6
+            mb-4
           "
         >
           {name}
@@ -298,7 +308,7 @@ export default function Hero({
         <div className="flex items-center justify-center gap-6 mb-6">
 
           <div
-            className="w-[70px] md:w-[120px] h-px"
+            className="w-[60px] md:w-[90px] h-px"
             style={{
               background: `${theme.accent}88`,
             }}
@@ -316,7 +326,7 @@ export default function Hero({
           />
 
           <div
-            className="w-[70px] md:w-[120px] h-px"
+            className="w-[60px] md:w-[90px] h-px"
             style={{
               background: `${theme.accent}88`,
             }}
@@ -329,8 +339,8 @@ export default function Hero({
           className="
             uppercase
             tracking-[0.34em]
-            text-[13px]
-            md:text-[18px]
+            text-[12px]
+            md:text-[15px]
           "
           style={{
             color: dark

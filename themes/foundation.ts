@@ -1,4 +1,4 @@
-export const executive = {
+export const foundation = {
 
   background: "#07181D",
 
@@ -12,11 +12,11 @@ export const executive = {
 
   border: "rgba(255,255,255,0.05)",
 
-  logoLight: "/logos/logo-light.png",
+  logoLight: "/logos/foundation-logo-light.svg",
 
-  logoDark: "/logos/logo-dark.png",
+  logoDark: "/logos/foundation-logo-dark.svg",
 
     brandName:
-    "NADIM Group",
+    "NADIM Foundation",
 
 };

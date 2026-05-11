@@ -1,27 +1,10 @@
 export type ThemeName =
   | "executive"
-  | "foundation"
-  | "group";
-
-export type SocialItem = {
-
-  type:
-    | "phone"
-    | "email"
-    | "website"
-    | "whatsapp"
-    | "linkedin";
-
-  title: string;
-
-  value: string;
-
-  href: string;
-
-};
-
+  | "industries"
+  | "group"
+  | "kenda";
+  
 export type Employee = {
-
   slug: string;
 
   name: string;
@@ -34,12 +17,13 @@ export type Employee = {
 
   phone: string;
 
-  website?: string;
+  website: string;
+
+  whatsapp?: string;
+
+  linkedin?: string;
 
   address?: string;
 
   theme: ThemeName;
-
-  contacts: SocialItem[];
-
 };

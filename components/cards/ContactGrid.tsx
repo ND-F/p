@@ -21,11 +21,11 @@ type Props = {
   contacts: {
 
     type:
-      | "phone"
-      | "email"
-      | "website"
-      | "whatsapp"
-      | "linkedin";
+  | "phone"
+  | "email"
+  | "website"
+  | "whatsapp"
+  | "linkedin";
 
     title: string;
 
@@ -93,17 +93,35 @@ export default function ContactGrid({
 
             return (
 
-              <ContactCard
+              <div
                 key={index}
+                className={
+                  contacts.length % 2 !== 0 &&
+                  index === contacts.length - 1
+                    ? "md:col-span-2 md:flex md:justify-center"
+                    : ""
+                }
+              >
 
-                title={item.title}
+                <div
+                  className={
+                    contacts.length % 2 !== 0 &&
+                    index === contacts.length - 1
+                      ? "md:w-[48%]"
+                      : ""
+                  }
+                >
 
-                value={item.value}
+                  <ContactCard
+                    title={item.title}
+                    value={item.value}
+                    href={item.href}
+                    icon={Icon}
+                  />
 
-                href={item.href}
+                </div>
 
-                icon={Icon}
-              />
+              </div>
 
             );
 

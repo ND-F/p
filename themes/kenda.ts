@@ -1,4 +1,4 @@
-export const executive = {
+export const kenda = {
 
   background: "#07181D",
 
@@ -12,11 +12,13 @@ export const executive = {
 
   border: "rgba(255,255,255,0.05)",
 
-  logoLight: "/logos/logo-light.png",
+  logoLight:
+    "/logos/kenda-light.png",
 
-  logoDark: "/logos/logo-dark.png",
+  logoDark:
+    "/logos/kenda-dark.png",
 
-    brandName:
-    "NADIM Group",
+  brandName:
+    "KENDA",
 
 };

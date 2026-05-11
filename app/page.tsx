@@ -1,9 +1,7 @@
-import {
-  redirect,
-} from "next/navigation";
-
 export default function Home() {
-
-  redirect("/adham");
-
+  return (
+    <main>
+      Hello
+    </main>
+  );
 }

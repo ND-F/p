@@ -27,6 +27,9 @@ export function ThemeProvider({
   children: React.ReactNode;
 }) {
 
+  const [mounted, setMounted] =
+    useState(false);
+
   const [dark, setDark] =
     useState(true);
 
@@ -43,9 +46,13 @@ export function ThemeProvider({
 
     }
 
+    setMounted(true);
+
   }, []);
 
   useEffect(() => {
+
+    if (!mounted) return;
 
     document.documentElement.classList.toggle(
       "light",
@@ -57,11 +64,17 @@ export function ThemeProvider({
       dark ? "dark" : "light"
     );
 
-  }, [dark]);
+  }, [dark, mounted]);
 
   const toggleTheme = () => {
-    setDark(!dark);
+
+    setDark((prev) => !prev);
+
   };
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
 

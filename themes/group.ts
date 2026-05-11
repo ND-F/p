@@ -1,4 +1,4 @@
-export const executive = {
+export const group = {
 
   background: "#07181D",
 

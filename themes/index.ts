@@ -1,5 +1,23 @@
-import { executiveTheme } from "./executive";
+import { executive }
+from "./executive";
+
+import { industries }
+from "./industries";
+
+import { group }
+from "./group";
+
+import { kenda }
+from "./kenda";
 
 export const themes = {
-  executive: executiveTheme,
-} as const;
+
+  executive,
+
+  industries,
+
+  group,
+
+  kenda,
+
+};

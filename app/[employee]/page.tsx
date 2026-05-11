@@ -35,6 +35,14 @@ type Props = {
   }>;
 };
 
+export async function generateStaticParams() {
+  const employees = await getEmployees();
+
+  return employees.map((employee: any) => ({
+    employee: employee.slug,
+  }));
+}
+
 export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
