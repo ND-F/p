@@ -2,8 +2,9 @@ export type ThemeName =
   | "executive"
   | "industries"
   | "group"
-  | "kenda";
-  
+  | "kenda"
+  | "foundation";
+
 export type Employee = {
   slug: string;
 

@@ -10,6 +10,9 @@ from "./group";
 import { kenda }
 from "./kenda";
 
+import { foundation }
+from "./foundation";
+
 export const themes = {
 
   executive,
@@ -19,5 +22,7 @@ export const themes = {
   group,
 
   kenda,
+
+  foundation,
 
 };
