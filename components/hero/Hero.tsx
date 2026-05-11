@@ -15,20 +15,20 @@ type Props = {
   title: string;
 
   theme: {
-  background: string;
+    background: string;
 
-  foreground: string;
+    foreground: string;
 
-  muted: string;
+    muted: string;
 
-  accent: string;
+    accent: string;
 
-  logoLight: string;
+    logoLight?: string;
 
-  logoDark: string;
+    logoDark?: string;
 
-  brandName: string;
-};
+    brandName?: string;
+  };
 
 };
 
@@ -41,13 +41,25 @@ export default function Hero({
   const { dark } =
     useTheme();
 
+  const logoLight =
+    theme.logoLight ||
+    "/logos/logo-light.png";
+
+  const logoDark =
+    theme.logoDark ||
+    "/logos/logo-dark.png";
+
+  const brandName =
+    theme.brandName ||
+    "NADIM";
+
   return (
 
     <section
       className="
         relative
         h-[58vh]
-        min-h-[520px]
+        min-h-[420px]
         overflow-hidden
         flex
         items-center
@@ -68,12 +80,17 @@ export default function Hero({
       {/* PATTERN */}
 
       <div
-        className="
-          absolute
-          inset-0
-          opacity-[0.05]
-          pointer-events-none
-        "
+        className={`
+            absolute
+            inset-0
+            pointer-events-none
+
+            ${
+              dark
+                ? "opacity-[0.035]"
+                : "opacity-[0.05]"
+            }
+          `}
         style={{
           backgroundImage: dark
             ? "url('/patterns/pattern-light.svg')"
@@ -194,12 +211,12 @@ export default function Hero({
             >
 
               <Image
-                src={
+                    src={
                       dark
-                        ? theme.logoLight
-                        : theme.logoDark
+                        ? "/logos/logo-light.png"
+                        : "/logos/logo-dark.png"
                     }
-                alt={theme.brandName}
+                    alt="NADIM Group"
                 fill
                 priority
                 sizes="74px"
@@ -217,7 +234,7 @@ export default function Hero({
                   tracking-tight
                 "
               >
-                NADIM
+                {brandName}
               </h2>
 
               <p
@@ -275,10 +292,10 @@ export default function Hero({
             <Image
               src={
                 dark
-                  ? "/logos/logo-light.png"
-                  : "/logos/logo-dark.png"
+                  ? logoLight
+                  : logoDark
               }
-              alt="NADIM"
+              alt={brandName}
               fill
               priority
               sizes="190px"

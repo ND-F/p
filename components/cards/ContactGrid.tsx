@@ -1,3 +1,5 @@
+"use client";
+
 import {
 
   FiPhone,
@@ -21,11 +23,11 @@ type Props = {
   contacts: {
 
     type:
-  | "phone"
-  | "email"
-  | "website"
-  | "whatsapp"
-  | "linkedin";
+      | "phone"
+      | "email"
+      | "website"
+      | "whatsapp"
+      | "linkedin";
 
     title: string;
 
@@ -70,19 +72,36 @@ export default function ContactGrid({
     >
 
       <div
-        className="
+        className={`
           max-w-6xl
           mx-auto
-
           grid
-
-          grid
-
-            sm:grid-cols-2
-            xl:grid-cols-3
           gap-6
           md:gap-7
-        "
+
+          sm:grid-cols-2
+          xl:grid-cols-3
+
+          ${
+            contacts.length === 4
+              ? `
+                xl:[&>*:last-child]:col-span-3
+                xl:[&>*:last-child]:flex
+                xl:[&>*:last-child]:justify-center
+                xl:[&>*:last-child>div]:w-[32%]
+              `
+              : ""
+          }
+
+          ${
+            contacts.length === 5
+              ? `
+                xl:[&>*:nth-child(4)]:translate-x-[52%]
+                xl:[&>*:nth-child(5)]:translate-x-[52%]
+              `
+              : ""
+          }
+        `}
       >
 
         {contacts.map(
@@ -91,23 +110,36 @@ export default function ContactGrid({
             const Icon =
               iconMap[item.type];
 
+            const isLastOddCard =
+                contacts.length % 2 !== 0 &&
+                contacts.length < 4 &&
+                index === contacts.length - 1;
+
             return (
 
               <div
                 key={index}
                 className={
-                  contacts.length % 2 !== 0 &&
-                  index === contacts.length - 1
-                    ? "md:col-span-2 md:flex md:justify-center"
+                  isLastOddCard
+                    ? `
+                      sm:col-span-2
+                      sm:flex
+                      sm:justify-center
+
+                      xl:block
+                    `
                     : ""
                 }
               >
 
                 <div
                   className={
-                    contacts.length % 2 !== 0 &&
-                    index === contacts.length - 1
-                      ? "md:w-[48%]"
+                    isLastOddCard
+                      ? `
+                        sm:w-[48%]
+
+                        xl:w-auto
+                      `
                       : ""
                   }
                 >
