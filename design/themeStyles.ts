@@ -46,7 +46,7 @@ export function getSurfaceStyles(
       "hover:border-black/[0.06]",
 
     text:
-      "text-[#111111]",
+      "text-[#1A1A1A]",
 
     muted:
       "text-black/50",

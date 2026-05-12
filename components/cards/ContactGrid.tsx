@@ -67,41 +67,20 @@ export default function ContactGrid({
         -mt-10
 
         px-6
-        pb-52
+        pb-28
       "
     >
 
       <div
-        className={`
-          max-w-6xl
+        className="
+          max-w-5xl
           mx-auto
           grid
-          gap-6
-          md:gap-7
+          gap-5
+          md:gap-5
 
-          sm:grid-cols-2
-          xl:grid-cols-3
-
-          ${
-            contacts.length === 4
-              ? `
-                xl:[&>*:last-child]:col-span-3
-                xl:[&>*:last-child]:flex
-                xl:[&>*:last-child]:justify-center
-                xl:[&>*:last-child>div]:w-[32%]
-              `
-              : ""
-          }
-
-          ${
-            contacts.length === 5
-              ? `
-                xl:[&>*:nth-child(4)]:translate-x-[52%]
-                xl:[&>*:nth-child(5)]:translate-x-[52%]
-              `
-              : ""
-          }
-        `}
+          md:grid-cols-2
+        "
       >
 
         {contacts.map(
@@ -110,36 +89,25 @@ export default function ContactGrid({
             const Icon =
               iconMap[item.type];
 
-            const isLastOddCard =
-                contacts.length % 2 !== 0 &&
-                contacts.length < 4 &&
-                index === contacts.length - 1;
+            const isLastOdd =
+              contacts.length % 2 !== 0 &&
+              index === contacts.length - 1;
 
             return (
 
               <div
                 key={index}
                 className={
-                  isLastOddCard
-                    ? `
-                      sm:col-span-2
-                      sm:flex
-                      sm:justify-center
-
-                      xl:block
-                    `
+                  isLastOdd
+                    ? "md:col-span-2 md:flex md:justify-center"
                     : ""
                 }
               >
 
                 <div
                   className={
-                    isLastOddCard
-                      ? `
-                        sm:w-[48%]
-
-                        xl:w-auto
-                      `
+                    isLastOdd
+                      ? "md:w-[48%]"
                       : ""
                   }
                 >
