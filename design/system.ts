@@ -27,7 +27,7 @@ export const design = {
   spacing: {
 
     cardPadding:
-      "p-6 md:p-8",
+      "p-7 md:p-10",
 
     sectionX:
       "px-6",
@@ -56,7 +56,7 @@ export const design = {
 
     cardHover:
       `
-        hover:shadow-[0_35px_80px_rgba(0,0,0,0.28)]
+        hover:shadow-[0_18px_45px_rgba(0,0,0,0.16)]
       `,
 
   },
