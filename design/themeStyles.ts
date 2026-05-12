@@ -8,10 +8,10 @@ export function getSurfaceStyles(
 
         
       background:
-        "bg-[rgba(255,255,255,0.03)]",
+        "bg-[rgba(255,255,255,0.07)]",
 
       backgroundHover:
-        "hover:bg-[rgba(255,255,255,0.055)]",
+        "hover:bg-[rgba(255,255,255,0.11)]",
 
       border:
         "border-white/[0.05]",
@@ -46,7 +46,7 @@ export function getSurfaceStyles(
       "hover:border-black/[0.06]",
 
     text:
-      "text-[#111111]",
+      "text-[#1A1A1A]",
 
     muted:
       "text-black/50",
