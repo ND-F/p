@@ -58,6 +58,22 @@ body {
 
 }
 
+html.dark body {
+
+  background: #07181D;
+
+  color: #F5F1E8;
+
+}
+
+html.light body {
+
+  background: #F4F1E8;
+
+  color: #111111;
+
+}
+
 ::selection {
 
   background:
