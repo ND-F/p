@@ -1,9 +1,18 @@
 "use client";
 
 import {
+  applyThemeVariables,
+} from "@/design/applyTheme";
+
+import {
+  executive,
+} from "@/themes/executive";
+
+import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -21,11 +30,15 @@ const ThemeContext =
     toggleTheme: () => {},
   });
 
+type Props = {
+
+  children: React.ReactNode;
+
+};
+
 export function ThemeProvider({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Props) {
 
   const [mounted, setMounted] =
     useState(false);
@@ -33,16 +46,19 @@ export function ThemeProvider({
   const [dark, setDark] =
     useState(true);
 
+  /* LOAD SAVED THEME */
   useEffect(() => {
 
-    const saved =
+    const savedTheme =
       localStorage.getItem(
         "nadim-theme"
       );
 
-    if (saved) {
+    if (savedTheme) {
 
-      setDark(saved === "dark");
+      setDark(
+        savedTheme === "dark"
+      );
 
     }
 
@@ -50,39 +66,68 @@ export function ThemeProvider({
 
   }, []);
 
+  /* APPLY THEME */
   useEffect(() => {
 
     if (!mounted) return;
 
-    document.documentElement.classList.toggle(
+    const root =
+      document.documentElement;
+
+    root.classList.remove(
       "light",
-      !dark
+      "dark"
     );
+
+    root.classList.add(
+      dark
+        ? "dark"
+        : "light"
+    );
+
+    
+    applyThemeVariables(
+        executive
+      );
+
 
     localStorage.setItem(
       "nadim-theme",
-      dark ? "dark" : "light"
+      dark
+        ? "dark"
+        : "light"
     );
 
   }, [dark, mounted]);
 
+  /* TOGGLE */
   const toggleTheme = () => {
 
     setDark((prev) => !prev);
 
   };
 
+  /* CONTEXT VALUE */
+  const value =
+    useMemo(
+      () => ({
+        dark,
+        toggleTheme,
+      }),
+      [dark]
+    );
+
+  /* PREVENT HYDRATION MISMATCH */
   if (!mounted) {
+
     return null;
+
   }
 
   return (
 
     <ThemeContext.Provider
-      value={{
-        dark,
-        toggleTheme,
-      }}
+      value={value}
     >
 
       {children}

@@ -1,22 +1,42 @@
 export const executive = {
 
-  background: "#07181D",
+  colors: {
 
-  foreground: "#F5F1E8",
+    background: "#07181D",
 
-  accent: "#C6A46A",
+    foreground: "#F5F1E8",
 
-  muted: "rgba(255,255,255,0.60)",
+    accent: "#C6A46A",
 
-  surface: "rgba(255,255,255,0.03)",
+    muted: "rgba(255,255,255,0.60)",
 
-  border: "rgba(255,255,255,0.05)",
+    surface: "rgba(10,22,25,0.72)",
 
-  logoLight: "/logos/logo-light.png",
+    surfaceHover:
+      "rgba(255,255,255,0.055)",
 
-  logoDark: "/logos/logo-dark.png",
+    border:
+      "rgba(255,255,255,0.06)",
 
-    brandName:
-    "NADIM Group",
+    borderHover:
+      "rgba(255,255,255,0.09)",
+
+  },
+
+  logos: {
+
+    light:
+      "/logos/logo-light.png",
+
+    dark:
+      "/logos/logo-dark.png",
+
+  },
+
+  brand: {
+
+    name: "NADIM",
+
+  },
 
 };

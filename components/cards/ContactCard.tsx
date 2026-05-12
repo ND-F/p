@@ -1,10 +1,25 @@
+
 "use client";
 
 import {
   useTheme,
 } from "@/components/layout/ThemeProvider";
 
+import {
+  getSurfaceStyles,
+} from "@/design/themeStyles";
+
+import {
+  getThemeVariables,
+} from "@/design/themeVariables";
+
 import { IconType } from "react-icons";
+
+import { design }
+from "@/design/system";
+
+import { motion }
+from "@/design/motion";
 
 type Props = {
 
@@ -28,57 +43,80 @@ export default function ContactCard({
   const { dark } =
     useTheme();
 
+  const surface =
+    getSurfaceStyles(dark);
+
+  const variables =
+    getThemeVariables(dark);
+
   return (
 
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+
+      style={variables}
+
       className={`
         group
         relative
         overflow-hidden
 
-        rounded-[26px]
-        md:rounded-[30px]
-
         border
-        backdrop-blur-2xl
 
-        transition-all
-        duration-500
+        transform-gpu
+        will-change-transform
 
-        hover:-translate-y-[4px]
         active:scale-[0.985]
 
-        ${
-          dark
-            ? `
-              bg-[rgba(255,255,255,0.03)]
-              border-white/[0.05]
+        ${design.radius.card}
 
-              hover:bg-[rgba(255,255,255,0.055)]
-              hover:border-white/[0.08]
+        ${design.glass.card}
 
-              text-[#F5F1E8]
-            `
-            : `
-              bg-[rgba(255,255,255,0.55)]
-              border-black/[0.04]
+        ${motion.smooth}
 
-              hover:bg-[rgba(255,255,255,0.74)]
-              hover:border-black/[0.06]
+        ${motion.hoverLift}
 
-              text-[#111111]
-            `
-        }
+        ${design.shadows.card}
 
-        shadow-[0_10px_35px_rgba(0,0,0,0.10)]
-        hover:shadow-[0_18px_45px_rgba(0,0,0,0.16)]
+        ${design.shadows.cardHover}
+
+        ${surface.background}
+
+        ${surface.backgroundHover}
+
+        ${surface.border}
+
+        ${surface.borderHover}
+
+        ${surface.text}
       `}
     >
 
-      {/* GLOW */}
+      {/* MAIN GLOW */}
+      <div
+        className={`
+          absolute
+          inset-0
+
+          opacity-0
+
+          group-hover:opacity-[0.9]
+
+          pointer-events-none
+
+          ${motion.smooth}
+
+          ${
+            dark
+              ? design.glow.dark
+              : design.glow.light
+          }
+        `}
+      />
+
+      {/* REFLECTIVE LIGHT */}
       <div
         className={`
           absolute
@@ -88,57 +126,45 @@ export default function ContactCard({
 
           group-hover:opacity-100
 
-          transition-all
-          duration-700
-
           pointer-events-none
 
-          ${
-            dark
-              ? `
-                bg-[linear-gradient(120deg,rgba(255,255,255,0.10),transparent_40%,rgba(255,255,255,0.04))]
-              `
-              : `
-                bg-[linear-gradient(120deg,rgba(255,255,255,0.42),transparent_40%,rgba(255,255,255,0.16))]
-              `
-          }
+          ${motion.smooth}
+
+          ${design.glow.reflective}
         `}
       />
 
+      {/* CONTENT */}
       <div
-        className="
+        className={`
           relative
           z-10
 
-          p-7
-          md:p-10
-        "
+          ${design.spacing.cardPadding}
+        `}
       >
 
         {/* ICON */}
         <div
-          className="
+          className={`
             mb-10
             md:mb-14
-          "
+          `}
         >
 
           <div
             className={`
-              text-[20px]
-              md:text-[34px]
+              ${design.typography.icon}
 
-              transition-all
-              duration-500
+              ${motion.icon}
 
-              group-hover:text-[#C6A46A]
+              group-hover:text-[var(--accent)]
+
               group-hover:scale-110
 
-              ${
-                dark
-                  ? "text-white"
-                  : "text-black"
-              }
+              group-hover:-translate-y-[2px]
+
+              ${surface.heading}
             `}
           >
 
@@ -153,8 +179,7 @@ export default function ContactCard({
 
           <h3
             className={`
-              text-[24px]
-              md:text-[28px]
+              ${design.typography.cardTitle}
 
               font-semibold
 
@@ -163,11 +188,11 @@ export default function ContactCard({
               mb-2
               md:mb-3
 
-              ${
-                dark
-                  ? "text-white"
-                  : "text-black"
-              }
+              ${motion.fade}
+
+              group-hover:tracking-[-0.015em]
+
+              ${surface.heading}
             `}
           >
             {title}
@@ -175,19 +200,15 @@ export default function ContactCard({
 
           <p
             className={`
-              text-[14px]
-              md:text-[15px]
+              ${design.typography.body}
 
               leading-relaxed
 
-              transition-colors
-              duration-500
+              ${motion.fade}
 
-              ${
-                dark
-                  ? "text-white/55"
-                  : "text-black/50"
-              }
+              group-hover:translate-x-[1px]
+
+              ${surface.muted}
             `}
           >
             {value}
@@ -197,23 +218,25 @@ export default function ContactCard({
 
       </div>
 
-      {/* BOTTOM LINE */}
+      {/* ACCENT LINE */}
       <div
-        className="
+        className={`
           absolute
           bottom-0
           left-0
 
           h-[2px]
+
           w-0
 
-          bg-[#C6A46A]
-
-          transition-all
-          duration-500
+          ${motion.smooth}
 
           group-hover:w-full
-        "
+
+          group-hover:shadow-[0_0_14px_rgba(198,164,106,0.55)]
+
+          bg-[var(--accent)]
+        `}
       />
 
     </a>

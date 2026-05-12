@@ -1,8 +1,17 @@
+
 "use client";
 
 import {
   useTheme,
 } from "@/components/layout/ThemeProvider";
+
+import {
+  getSurfaceStyles,
+} from "@/design/themeStyles";
+
+import {
+  getThemeVariables,
+} from "@/design/themeVariables";
 
 import {
   FiSun,
@@ -11,14 +20,28 @@ import {
   FiDownload,
 } from "react-icons/fi";
 
+import { design }
+from "@/design/system";
+
+import { motion }
+from "@/design/motion";
+
 type Props = {
+
   employee: {
+
     name: string;
+
     title: string;
+
     company: string;
+
     email: string;
+
     phone: string;
+
   };
+
 };
 
 export default function FloatingDock({
@@ -30,6 +53,13 @@ export default function FloatingDock({
     toggleTheme,
   } = useTheme();
 
+  const surface =
+    getSurfaceStyles(dark);
+
+  const variables =
+    getThemeVariables(dark);
+
+  /* DOWNLOAD CONTACT */
   const downloadVCF = () => {
 
     const vcf = `BEGIN:VCARD
@@ -67,6 +97,7 @@ END:VCARD`;
 
   };
 
+  /* SHARE PAGE */
   const sharePage = async () => {
 
     if (navigator.share) {
@@ -89,6 +120,8 @@ END:VCARD`;
   return (
 
     <div
+      style={variables}
+
       className={`
         fixed
         bottom-5
@@ -111,28 +144,19 @@ END:VCARD`;
         md:px-3
         md:py-3
 
-        rounded-full
+        border
 
-        backdrop-blur-xl
+        ${design.radius.dock}
 
-        shadow-2xl
+        ${design.glass.dock}
 
-        transition-all
-        duration-500
+        ${design.shadows.card}
 
-        ${
-          dark
-            ? `
-              bg-[rgba(10,22,25,0.78)]
-              border
-              border-white/[0.05]
-            `
-            : `
-              bg-[rgba(255,255,255,0.72)]
-              border
-              border-black/[0.06]
-            `
-        }
+        ${motion.smooth}
+
+        ${surface.background}
+
+        ${surface.border}
       `}
     >
 
@@ -140,7 +164,7 @@ END:VCARD`;
       <DockButton
         label="Share"
         onClick={sharePage}
-        dark={dark}
+        heading={surface.heading}
       >
         <FiShare2 className="text-[16px] md:text-[18px]" />
       </DockButton>
@@ -149,7 +173,7 @@ END:VCARD`;
       <DockButton
         label="Theme"
         onClick={toggleTheme}
-        dark={dark}
+        heading={surface.heading}
       >
 
         {dark ? (
@@ -164,7 +188,7 @@ END:VCARD`;
       <DockButton
         label="Save Contact"
         onClick={downloadVCF}
-        dark={dark}
+        heading={surface.heading}
       >
         <FiDownload className="text-[16px] md:text-[18px]" />
       </DockButton>
@@ -183,7 +207,7 @@ type DockButtonProps = {
 
   onClick?: () => void;
 
-  dark: boolean;
+  heading: string;
 
 };
 
@@ -191,7 +215,7 @@ function DockButton({
   children,
   label,
   onClick,
-  dark,
+  heading,
 }: DockButtonProps) {
 
   return (
@@ -200,6 +224,7 @@ function DockButton({
 
       <button
         onClick={onClick}
+
         className={`
           w-10
           h-10
@@ -207,23 +232,19 @@ function DockButton({
           md:w-11
           md:h-11
 
-          rounded-full
-
           flex
           items-center
           justify-center
 
-          transition-all
-          duration-300
+          ${design.radius.dock}
 
-          hover:text-[#C6A46A]
+          ${motion.smooth}
+
+          ${heading}
+
+          hover:text-[var(--accent)]
+
           hover:scale-110
-
-          ${
-            dark
-              ? "text-white/80"
-              : "text-black/70"
-          }
         `}
       >
 
@@ -238,49 +259,43 @@ function DockButton({
 
           bottom-[135%]
           left-1/2
+
           -translate-x-1/2
 
           px-3
           py-2
 
-          rounded-full
-
-          text-[10px]
-          uppercase
-          tracking-[0.22em]
-
           whitespace-nowrap
 
+          uppercase
+
+          text-[10px]
+
+          tracking-[0.22em]
+
           opacity-0
+
           translate-y-2
 
           pointer-events-none
 
-          transition-all
-          duration-300
-
-          group-hover:opacity-100
-          group-hover:translate-y-0
-
-          backdrop-blur-xl
-
           border
 
-          shadow-xl
+          group-hover:opacity-100
 
-          ${
-            dark
-              ? `
-                bg-[rgba(10,22,25,0.92)]
-                border-white/[0.06]
-                text-white
-              `
-              : `
-                bg-[rgba(255,255,255,0.92)]
-                border-black/[0.06]
-                text-black
-              `
-          }
+          group-hover:translate-y-0
+
+          ${design.radius.dock}
+
+          ${design.glass.dock}
+
+          ${motion.fade}
+
+          bg-[rgba(10,22,25,0.92)]
+
+          border-white/[0.06]
+
+          text-white
         `}
       >
 

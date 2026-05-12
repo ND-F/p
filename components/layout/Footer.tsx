@@ -1,8 +1,48 @@
-export default function Footer() {
+
+"use client";
+
+import {
+  useTheme,
+} from "@/components/layout/ThemeProvider";
+
+import {
+  getSurfaceStyles,
+} from "@/design/themeStyles";
+
+import {
+  getThemeVariables,
+} from "@/design/themeVariables";
+
+import { design }
+from "@/design/system";
+
+type Props = {
+
+  brand?: string;
+
+  systemName?: string;
+
+};
+
+export default function Footer({
+  brand = "NADIM Industries",
+  systemName = "Executive Identity System",
+}: Props) {
+
+  const { dark } =
+    useTheme();
+
+  const surface =
+    getSurfaceStyles(dark);
+
+  const variables =
+    getThemeVariables(dark);
 
   return (
 
     <footer
+      style={variables}
+
       className="
         px-6
         pb-10
@@ -10,14 +50,15 @@ export default function Footer() {
     >
 
       <div
-        className="
+        className={`
           max-w-6xl
           mx-auto
 
           pt-8
 
           border-t
-          border-white/[0.05]
+
+          ${surface.border}
 
           flex
           flex-col
@@ -27,37 +68,39 @@ export default function Footer() {
           justify-between
 
           gap-5
-        "
+        `}
       >
 
+        {/* BRAND */}
         <div>
 
           <p
-            className="
+            className={`
               text-[13px]
 
               tracking-[0.18em]
 
               uppercase
 
-              text-white/35
-            "
+              ${surface.muted}
+            `}
           >
-            NADIM Industries
+            {brand}
           </p>
 
         </div>
 
+        {/* SYSTEM */}
         <div>
 
           <p
-            className="
+            className={`
               text-[12px]
 
-              text-white/30
-            "
+              ${surface.muted}
+            `}
           >
-            Executive Identity System
+            {systemName}
           </p>
 
         </div>

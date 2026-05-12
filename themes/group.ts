@@ -8,15 +8,16 @@ export const group = {
 
   muted: "rgba(255,255,255,0.60)",
 
-  surface: "rgba(255,255,255,0.03)",
 
-  border: "rgba(255,255,255,0.05)",
+  surface: "rgba(10,22,25,0.72)",
+
+  border: "rgba(255,255,255,0.06)",
 
   logoLight: "/logos/logo-light.png",
 
   logoDark: "/logos/logo-dark.png",
 
     brandName:
-    "NADIM Group",
+    "NADIM",
 
 };

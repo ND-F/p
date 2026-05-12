@@ -103,69 +103,65 @@ export default async function EmployeePage({
     notFound();
   }
 
-  const theme =
-    themes[
-      data.theme as keyof typeof themes
-    ];
+  const theme = themes[ data.theme as keyof typeof themes ] || themes.executive;
 
   const contacts: any[] = [
 
-    {
-      type: "phone",
-      title: "Phone",
-      value: data.phone,
-      href: `tel:${data.phone}`,
-    },
+  {
+    type: "phone",
+    title: "Phone",
+    value: data.phone,
+    href: `tel:${data.phone}`,
+  },
 
-    {
-      type: "email",
-      title: "Email",
-      value: data.email,
-      href: `mailto:${data.email}`,
-    },
+  {
+    type: "email",
+    title: "Email",
+    value: data.email,
+    href: `mailto:${data.email}`,
+  },
 
-    {
-      type: "website",
-      title: "Website",
-      value: data.website,
-      href: data.website,
-    },
+  {
+    type: "website",
+    title: "Website",
+    value: data.website,
+    href: data.website,
+  },
 
-  ];
+];
 
-  if (data.whatsapp) {
+if (data.whatsapp) {
 
-    contacts.push({
+  contacts.push({
 
-      type: "whatsapp",
+    type: "whatsapp",
 
-      title: "WhatsApp",
+    title: "WhatsApp",
 
-      value: data.whatsapp,
+    value: data.whatsapp,
 
-      href:
-        `https://wa.me/${data.whatsapp}`,
+    href:
+      `https://wa.me/${data.whatsapp}`,
 
-    });
+  });
 
-  }
+}
 
-  if (data.linkedin) {
+if (data.linkedin) {
 
-    contacts.push({
+  contacts.push({
 
-      type: "linkedin",
+    type: "linkedin",
 
-      title: "LinkedIn",
+    title: "LinkedIn",
 
-      value: "Profile",
+    value: "Profile",
 
-      href: data.linkedin,
+    href: data.linkedin,
 
-    });
+  });
 
-  }
-
+}
   return (
 
     <main>

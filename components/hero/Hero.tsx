@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -6,7 +7,15 @@ import {
   useTheme,
 } from "@/components/layout/ThemeProvider";
 
-import { motion } from "framer-motion";
+import {
+  getThemeVariables,
+} from "@/design/themeVariables";
+
+import { design }
+from "@/design/system";
+
+import { motion as fm }
+from "framer-motion";
 
 type Props = {
 
@@ -14,21 +23,7 @@ type Props = {
 
   title: string;
 
-  theme: {
-    background: string;
-
-    foreground: string;
-
-    muted: string;
-
-    accent: string;
-
-    logoLight?: string;
-
-    logoDark?: string;
-
-    brandName?: string;
-  };
+  theme: any;
 
 };
 
@@ -41,80 +36,87 @@ export default function Hero({
   const { dark } =
     useTheme();
 
-  const logoLight =
-    theme.logoLight ||
-    "/logos/logo-light.png";
+  const variables =
+    getThemeVariables(dark);
 
-  const logoDark =
-    theme.logoDark ||
-    "/logos/logo-dark.png";
-
-  const brandName =
-    theme.brandName ||
-    "NADIM";
+  const logo =
+    dark
+      ? theme.logos.light
+      : theme.logos.dark;
 
   return (
 
     <section
-      className="
+      style={{
+        ...variables,
+
+        background:
+          dark
+            ? theme.colors.background
+            : "#F4F1E8",
+
+        color:
+          dark
+            ? theme.colors.foreground
+            : "#111111",
+      }}
+
+      className={`
         relative
-        h-[58vh]
-        min-h-[420px]
+
+        ${design.hero.container}
+
         overflow-hidden
+
         flex
         items-center
         justify-center
-        px-6
-      "
-      style={{
-        background: dark
-          ? theme.background
-          : "#F4F1E8",
 
-        color: dark
-          ? theme.foreground
-          : "#121212",
-      }}
+        px-6
+      `}
     >
 
       {/* PATTERN */}
-
       <div
         className={`
-            absolute
-            inset-0
-            pointer-events-none
+          absolute
+          inset-0
 
-            ${
-              dark
-                ? "opacity-[0.035]"
-                : "opacity-[0.05]"
-            }
-          `}
+          pointer-events-none
+
+          ${
+            dark
+              ? "opacity-[0.035]"
+              : "opacity-[0.05]"
+          }
+        `}
         style={{
-          backgroundImage: dark
-            ? "url('/patterns/pattern-light.svg')"
-            : "url('/patterns/pattern-dark.svg')",
+          backgroundImage:
+            dark
+              ? "url('/patterns/pattern-light.svg')"
+              : "url('/patterns/pattern-dark.svg')",
 
-          backgroundSize: "120px 120px",
+          backgroundSize:
+            "120px 120px",
         }}
       />
 
       {/* CINEMATIC GLOWS */}
-
       {dark && (
 
         <div
           className="
             absolute
             inset-0
+
             overflow-hidden
+
             pointer-events-none
           "
         >
 
           {/* GOLD GLOW */}
-          <motion.div
+          <fm.div
             animate={{
               x: [0, 40, 0],
               y: [0, -20, 0],
@@ -128,20 +130,24 @@ export default function Hero({
               absolute
               top-[-140px]
               left-[-120px]
+
               w-[420px]
               h-[420px]
+
               rounded-full
+
               blur-[120px]
+
               opacity-[0.12]
             "
             style={{
               background:
-                "radial-gradient(circle,#C6A46A,transparent 72%)",
+                "radial-gradient(circle,var(--accent),transparent 72%)",
             }}
           />
 
           {/* BLUE GLOW */}
-          <motion.div
+          <fm.div
             animate={{
               x: [0, -30, 0],
               y: [0, 30, 0],
@@ -155,10 +161,14 @@ export default function Hero({
               absolute
               bottom-[-220px]
               right-[-140px]
+
               w-[500px]
               h-[500px]
+
               rounded-full
+
               blur-[140px]
+
               opacity-[0.18]
             "
             style={{
@@ -172,13 +182,14 @@ export default function Hero({
       )}
 
       {/* TOP BAR */}
-
       <div
         className="
           absolute
           top-0
           left-0
+
           w-full
+
           z-20
         "
       >
@@ -186,9 +197,12 @@ export default function Hero({
         <div
           className="
             w-full
+
             px-4
             md:px-8
+
             py-8
+
             flex
             items-center
           "
@@ -198,6 +212,7 @@ export default function Hero({
             className="
               flex
               items-center
+
               gap-5
             "
           >
@@ -205,18 +220,15 @@ export default function Hero({
             <div
               className="
                 relative
+
                 w-[52px]
                 h-[52px]
               "
             >
 
               <Image
-                    src={
-                      dark
-                        ? "/logos/logo-light.png"
-                        : "/logos/logo-dark.png"
-                    }
-                    alt="NADIM Group"
+                src={logo}
+                alt={theme.brand.name}
                 fill
                 priority
                 sizes="74px"
@@ -230,24 +242,30 @@ export default function Hero({
               <h2
                 className="
                   text-[16px]
+
                   font-semibold
+
                   tracking-tight
                 "
               >
-                {brandName}
+                {theme.brand.name}
               </h2>
 
               <p
                 className="
                   text-[11px]
+
                   uppercase
+
                   tracking-[0.28em]
+
                   mt-1
                 "
                 style={{
-                  color: dark
-                    ? theme.muted
-                    : "rgba(0,0,0,0.45)",
+                  color:
+                    dark
+                      ? theme.colors.muted
+                      : "rgba(0,0,0,0.45)",
                 }}
               >
                 Since 1978
@@ -262,8 +280,7 @@ export default function Hero({
       </div>
 
       {/* HERO CONTENT */}
-
-      <motion.div
+      <fm.div
         initial={{
           opacity: 0,
           y: 40,
@@ -275,10 +292,13 @@ export default function Hero({
         transition={{
           duration: 1.2,
         }}
+
         className="
           relative
           z-10
+
           text-center
+
           -translate-y-8
           md:-translate-y-10
         "
@@ -287,15 +307,17 @@ export default function Hero({
         {/* MAIN LOGO */}
         <div className="flex justify-center mb-1">
 
-          <div className="relative w-[150px] h-[150px] md:w-[190px] md:h-[190px]">
+          <div
+            className={`
+              relative
+
+              ${design.hero.logo}
+            `}
+          >
 
             <Image
-              src={
-                dark
-                  ? logoLight
-                  : logoDark
-              }
-              alt={brandName}
+              src={logo}
+              alt={theme.brand.name}
               fill
               priority
               sizes="190px"
@@ -308,26 +330,33 @@ export default function Hero({
 
         {/* NAME */}
         <h1
-          className="
-            text-[42px]
-            sm:text-[52px]
-            md:text-[82px]
+          className={`
+            ${design.hero.title}
+
             leading-[0.92]
+
             tracking-[-0.07em]
+
             font-black
+
             mb-4
-          "
+          `}
         >
           {name}
         </h1>
 
-        {/* GOLD DIVIDER */}
+        {/* DIVIDER */}
         <div className="flex items-center justify-center gap-6 mb-6">
 
           <div
-            className="w-[60px] md:w-[90px] h-px"
+            className={`
+              ${design.hero.divider}
+
+              h-px
+            `}
             style={{
-              background: `${theme.accent}88`,
+              background:
+                `${theme.colors.accent}88`,
             }}
           />
 
@@ -335,17 +364,22 @@ export default function Hero({
             className="
               w-[8px]
               h-[8px]
+
               rotate-45
+
+              bg-[var(--accent)]
             "
-            style={{
-              background: theme.accent,
-            }}
           />
 
           <div
-            className="w-[60px] md:w-[90px] h-px"
+            className={`
+              ${design.hero.divider}
+
+              h-px
+            `}
             style={{
-              background: `${theme.accent}88`,
+              background:
+                `${theme.colors.accent}88`,
             }}
           />
 
@@ -353,22 +387,24 @@ export default function Hero({
 
         {/* TITLE */}
         <p
-          className="
+          className={`
             uppercase
+
             tracking-[0.34em]
-            text-[12px]
-            md:text-[15px]
-          "
+
+            ${design.hero.subtitle}
+          `}
           style={{
-            color: dark
-              ? theme.muted
-              : "rgba(0,0,0,0.55)",
+            color:
+              dark
+                ? theme.colors.muted
+                : "rgba(0,0,0,0.55)",
           }}
         >
           {title}
         </p>
 
-      </motion.div>
+      </fm.div>
 
     </section>
 
