@@ -94,6 +94,25 @@ export default function ContactCard({
       `}
     >
 
+        {
+  dark && (
+
+    <div
+      className="
+        absolute
+        inset-0
+
+        opacity-[0.38]
+
+        pointer-events-none
+
+        bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.08),transparent_42%)]
+      "
+    />
+
+  )
+}
+
       {/* MAIN GLOW */}
       <div
         className={`
@@ -102,7 +121,7 @@ export default function ContactCard({
 
           opacity-0
 
-          group-hover:opacity-[0.9]
+          group-hover:opacity-100
 
           pointer-events-none
 
@@ -146,10 +165,10 @@ export default function ContactCard({
 
         {/* ICON */}
         <div
-          className={`
+          className="
             mb-10
             md:mb-14
-          `}
+          "
         >
 
           <div

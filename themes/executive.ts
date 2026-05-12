@@ -23,19 +23,36 @@ export const executive = {
 
   },
 
-  logos: {
+logos: {
 
-    light:
-      "/logos/logo-light.png",
+  light:
+    "/logos/logo-light.png",
 
-    dark:
-      "/logos/logo-dark.png",
+  dark:
+    "/logos/logo-dark.png",
 
-  },
+},
+
 
   brand: {
 
     name: "NADIM",
+
+  },
+
+  personality: {
+
+    glow:
+      "cinematic",
+
+    surface:
+      "luxury",
+
+    motion:
+      "smooth",
+
+    typography:
+      "elegant",
 
   },
 

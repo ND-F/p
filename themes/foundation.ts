@@ -23,13 +23,16 @@ export const foundation = {
 
   },
 
-  logos: {
+logos: {
 
-  logoLight: "/logos/foundation-logo-light.svg",
+  light:
+    "/logos/logo-light.png",
 
-  logoDark: "/logos/foundation-logo-dark.svg",
+  dark:
+    "/logos/logo-dark.png",
 
-  },
+},
+
 
   brand: {
 

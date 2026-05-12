@@ -1,8 +1,6 @@
 
 "use client";
 
-import Image from "next/image";
-
 import {
   useTheme,
 } from "@/components/layout/ThemeProvider";
@@ -142,7 +140,7 @@ export default function Hero({
             "
             style={{
               background:
-                "radial-gradient(circle,var(--accent),transparent 72%)",
+                'radial-gradient(circle,var(--accent),transparent 72%)',
             }}
           />
 
@@ -173,7 +171,7 @@ export default function Hero({
             "
             style={{
               background:
-                "radial-gradient(circle,#0F3A46,transparent 72%)",
+                'radial-gradient(circle,#0F3A46,transparent 72%)',
             }}
           />
 
@@ -219,18 +217,37 @@ export default function Hero({
 
             <div className="shrink-0">
 
-              <Image
+              <img
                 src={logo}
                 alt={theme.brand.name}
-                width={52}
-                height={52}
-                priority
                 className="
+                  w-[52px]
+                  h-[52px]
+
                   object-contain
                 "
               />
 
             </div>
+
+
+
+              <div
+                className="
+                  absolute
+                  inset-0
+
+                  pointer-events-none
+
+                  opacity-[0.16]
+
+                  blur-[120px]
+                "
+                style={{
+                  background:
+                    "radial-gradient(circle at 20% 20%, #0F3A46, transparent 42%)",
+                }}
+              />
 
             <div>
 
@@ -312,14 +329,15 @@ export default function Hero({
             `}
           >
 
-            <Image
+            <img
               src={logo}
               alt={theme.brand.name}
-              width={190}
-              height={190}
-              priority
               className="
+                w-[190px]
+                h-[190px]
+
                 object-contain
+
                 opacity-95
               "
             />

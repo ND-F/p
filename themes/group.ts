@@ -1,23 +1,59 @@
 export const group = {
 
-  background: "#07181D",
+  colors: {
 
-  foreground: "#F5F1E8",
+    background: "#07181D",
 
-  accent: "#C6A46A",
+    foreground: "#F5F1E8",
 
-  muted: "rgba(255,255,255,0.60)",
+    accent: "#C6A46A",
+
+    muted: "rgba(255,255,255,0.60)",
+
+    surface: "rgba(10,22,25,0.72)",
+
+    surfaceHover:
+      "rgba(255,255,255,0.055)",
+
+    border:
+      "rgba(255,255,255,0.06)",
+
+    borderHover:
+      "rgba(255,255,255,0.09)",
+
+  },
+
+  logos: {
+
+  light:
+    "/logos/logo-light.png",
+
+  dark:
+    "/logos/logo-dark.png",
+
+},
 
 
-  surface: "rgba(10,22,25,0.72)",
+  brand: {
 
-  border: "rgba(255,255,255,0.06)",
+    name: "NADIM",
 
-  logoLight: "/logos/logo-light.png",
+  },
 
-  logoDark: "/logos/logo-dark.png",
+  personality: {
 
-    brandName:
-    "NADIM",
+    glow:
+      "cinematic",
+
+    surface:
+      "luxury",
+
+    motion:
+      "smooth",
+
+    typography:
+      "elegant",
+
+  },
 
 };

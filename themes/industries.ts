@@ -25,13 +25,14 @@ export const industries = {
 
   logos: {
 
-      logoLight:
-        "/logos/industries-light.png",
+  light:
+    "/logos/logo-light.png",
 
-      logoDark:
-        "/logos/industries-dark.png",
+  dark:
+    "/logos/logo-dark.png",
 
-  },
+},
+
 
   brand: {
 

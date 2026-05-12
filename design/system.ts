@@ -1,3 +1,4 @@
+
 export const design = {
 
   radius: {
@@ -26,7 +27,7 @@ export const design = {
   spacing: {
 
     cardPadding:
-      "p-7 md:p-10",
+      "p-6 md:p-8",
 
     sectionX:
       "px-6",
@@ -49,53 +50,77 @@ export const design = {
   shadows: {
 
     card:
-      "shadow-[0_10px_35px_rgba(0,0,0,0.10)]",
+      `
+        shadow-[0_10px_35px_rgba(0,0,0,0.10)]
+      `,
 
     cardHover:
-      "hover:shadow-[0_30px_60px_rgba(0,0,0,0.22)]",
+      `
+        hover:shadow-[0_35px_80px_rgba(0,0,0,0.28)]
+      `,
 
   },
 
   glow: {
 
     dark:
-      "bg-[linear-gradient(120deg,rgba(255,255,255,0.08),transparent_42%,rgba(255,255,255,0.025))]",
+      `
+        bg-[linear-gradient(
+          120deg,
+          rgba(255,255,255,0.16),
+          transparent_38%,
+          rgba(255,255,255,0.06)
+        )]
+      `,
 
     light:
-      "bg-[linear-gradient(120deg,rgba(255,255,255,0.22),transparent_42%,rgba(255,255,255,0.10))]",
+      `
+        bg-[linear-gradient(
+          120deg,
+          rgba(255,255,255,0.22),
+          transparent_42%,
+          rgba(255,255,255,0.10)
+        )]
+      `,
 
     reflective:
-      "bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.10),transparent_45%)]",
-  },
+      `
+        bg-[radial-gradient(
+          circle_at_top_left,
+          rgba(255,255,255,0.10),
+          transparent_45%
+        )]
+      `,
 
+  },
 
   hero: {
 
-  container:
-    "h-[58vh] min-h-[420px]",
+    container:
+      "h-[60vh] min-h-[520px]",
 
-  title:
-    "text-[42px] sm:text-[52px] md:text-[82px]",
+    title:
+      "text-[42px] sm:text-[52px] md:text-[82px]",
 
-  subtitle:
-    "text-[12px] md:text-[15px]",
+    subtitle:
+      "text-[12px] md:text-[15px]",
 
-  logo:
-    "w-[150px] h-[150px] md:w-[190px] md:h-[190px]",
+    logo:
+      "w-[150px] h-[150px] md:w-[190px] md:h-[190px]",
 
-  divider:
-    "w-[60px] md:w-[90px]",
+    divider:
+      "w-[60px] md:w-[90px]",
 
-},
+  },
 
-map: {
+  map: {
 
-  title:
-    "text-[28px] md:text-[40px]",
+    title:
+      "text-[28px] md:text-[40px]",
 
-  label:
-    "text-[11px] tracking-[0.28em]",
+    label:
+      "text-[11px] tracking-[0.28em]",
 
-},
+  },
 
 };
