@@ -8,10 +8,10 @@ export function getSurfaceStyles(
 
         
       background:
-        "bg-[rgba(255,255,255,0.045)]",
+        "bg-[rgba(255,255,255,0.03)]",
 
       backgroundHover:
-        "hover:bg-[rgba(255,255,255,0.075)]",
+        "hover:bg-[rgba(255,255,255,0.055)]",
 
       border:
         "border-white/[0.05]",

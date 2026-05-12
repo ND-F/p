@@ -1,13 +1,13 @@
 export const motion = {
 
   smooth:
-    "transition-all duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+    "transition-all duration-500",
 
   hoverLift:
-    "hover:-translate-y-[8px] hover:scale-[1.02]",
+    "hover:-translate-y-[4px]",
 
   icon:
-    "transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+    "transition-all duration-500",
 
   fade:
     "transition-all duration-500",
