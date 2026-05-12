@@ -217,22 +217,17 @@ export default function Hero({
             "
           >
 
-            <div
-              className="
-                relative
-
-                w-[52px]
-                h-[52px]
-              "
-            >
+            <div className="shrink-0">
 
               <Image
                 src={logo}
                 alt={theme.brand.name}
-                fill
+                width={52}
+                height={52}
                 priority
-                sizes="74px"
-                className="object-contain"
+                className="
+                  object-contain
+                "
               />
 
             </div>
@@ -309,19 +304,24 @@ export default function Hero({
 
           <div
             className={`
-              relative
-
               ${design.hero.logo}
+
+              flex
+              items-center
+              justify-center
             `}
           >
 
             <Image
               src={logo}
               alt={theme.brand.name}
-              fill
+              width={190}
+              height={190}
               priority
-              sizes="190px"
-              className="object-contain opacity-95"
+              className="
+                object-contain
+                opacity-95
+              "
             />
 
           </div>
