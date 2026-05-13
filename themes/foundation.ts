@@ -19,10 +19,10 @@ export const foundation = {
 logos: {
 
   light:
-    "/logos/logo-light.png",
+    "/logos/logo-foundation-light.png",
 
   dark:
-    "/logos/logo-dark.png",
+    "/logos/logo-foundation-dark.png",
 
 },
 

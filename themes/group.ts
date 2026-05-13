@@ -20,10 +20,10 @@ export const group = {
   logos: {
 
   light:
-    "/logos/logo-light.png",
+    "/logos/logo-group-light.png",
 
   dark:
-    "/logos/logo-dark.png",
+    "/logos/logo-group-dark.png",
 
 },
 
