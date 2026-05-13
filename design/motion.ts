@@ -6,6 +6,9 @@ export const motion = {
   hoverLift:
     "hover:-translate-y-[4px]",
 
+  glow:
+    "transition-all duration-700",
+
   icon:
     "transition-all duration-500",
 

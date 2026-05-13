@@ -66,9 +66,9 @@ export const design = {
       `
         bg-[linear-gradient(
           120deg,
-          rgba(255,255,255,0.16),
-          transparent_38%,
-          rgba(255,255,255,0.06)
+          rgba(255,255,255,0.10),
+          transparent_40%,
+          rgba(255,255,255,0.04)
         )]
       `,
 
@@ -76,9 +76,9 @@ export const design = {
       `
         bg-[linear-gradient(
           120deg,
-          rgba(255,255,255,0.22),
-          transparent_42%,
-          rgba(255,255,255,0.10)
+          rgba(255,255,255,0.10),
+          transparent_40%,
+          rgba(255,255,255,0.04)
         )]
       `,
 
@@ -86,7 +86,7 @@ export const design = {
       `
         bg-[radial-gradient(
           circle_at_top_left,
-          rgba(255,255,255,0.10),
+          rgba(255,255,255,0.06),
           transparent_45%
         )]
       `,

@@ -125,7 +125,7 @@ export default function ContactCard({
 
           pointer-events-none
 
-          ${motion.smooth}
+          ${motion.glow}
 
           ${
             dark
@@ -147,7 +147,7 @@ export default function ContactCard({
 
           pointer-events-none
 
-          ${motion.smooth}
+          ${motion.glow}
 
           ${design.glow.reflective}
         `}
