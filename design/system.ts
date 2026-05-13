@@ -97,10 +97,10 @@ export const design = {
   hero: {
 
   container:
-    "h-[58vh] min-h-[520px] md:min-h-[620px]",
+    "h-[48vh] min-h-[420px] md:min-h-[540px]",
 
   title:
-    "text-[44px] sm:text-[64px] md:text-[092px] lg:text-[108px]",
+    "text-[38px] sm:text-[54px] md:text-[078px] lg:text-[092px]",
 
   subtitle:
     "text-[14px] md:text-[19px]",

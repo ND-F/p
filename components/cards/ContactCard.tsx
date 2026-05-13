@@ -35,7 +35,7 @@ relative
 
 block
 w-full
-min-h-[26px]
+min-h-[260px]
 
 flex
 flex-col
@@ -47,8 +47,8 @@ border
 
 ${
   dark
-    ? "bg-[rgba(255,255,255,0.03)]"
-    : "bg-[rgba(255,255,255,0.55)]"
+    ? "bg-[linear-gradient(145deg,rgba(10,22,25,0.88),rgba(5,14,16,0.94))]"
+    : "bg-[rgba(255,255,255,0.72)]"
 }
 
 ${design.radius.card}
@@ -65,12 +65,12 @@ ${surface.text}
 ${
   dark
     ? `
-hover:bg-[rgba(255,255,255,0.055)]
-hover:border-white/[0.08]
+hover:bg-[linear-gradient(145deg,rgba(12,26,30,0.94),rgba(7,18,20,0.98))]
+hover:border-white/[0.07]
 `
     : `
-hover:bg-[rgba(255,255,255,0.82)]
-hover:border-black/[0.06]
+hover:bg-[rgba(255,255,255,0.84)]
+hover:border-black/[0.05]
 `
 }
 
@@ -102,14 +102,14 @@ ${
 absolute
 inset-0
 pointer-events-none
-opacity-60
-bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.06),transparent_42%)]
+opacity-40
+bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.05),transparent_42%)]
 "
       />
 
       {/* CONTENT */}
       <div
-        className={`
+        className="
 relative
 z-10
 h-full
@@ -118,52 +118,74 @@ flex
 flex-col
 justify-between
 
-p-6 md:p-7
-`}
+p-7
+md:p-8
+"
       >
         <div>
           {/* ICON */}
-          <div className="mb-8 md:mb-12">
-            <div
-              className={`
-text-[18px] md:text-[28px]
+          <div
+  className="
+flex
+items-center
+gap-3
+
+mb-10
+md:mb-12
+"
+>
+  <div
+    className={`
+text-[22px]
+md:text-[28px]
+
 ${surface.heading}
 
 transition-all
 duration-500
 
 group-hover:text-[var(--accent)]
-group-hover:scale-110
+group-hover:scale-105
 `}
-            >
-              <Icon />
-            </div>
-          </div>
+  >
+    <Icon />
+  </div>
 
-          {/* TEXT */}
+  <span
+    className="
+text-[11px]
+md:text-[12px]
+
+uppercase
+
+tracking-[0.18em]
+
+opacity-45
+
+font-medium
+"
+  >
+    {title}
+  </span>
+</div>
+
+          {/* VALUE */}
           <div>
-            <h3
-              className={`
-${design.typography.cardTitle}
-font-semibold
-tracking-tight
-mb-1
-
-${surface.heading}
-`}
-            >
-              {title}
-            </h3>
-
             <p
-              className={`
-${design.typography.body}
+              className="
+text-[12px]
+md:text-[18px]
+
+font-medium
+
+leading-[1.28]
+
+tracking-[-0.03em]
+
 opacity-70
+
 break-words
-leading-relaxed
-max-w-full
-overflow-hidden
-`}
+"
             >
               {value}
             </p>
@@ -177,11 +199,15 @@ overflow-hidden
 absolute
 bottom-0
 left-0
+
 h-[2px]
 w-0
+
 bg-[var(--accent)]
+
 transition-all
 duration-500
+
 group-hover:w-full
 "
       />

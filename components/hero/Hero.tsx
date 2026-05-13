@@ -311,8 +311,8 @@ export default function Hero({
 
           text-center
 
-          -translate-y-10
-          md:-translate-y-14
+         -translate-y-4
+          md:-translate-y-6
         "
       >
 
