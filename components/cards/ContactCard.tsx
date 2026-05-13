@@ -1,265 +1,50 @@
-
 "use client";
-
-import {
-  useTheme,
-} from "@/components/layout/ThemeProvider";
-
-import {
-  getSurfaceStyles,
-} from "@/design/themeStyles";
-
-import {
-  getThemeVariables,
-} from "@/design/themeVariables";
-
+import { useTheme } from "@/components/layout/ThemeProvider";
+import { getSurfaceStyles } from "@/design/themeStyles";
 import { IconType } from "react-icons";
+import { design } from "@/design/system";
+import { motion } from "@/design/motion";
 
-import { design }
-from "@/design/system";
-
-import { motion }
-from "@/design/motion";
-
-type Props = {
-
-  title: string;
-
-  value: string;
-
-  href: string;
-
-  icon: IconType;
-
-};
-
-export default function ContactCard({
-  title,
-  value,
-  href,
-  icon: Icon,
-}: Props) {
-
-  const { dark } =
-    useTheme();
-
-  const surface =
-    getSurfaceStyles(dark);
-
-  const variables =
-    getThemeVariables(dark);
+export default function ContactCard({ title, value, href, icon: Icon }: { title: string; value: string; href: string; icon: IconType }) {
+  const { dark } = useTheme();
+  const surface = getSurfaceStyles(dark);
 
   return (
-
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-
-      style={variables}
-
       className={`
-        group
-        relative
-        overflow-hidden
-
-        border
-
-        transform-gpu
-        will-change-transform
-
-        active:scale-[0.985]
-
-        ${design.radius.card}
-
-        ${design.glass.card}
-
-        ${motion.smooth}
-
+        group relative overflow-hidden border
+        ${design.radius.card} 
+        ${design.glass.card} 
+        ${motion.smooth} 
         ${motion.hoverLift}
-
         ${design.shadows.card}
-
-        ${design.shadows.cardHover}
-
-        ${surface.background}
-
-        ${surface.backgroundHover}
-
-        ${surface.border}
-
-        ${surface.borderHover}
-
+        ${surface.background} 
+        ${surface.border} 
         ${surface.text}
+        transition-all duration-500
       `}
     >
-
-        {
-  dark && (
-
-    <div
-      className="
-        absolute
-        inset-0
-
-        opacity-[0.38]
-
-        pointer-events-none
-
-        bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.08),transparent_42%)]
-      "
-    />
-
-  )
-}
-
-      {/* MAIN GLOW */}
-      <div
-        className={`
-          absolute
-          inset-0
-
-          opacity-0
-
-          group-hover:opacity-100
-
-          pointer-events-none
-
-          ${motion.glow}
-
-          ${
-            dark
-              ? design.glow.dark
-              : design.glow.light
-          }
-        `}
-      />
-
-      {/* REFLECTIVE LIGHT */}
-      <div
-        className={`
-          absolute
-          inset-0
-
-          opacity-0
-
-          group-hover:opacity-100
-
-          pointer-events-none
-
-          ${motion.glow}
-
-          ${design.glow.reflective}
-        `}
-      />
+      {/* اللمعة عند الهوفر - فقط تظهر عند تمرير الماوس */}
+      <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-700 ${dark ? design.glow.dark : design.glow.light}`} />
 
       {/* CONTENT */}
-      <div
-        className={`
-          relative
-          z-10
-
-          ${design.spacing.cardPadding}
-        `}
-      >
-
-        {/* ICON */}
-        <div
-          className="
-            mb-10
-            md:mb-14
-          "
-        >
-
-          <div
-            className={`
-              ${design.typography.icon}
-
-              ${motion.icon}
-
-              group-hover:text-[var(--accent)]
-
-              group-hover:scale-110
-
-              group-hover:-translate-y-[2px]
-
-              ${surface.heading}
-            `}
-          >
-
+      <div className={`relative z-10 ${design.spacing.cardPadding}`}>
+        <div className="mb-8 md:mb-12">
+          <div className={`${design.typography.icon} group-hover:text-[var(--accent)] group-hover:scale-110 transition-transform duration-500 ${surface.heading}`}>
             <Icon />
-
           </div>
-
         </div>
-
-        {/* TEXT */}
         <div>
-
-          <h3
-            className={`
-              ${design.typography.cardTitle}
-
-              font-semibold
-
-              tracking-tight
-
-              mb-2
-              md:mb-3
-
-              ${motion.fade}
-
-              group-hover:tracking-[-0.015em]
-
-              ${surface.heading}
-            `}
-          >
-            {title}
-          </h3>
-
-          <p
-            className={`
-              ${design.typography.body}
-
-              leading-relaxed
-
-              ${motion.fade}
-
-              group-hover:translate-x-[1px]
-
-              ${surface.muted}
-            `}
-          >
-            {value}
-          </p>
-
+          <h3 className={`${design.typography.cardTitle} font-semibold tracking-tight mb-1 ${surface.heading}`}>{title}</h3>
+          <p className={`${design.typography.body} opacity-70`}>{value}</p>
         </div>
-
       </div>
 
-      {/* ACCENT LINE */}
-      <div
-        className={`
-          absolute
-          bottom-0
-          left-0
-
-          h-[2px]
-
-          w-0
-
-          ${motion.smooth}
-
-          group-hover:w-full
-
-          group-hover:shadow-[0_0_14px_rgba(198,164,106,0.55)]
-
-          bg-[var(--accent)]
-        `}
-      />
-
+      {/* الخط الذهبي السفلي */}
+      <div className={`absolute bottom-0 left-0 h-[2px] w-0 bg-[var(--accent)] transition-all duration-500 group-hover:w-full`} />
     </a>
-
   );
-
 }

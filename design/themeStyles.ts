@@ -1,59 +1,24 @@
-export function getSurfaceStyles(
-  dark: boolean
-) {
-
+export function getSurfaceStyles(dark: boolean) {
   if (dark) {
-
     return {
-
-        
-      background:
-        "bg-[rgba(255,255,255,0.07)]",
-
-      backgroundHover:
-        "hover:bg-[rgba(255,255,255,0.11)]",
-
-      border:
-        "border-white/[0.05]",
-
-      borderHover:
-        "hover:border-white/[0.08]",
-
-      text:
-        "text-[#F5F1E8]",
-
-      muted:
-        "text-white/55",
-
-      heading:
-         "text-white",
+      // بدل الشفافية البيضاء، هنستخدم لون الـ Surface الغامق من الثيم
+      background: "bg-[var(--surface)]",
+      backgroundHover: "hover:bg-[var(--surface-hover)]",
+      border: "border-[var(--border)]",
+      borderHover: "hover:border-[var(--border-hover)]",
+      text: "text-[#F5F1E8]",
+      muted: "text-white/55",
+      heading: "text-white",
     };
-
   }
 
   return {
-
-    background:
-      "bg-[rgba(255,255,255,0.55)]",
-
-    backgroundHover:
-      "hover:bg-[rgba(255,255,255,0.74)]",
-
-    border:
-      "border-black/[0.04]",
-
-    borderHover:
-      "hover:border-black/[0.06]",
-
-    text:
-      "text-[#1A1A1A]",
-
-    muted:
-      "text-black/50",
-
-    heading:
-      "text-black",
-
+    background: "bg-white/70",
+    backgroundHover: "hover:bg-white/90",
+    border: "border-black/[0.05]",
+    borderHover: "hover:border-black/[0.08]",
+    text: "text-[#111111]",
+    muted: "text-black/50",
+    heading: "text-black",
   };
-
 }
