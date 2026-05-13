@@ -25,8 +25,8 @@ type Props = {
 };
 
 export default function Footer({
-  brand = "NADIM Industries",
-  systemName = "Executive Identity System",
+  brand = "NADIM GROUP",
+  systemName = "Since 1978",
 }: Props) {
 
   const { dark } =

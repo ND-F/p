@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -82,11 +81,7 @@ export default function Hero({
 
           pointer-events-none
 
-          ${
-            dark
-              ? "opacity-[0.05]"
-              : "opacity-[0.05]"
-          }
+          opacity-[0.05]
         `}
         style={{
           backgroundImage:
@@ -140,7 +135,7 @@ export default function Hero({
             "
             style={{
               background:
-                'radial-gradient(circle,var(--accent),transparent 72%)',
+                "radial-gradient(circle,var(--accent),transparent 72%)",
             }}
           />
 
@@ -171,7 +166,7 @@ export default function Hero({
             "
             style={{
               background:
-                'radial-gradient(circle,#0F3A46,transparent 72%)',
+                "radial-gradient(circle,#0F3A46,transparent 72%)",
             }}
           />
 
@@ -199,7 +194,8 @@ export default function Hero({
             px-4
             md:px-8
 
-            py-8
+            pt-5
+            md:pt-8
 
             flex
             items-center
@@ -209,9 +205,10 @@ export default function Hero({
           <div
             className="
               flex
-              items-center
+              items-start
 
-              gap-5
+              gap-3
+              md:gap-5
             "
           >
 
@@ -221,43 +218,32 @@ export default function Hero({
                 src={logo}
                 alt={theme.brand.name}
                 className="
-                  w-[85px]
-                  h-[85px]
+                  w-[40px]
+                  h-[40px]
+
+                  md:w-[85px]
+                  md:h-[85px]
 
                   object-contain
+
+                  opacity-90
                 "
               />
 
             </div>
 
-
-
-              <div
-                className="
-                  absolute
-                  inset-0
-
-                  pointer-events-none
-
-                  opacity-[0.16]
-
-                  blur-[120px]
-                "
-                style={{
-                  background:
-                    "radial-gradient(circle at 20% 20%, #0F3A46, transparent 42%)",
-                }}
-              />
-
             <div>
 
               <h2
                 className="
-                  text-[16px]
+                  text-[14px]
+                  md:text-[16px]
 
                   font-semibold
 
-                  tracking-tight
+                  tracking-[-0.04em]
+
+                  leading-none
                 "
               >
                 {theme.brand.name}
@@ -265,13 +251,15 @@ export default function Hero({
 
               <p
                 className="
-                  text-[11px]
+                  mt-1.5
+
+                  text-[9px]
+                  md:text-[11px]
 
                   uppercase
 
-                  tracking-[0.28em]
-
-                  mt-1
+                  tracking-[0.24em]
+                  md:tracking-[0.28em]
                 "
                 style={{
                   color:
@@ -311,13 +299,13 @@ export default function Hero({
 
           text-center
 
-         -translate-y-4
+          -translate-y-10
           md:-translate-y-6
         "
       >
 
         {/* MAIN LOGO */}
-        <div className="flex justify-center mb-1">
+        <div className="flex justify-center mb-0 md:mb-1">
 
           <div
             className={`
@@ -330,20 +318,20 @@ export default function Hero({
           >
 
             <img
-            src={logo}
-            alt={theme.brand.name}
-            className="
-              w-[220px]
-              h-[220px]
+              src={logo}
+              alt={theme.brand.name}
+              className="
+                w-[145px]
+                h-[145px]
 
-              md:w-[250px]
-              md:h-[250px]
+                md:w-[250px]
+                md:h-[250px]
 
-              object-contain
+                object-contain
 
-              opacity-95
-            "
-          />
+                opacity-95
+              "
+            />
 
           </div>
 
@@ -356,20 +344,21 @@ export default function Hero({
 
             whitespace-nowrap
 
-            leading-[0.92]
+            leading-[0.9]
 
-            tracking-[-0.045em]
+            tracking-[-0.05em]
 
             font-black
 
-            mb-4
+            mb-3
+            md:mb-4
           `}
         >
           {name}
         </h1>
 
         {/* DIVIDER */}
-        <div className="flex items-center justify-center gap-6 mb-6">
+        <div className="flex items-center justify-center gap-4 md:gap-6 mb-5 md:mb-6">
 
           <div
             className={`
@@ -385,8 +374,8 @@ export default function Hero({
 
           <div
             className="
-              w-[8px]
-              h-[8px]
+              w-[7px]
+              h-[7px]
 
               rotate-45
 
@@ -413,7 +402,8 @@ export default function Hero({
           className={`
             uppercase
 
-            tracking-[0.34em]
+            tracking-[0.26em]
+            md:tracking-[0.34em]
 
             ${design.hero.subtitle}
           `}
