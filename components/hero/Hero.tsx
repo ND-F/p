@@ -37,9 +37,9 @@ export default function Hero({
     getThemeVariables(dark);
 
   const logo =
-    dark
-      ? theme.logos.light
-      : theme.logos.dark;
+  dark
+    ? "/logos/logo-light.png"
+    : "/logos/logo-dark.png";
 
   return (
 
@@ -194,8 +194,8 @@ export default function Hero({
             px-4
             md:px-8
 
-            pt-5
-            md:pt-8
+            pt-1
+            md:pt-2
 
             flex
             items-center
@@ -205,7 +205,8 @@ export default function Hero({
           <div
             className="
               flex
-              items-start
+              items-center
+
 
               gap-3
               md:gap-5
