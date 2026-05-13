@@ -10,16 +10,10 @@ export const group = {
 
     muted: "rgba(255,255,255,0.60)",
 
-    surface: "rgba(10,22,25,0.72)",
-
-    surfaceHover:
-      "rgba(255,255,255,0.055)",
-
-    border:
-      "rgba(255,255,255,0.06)",
-
-    borderHover:
-      "rgba(255,255,255,0.09)",
+    surface: "rgba(255,255,255,0.03)",
+    surfaceHover: "rgba(255,255,255,0.055)",
+    border: "rgba(255,255,255,0.05)",
+    borderHover: "rgba(255,255,255,0.08)",
 
   },
 

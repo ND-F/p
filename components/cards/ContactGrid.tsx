@@ -1,13 +1,9 @@
 "use client";
 
 import {
-
   FiPhone,
-
   FiMail,
-
   FiGlobe,
-
 } from "react-icons/fi";
 
 import {
@@ -15,13 +11,10 @@ import {
   FaLinkedin,
 } from "react-icons/fa";
 
-import ContactCard
-from "./ContactCard";
+import ContactCard from "./ContactCard";
 
 type Props = {
-
   contacts: {
-
     type:
       | "phone"
       | "email"
@@ -30,103 +23,119 @@ type Props = {
       | "linkedin";
 
     title: string;
-
     value: string;
-
     href: string;
-
   }[];
-
 };
 
 const iconMap = {
-
   phone: FiPhone,
-
   email: FiMail,
-
   website: FiGlobe,
-
   whatsapp: FaWhatsapp,
-
   linkedin: FaLinkedin,
-
 };
 
 export default function ContactGrid({
   contacts,
 }: Props) {
 
+  const rows: typeof contacts[] = [];
+
+  for (let i = 0; i < contacts.length; i += 3) {
+
+    rows.push(
+      contacts.slice(i, i + 3)
+    );
+
+  }
+
   return (
 
     <section
       className="
-        relative
-        z-20
+relative
+z-20
 
-        -mt-10
+-mt-8
 
-        px-6
-        pb-28
-      "
+px-2
+md:px-4
+
+pb-28
+"
     >
 
       <div
         className="
-          max-w-5xl
-          mx-auto
-          grid
-          gap-5
-          md:gap-5
+max-w-7xl
+mx-auto
 
-          md:grid-cols-2
-        "
+space-y-3
+md:space-y-4
+"
       >
 
-        {contacts.map(
-          (item, index) => {
+        {rows.map((row, rowIndex) => {
 
-            const Icon =
-              iconMap[item.type];
+          const isOne =
+            row.length === 1;
 
-            const isLastOdd =
-              contacts.length % 2 !== 0 &&
-              index === contacts.length - 1;
+          const isTwo =
+            row.length === 2;
 
-            return (
+          return (
 
-              <div
-                key={index}
-                className={
-                  isLastOdd
-                    ? "md:col-span-2 md:flex md:justify-center"
-                    : ""
-                }
-              >
+            <div
+              key={rowIndex}
+              className={`
+flex
+flex-wrap
 
-                <div
-                  className={
-                    isLastOdd
-                      ? "md:w-[48%]"
-                      : ""
-                  }
-                >
+gap-2
+md:gap-4
 
-                  <ContactCard
-                    title={item.title}
-                    value={item.value}
-                    href={item.href}
-                    icon={Icon}
-                  />
+${
+  isOne || isTwo
+    ? "justify-center"
+    : "justify-between"
+}
+`}
+            >
 
-                </div>
+              {row.map((item, index) => {
 
-              </div>
+                const Icon =
+                  iconMap[item.type];
 
-            );
+                return (
 
-          }
-        )}
+                  <div
+                    key={index}
+                    className="
+w-[31.5%]
+min-w-[31.5%]
+"
+                  >
+
+                    <ContactCard
+                      title={item.title}
+                      value={item.value}
+                      href={item.href}
+                      icon={Icon}
+                    />
+
+                  </div>
+
+                );
+
+              })}
+
+            </div>
+
+          );
+
+        })}
 
       </div>
 

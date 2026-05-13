@@ -36,11 +36,17 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  const employees = await getEmployees();
 
-  return employees.map((employee: any) => ({
-    employee: employee.slug,
-  }));
+  const employees =
+    await getEmployees();
+
+  return employees.map(
+    (employee: any) => ({
+      employee:
+        employee.slug,
+    })
+  );
+
 }
 
 export async function generateMetadata({
@@ -103,65 +109,83 @@ export default async function EmployeePage({
     notFound();
   }
 
-  const theme = themes[ data.theme as keyof typeof themes ] || themes.executive;
+  const theme =
+    themes[
+      data.theme as keyof typeof themes
+    ] || themes.executive;
 
-  const contacts: any[] = [
+  const contacts: any[] = [];
 
-  {
-    type: "phone",
-    title: "Phone",
-    value: data.phone,
-    href: `tel:${data.phone}`,
-  },
+  function addContact(
+    type: string,
+    title: string,
+    rawValue: string | undefined,
+    buildHref: (value: string) => string
+  ) {
 
-  {
-    type: "email",
-    title: "Email",
-    value: data.email,
-    href: `mailto:${data.email}`,
-  },
+    if (!rawValue) return;
 
-  {
-    type: "website",
-    title: "Website",
-    value: data.website,
-    href: data.website,
-  },
+    const values =
+      rawValue
+        .split("|")
+        .map((v) => v.trim())
+        .filter(Boolean);
 
-];
+    values.forEach((value) => {
 
-if (data.whatsapp) {
+      contacts.push({
 
-  contacts.push({
+        type,
 
-    type: "whatsapp",
+        title,
 
-    title: "WhatsApp",
+        value,
 
-    value: data.whatsapp,
+        href:
+          buildHref(value),
 
-    href:
-      `https://wa.me/${data.whatsapp}`,
+      });
 
-  });
+    });
 
-}
+  }
 
-if (data.linkedin) {
+  addContact(
+    "phone",
+    "Phone",
+    data.phone,
+    (value) => `tel:${value}`
+  );
 
-  contacts.push({
+  addContact(
+    "email",
+    "Email",
+    data.email,
+    (value) => `mailto:${value}`
+  );
 
-    type: "linkedin",
+  addContact(
+    "website",
+    "Website",
+    data.website,
+    (value) => value
+  );
 
-    title: "LinkedIn",
+  addContact(
+    "whatsapp",
+    "WhatsApp",
+    data.whatsapp,
+    (value) =>
+      `https://wa.me/${value}`
+  );
 
-    value: "Profile",
+  addContact(
+    "linkedin",
+    "LinkedIn",
+    data.linkedin,
+    (value) => value
+  );
 
-    href: data.linkedin,
-
-  });
-
-}
   return (
 
     <main>

@@ -12,9 +12,7 @@ import { design }
 from "@/design/system";
 
 type Props = {
-
   address: string;
-
 };
 
 export default function MapSection({
@@ -31,65 +29,87 @@ export default function MapSection({
 
     <section
       style={variables}
-
       className="
-        px-6
-        pb-40
-      "
+px-6
+pb-40
+"
     >
 
       <div
         className={`
-          max-w-6xl
-          mx-auto
+max-w-6xl
+mx-auto
 
-          overflow-hidden
+overflow-hidden
 
-          ${design.radius.section}
+${design.radius.section}
 
-          border
-          border-white/[0.05]
-        `}
+border
+
+${
+  dark
+    ? `
+border-white/[0.05]
+bg-[rgba(255,255,255,0.03)]
+`
+    : `
+border-black/[0.04]
+bg-[rgba(255,255,255,0.82)]
+shadow-[0_10px_30px_rgba(0,0,0,0.04)]
+`
+}
+`}
       >
 
         {/* HEADER */}
         <div
-          className="
-            px-8
-            md:px-10
+          className={`
+px-7
+md:px-10
 
-            py-10
+py-8
+md:py-10
 
-            bg-[rgba(255,255,255,0.025)]
-          "
+${
+  dark
+    ? "bg-[rgba(255,255,255,0.02)]"
+    : "bg-[rgba(255,255,255,0.55)]"
+}
+`}
         >
 
           <p
             className={`
-              uppercase
+uppercase
 
-              ${design.map.label}
+${design.map.label}
 
-              text-[var(--accent)]
+text-[var(--accent)]
 
-              mb-4
-            `}
+mb-4
+`}
           >
             Headquarters
           </p>
 
           <h2
             className={`
-              ${design.map.title}
+${design.map.title}
 
-              leading-tight
+leading-[1.12]
 
-              font-semibold
+font-semibold
 
-              tracking-tight
+tracking-[-0.035em]
 
-              max-w-4xl
-            `}
+max-w-4xl
+
+${
+  dark
+    ? "text-white"
+    : "text-[#111111]"
+}
+`}
           >
             {address}
           </h2>
@@ -101,11 +121,11 @@ export default function MapSection({
           src="https://www.google.com/maps?q=30.0914416,31.0241968&z=15&output=embed"
 
           className="
-            w-full
-            h-[420px]
+w-full
+h-[420px]
 
-            border-0
-          "
+border-0
+"
 
           loading="lazy"
         />

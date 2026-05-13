@@ -84,7 +84,7 @@ export default function Hero({
 
           ${
             dark
-              ? "opacity-[0.035]"
+              ? "opacity-[0.05]"
               : "opacity-[0.05]"
           }
         `}
@@ -136,7 +136,7 @@ export default function Hero({
 
               blur-[120px]
 
-              opacity-[0.12]
+              opacity-[0.18]
             "
             style={{
               background:
@@ -167,7 +167,7 @@ export default function Hero({
 
               blur-[140px]
 
-              opacity-[0.18]
+              opacity-[0.22]
             "
             style={{
               background:
@@ -221,8 +221,8 @@ export default function Hero({
                 src={logo}
                 alt={theme.brand.name}
                 className="
-                  w-[52px]
-                  h-[52px]
+                  w-[85px]
+                  h-[85px]
 
                   object-contain
                 "
@@ -311,8 +311,8 @@ export default function Hero({
 
           text-center
 
-          -translate-y-8
-          md:-translate-y-10
+          -translate-y-10
+          md:-translate-y-14
         "
       >
 
@@ -330,17 +330,20 @@ export default function Hero({
           >
 
             <img
-              src={logo}
-              alt={theme.brand.name}
-              className="
-                w-[190px]
-                h-[190px]
+            src={logo}
+            alt={theme.brand.name}
+            className="
+              w-[220px]
+              h-[220px]
 
-                object-contain
+              md:w-[250px]
+              md:h-[250px]
 
-                opacity-95
-              "
-            />
+              object-contain
+
+              opacity-95
+            "
+          />
 
           </div>
 
@@ -351,9 +354,11 @@ export default function Hero({
           className={`
             ${design.hero.title}
 
+            whitespace-nowrap
+
             leading-[0.92]
 
-            tracking-[-0.07em]
+            tracking-[-0.045em]
 
             font-black
 

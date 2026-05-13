@@ -50,7 +50,8 @@ export const design = {
 
     card:
       `
-        shadow-[0_10px_35px_rgba(0,0,0,0.10)]
+      shadow-[0_10px_35px_rgba(0,0,0,0.10)]
+      hover:shadow-[0_18px_45px_rgba(0,0,0,0.16)]
       `,
 
     cardHover:
@@ -95,22 +96,22 @@ export const design = {
 
   hero: {
 
-    container:
-      "h-[60vh] min-h-[520px]",
+  container:
+    "h-[58vh] min-h-[520px] md:min-h-[620px]",
 
-    title:
-      "text-[42px] sm:text-[52px] md:text-[82px]",
+  title:
+    "text-[44px] sm:text-[64px] md:text-[092px] lg:text-[108px]",
 
-    subtitle:
-      "text-[12px] md:text-[15px]",
+  subtitle:
+    "text-[14px] md:text-[19px]",
 
-    logo:
-      "w-[150px] h-[150px] md:w-[190px] md:h-[190px]",
+  logo:
+    "w-[150px] h-[150px] md:w-[190px] md:h-[190px]",
 
-    divider:
-      "w-[60px] md:w-[90px]",
+  divider:
+    "w-[120px]",
 
-  },
+},
 
   map: {
 

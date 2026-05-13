@@ -1,0 +1,2409 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: src/**/*.{ts,tsx,css}, app/**/*.{ts,tsx,css}, components/**/*.{ts,tsx,css}, design/**/*.{ts,tsx,css}, themes/**/*.{ts,tsx,css}
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+app/[employee]/page.tsx
+app/globals.css
+app/layout.tsx
+app/page.tsx
+components/cards/ContactCard.tsx
+components/cards/ContactGrid.tsx
+components/controls/FloatingDock.tsx
+components/hero/Hero.tsx
+components/hero/PatternOverlay.tsx
+components/layout/Footer.tsx
+components/layout/MapSection.tsx
+components/layout/ThemeProvider.tsx
+design/applyTheme.ts
+design/motion.ts
+design/personalities.ts
+design/system.ts
+design/themeStyles.ts
+design/themeVariables.ts
+themes/executive.ts
+themes/foundation.ts
+themes/group.ts
+themes/index.ts
+themes/industries.ts
+themes/kenda.ts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="app/layout.tsx">
+import "./globals.css";
+
+import {
+  ThemeProvider,
+} from "@/components/layout/ThemeProvider";
+
+export const metadata = {
+  title: "NADIM",
+  description:
+    "Executive Identity System",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+
+  return (
+
+    <html lang="en">
+
+      <body>
+
+        <ThemeProvider>
+
+          {children}
+
+        </ThemeProvider>
+
+      </body>
+
+    </html>
+
+  );
+
+}
+</file>
+
+<file path="components/hero/PatternOverlay.tsx">
+type Props = {
+  dark?: boolean;
+};
+
+export default function PatternOverlay({
+  dark = true,
+}: Props) {
+
+  return (
+
+    <div className="absolute inset-0 pointer-events-none">
+
+      <div
+        className={`
+          absolute
+          inset-0
+          ${
+            dark
+              ? "opacity-[0.035]"
+              : "opacity-[0.05]"
+          }
+        `}
+        style={{
+
+          backgroundImage:
+            "url('/patterns/pattern-light.svg')",
+
+          backgroundSize: "120px 120px",
+
+          backgroundRepeat: "repeat",
+
+          backgroundPosition: "center",
+
+        }}
+      />
+
+    </div>
+
+  );
+
+}
+</file>
+
+<file path="design/applyTheme.ts">
+export function applyThemeVariables(
+  theme: any
+) {
+
+  const root =
+    document.documentElement;
+
+  root.style.setProperty(
+    "--background",
+    theme.colors.background
+  );
+
+  root.style.setProperty(
+    "--foreground",
+    theme.colors.foreground
+  );
+
+  root.style.setProperty(
+    "--accent",
+    theme.colors.accent
+  );
+
+  root.style.setProperty(
+    "--muted",
+    theme.colors.muted
+  );
+
+  root.style.setProperty(
+    "--surface",
+    theme.colors.surface
+  );
+
+  root.style.setProperty(
+    "--surface-hover",
+    theme.colors.surfaceHover
+  );
+
+  root.style.setProperty(
+    "--border",
+    theme.colors.border
+  );
+
+  root.style.setProperty(
+    "--border-hover",
+    theme.colors.borderHover
+  );
+
+}
+</file>
+
+<file path="design/personalities.ts">
+export const personalities = {
+
+  cinematic: {
+    glow: "blur-[140px]",
+  },
+
+  technical: {
+    glow: "blur-[90px]",
+  },
+
+};
+</file>
+
+<file path="design/themeVariables.ts">
+import React from "react";
+
+export function getThemeVariables(
+  dark: boolean
+) {
+
+  return {
+
+    "--accent": "#C6A46A",
+
+  } as React.CSSProperties;
+
+}
+</file>
+
+<file path="app/page.tsx">
+export default function Home() {
+  return (
+    <main>
+      Hello
+    </main>
+  );
+}
+</file>
+
+<file path="components/controls/FloatingDock.tsx">
+"use client";
+
+import {
+  useTheme,
+} from "@/components/layout/ThemeProvider";
+
+import {
+  getSurfaceStyles,
+} from "@/design/themeStyles";
+
+import {
+  getThemeVariables,
+} from "@/design/themeVariables";
+
+import {
+  FiSun,
+  FiMoon,
+  FiShare2,
+  FiDownload,
+} from "react-icons/fi";
+
+import { design }
+from "@/design/system";
+
+import { motion }
+from "@/design/motion";
+
+type Props = {
+
+  employee: {
+
+    name: string;
+
+    title: string;
+
+    company: string;
+
+    email: string;
+
+    phone: string;
+
+  };
+
+};
+
+export default function FloatingDock({
+  employee,
+}: Props) {
+
+  const {
+    dark,
+    toggleTheme,
+  } = useTheme();
+
+  const surface =
+    getSurfaceStyles(dark);
+
+  const variables =
+    getThemeVariables(dark);
+
+  /* DOWNLOAD CONTACT */
+  const downloadVCF = () => {
+
+    const vcf = `BEGIN:VCARD
+VERSION:3.0
+FN:${employee.name}
+ORG:${employee.company}
+TITLE:${employee.title}
+TEL:${employee.phone}
+EMAIL:${employee.email}
+END:VCARD`;
+
+    const blob = new Blob(
+      [vcf],
+      {
+        type: "text/vcard",
+      }
+    );
+
+    const url =
+      window.URL.createObjectURL(blob);
+
+    const link =
+      document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+      `${employee.name
+        .toLowerCase()
+        .replaceAll(" ", "-")}.vcf`;
+
+    link.click();
+
+    window.URL.revokeObjectURL(url);
+
+  };
+
+  /* SHARE PAGE */
+  const sharePage = async () => {
+
+    if (navigator.share) {
+
+      await navigator.share({
+        title: employee.name,
+        url: window.location.href,
+      });
+
+    } else {
+
+      navigator.clipboard.writeText(
+        window.location.href
+      );
+
+    }
+
+  };
+
+  return (
+
+    <div
+      style={variables}
+
+      className={`
+        fixed
+        bottom-5
+        md:bottom-7
+
+        left-1/2
+        -translate-x-1/2
+
+        z-50
+
+        flex
+        items-center
+
+        gap-1.5
+        md:gap-2
+
+        px-2.5
+        py-2.5
+
+        md:px-3
+        md:py-3
+
+        border
+
+        ${design.radius.dock}
+
+        ${design.glass.dock}
+
+        ${design.shadows.card}
+
+        ${motion.smooth}
+
+        ${surface.background}
+
+        ${surface.border}
+      `}
+    >
+
+      {/* SHARE */}
+      <DockButton
+        label="Share"
+        onClick={sharePage}
+        heading={surface.heading}
+      >
+        <FiShare2 className="text-[16px] md:text-[18px]" />
+      </DockButton>
+
+      {/* THEME */}
+      <DockButton
+        label="Theme"
+        onClick={toggleTheme}
+        heading={surface.heading}
+      >
+
+        {dark ? (
+          <FiSun className="text-[16px] md:text-[18px]" />
+        ) : (
+          <FiMoon className="text-[16px] md:text-[18px]" />
+        )}
+
+      </DockButton>
+
+      {/* SAVE */}
+      <DockButton
+        label="Save Contact"
+        onClick={downloadVCF}
+        heading={surface.heading}
+      >
+        <FiDownload className="text-[16px] md:text-[18px]" />
+      </DockButton>
+
+    </div>
+
+  );
+
+}
+
+type DockButtonProps = {
+
+  children: React.ReactNode;
+
+  label: string;
+
+  onClick?: () => void;
+
+  heading: string;
+
+};
+
+function DockButton({
+  children,
+  label,
+  onClick,
+  heading,
+}: DockButtonProps) {
+
+  return (
+
+    <div className="relative group">
+
+      <button
+        onClick={onClick}
+
+        className={`
+          w-10
+          h-10
+
+          md:w-11
+          md:h-11
+
+          flex
+          items-center
+          justify-center
+
+          ${design.radius.dock}
+
+          ${motion.smooth}
+
+          ${heading}
+
+          hover:text-[var(--accent)]
+
+          hover:scale-110
+        `}
+      >
+
+        {children}
+
+      </button>
+
+      {/* TOOLTIP */}
+      <div
+        className={`
+          absolute
+
+          bottom-[135%]
+          left-1/2
+
+          -translate-x-1/2
+
+          px-3
+          py-2
+
+          whitespace-nowrap
+
+          uppercase
+
+          text-[10px]
+
+          tracking-[0.22em]
+
+          opacity-0
+
+          translate-y-2
+
+          pointer-events-none
+
+          border
+
+          group-hover:opacity-100
+
+          group-hover:translate-y-0
+
+          ${design.radius.dock}
+
+          ${design.glass.dock}
+
+          ${motion.fade}
+
+          bg-[rgba(10,22,25,0.92)]
+
+          border-white/[0.06]
+
+          text-white
+        `}
+      >
+
+        {label}
+
+      </div>
+
+    </div>
+
+  );
+
+}
+</file>
+
+<file path="components/layout/Footer.tsx">
+"use client";
+
+import {
+  useTheme,
+} from "@/components/layout/ThemeProvider";
+
+import {
+  getSurfaceStyles,
+} from "@/design/themeStyles";
+
+import {
+  getThemeVariables,
+} from "@/design/themeVariables";
+
+import { design }
+from "@/design/system";
+
+type Props = {
+
+  brand?: string;
+
+  systemName?: string;
+
+};
+
+export default function Footer({
+  brand = "NADIM Industries",
+  systemName = "Executive Identity System",
+}: Props) {
+
+  const { dark } =
+    useTheme();
+
+  const surface =
+    getSurfaceStyles(dark);
+
+  const variables =
+    getThemeVariables(dark);
+
+  return (
+
+    <footer
+      style={variables}
+
+      className="
+        px-6
+        pb-10
+      "
+    >
+
+      <div
+        className={`
+          max-w-6xl
+          mx-auto
+
+          pt-8
+
+          border-t
+
+          ${surface.border}
+
+          flex
+          flex-col
+          md:flex-row
+
+          items-center
+          justify-between
+
+          gap-5
+        `}
+      >
+
+        {/* BRAND */}
+        <div>
+
+          <p
+            className={`
+              text-[13px]
+
+              tracking-[0.18em]
+
+              uppercase
+
+              ${surface.muted}
+            `}
+          >
+            {brand}
+          </p>
+
+        </div>
+
+        {/* SYSTEM */}
+        <div>
+
+          <p
+            className={`
+              text-[12px]
+
+              ${surface.muted}
+            `}
+          >
+            {systemName}
+          </p>
+
+        </div>
+
+      </div>
+
+    </footer>
+
+  );
+
+}
+</file>
+
+<file path="components/layout/MapSection.tsx">
+"use client";
+
+import {
+  useTheme,
+} from "@/components/layout/ThemeProvider";
+
+import {
+  getThemeVariables,
+} from "@/design/themeVariables";
+
+import { design }
+from "@/design/system";
+
+type Props = {
+
+  address: string;
+
+};
+
+export default function MapSection({
+  address,
+}: Props) {
+
+  const { dark } =
+    useTheme();
+
+  const variables =
+    getThemeVariables(dark);
+
+  return (
+
+    <section
+      style={variables}
+
+      className="
+        px-6
+        pb-40
+      "
+    >
+
+      <div
+        className={`
+          max-w-6xl
+          mx-auto
+
+          overflow-hidden
+
+          ${design.radius.section}
+
+          border
+          border-white/[0.05]
+        `}
+      >
+
+        {/* HEADER */}
+        <div
+          className="
+            px-8
+            md:px-10
+
+            py-10
+
+            bg-[rgba(255,255,255,0.025)]
+          "
+        >
+
+          <p
+            className={`
+              uppercase
+
+              ${design.map.label}
+
+              text-[var(--accent)]
+
+              mb-4
+            `}
+          >
+            Headquarters
+          </p>
+
+          <h2
+            className={`
+              ${design.map.title}
+
+              leading-tight
+
+              font-semibold
+
+              tracking-tight
+
+              max-w-4xl
+            `}
+          >
+            {address}
+          </h2>
+
+        </div>
+
+        {/* MAP */}
+        <iframe
+          src="https://www.google.com/maps?q=30.0914416,31.0241968&z=15&output=embed"
+
+          className="
+            w-full
+            h-[420px]
+
+            border-0
+          "
+
+          loading="lazy"
+        />
+
+      </div>
+
+    </section>
+
+  );
+
+}
+</file>
+
+<file path="themes/kenda.ts">
+export const kenda = {
+
+  colors: {
+
+    background: "#07181D",
+
+    foreground: "#F5F1E8",
+
+    accent: "#C6A46A",
+
+    muted: "rgba(255,255,255,0.60)",
+
+    surface: "rgba(10,22,25,0.72)",
+
+    surfaceHover:
+      "rgba(255,255,255,0.055)",
+
+    border:
+      "rgba(255,255,255,0.06)",
+
+    borderHover:
+      "rgba(255,255,255,0.09)",
+
+  },
+
+  logos: {
+
+  light:
+    "/logos/logo-light.png",
+
+  dark:
+    "/logos/logo-dark.png",
+
+},
+
+  brand: {
+
+    name: "NADIM",
+
+  },
+
+  personality: {
+
+    glow:
+      "cinematic",
+
+    surface:
+      "luxury",
+
+    motion:
+      "smooth",
+
+    typography:
+      "elegant",
+
+  },
+
+};
+</file>
+
+<file path="app/globals.css">
+@import "tailwindcss";
+
+:root {
+
+  --background: #07181D;
+
+  --foreground: #F5F1E8;
+
+}
+
+@theme inline {
+
+  --color-background:
+    var(--background);
+
+  --color-foreground:
+    var(--foreground);
+
+  --font-sans:
+    var(--font-geist-sans);
+
+  --font-mono:
+    var(--font-geist-mono);
+
+}
+
+* {
+
+  box-sizing: border-box;
+
+}
+
+html {
+
+  scroll-behavior: smooth;
+
+}
+
+body {
+
+  background:
+    var(--background);
+
+  color:
+    var(--foreground);
+
+  font-family:
+    Arial, Helvetica, sans-serif;
+
+  text-rendering:
+    optimizeLegibility;
+
+  -webkit-font-smoothing:
+    antialiased;
+
+  overflow-x:
+    hidden;
+
+}
+
+html.dark body {
+
+  background: #07181D;
+
+  color: #F5F1E8;
+
+}
+
+html.light body {
+
+  background: #F4F1E8;
+
+  color: #111111;
+
+}
+
+::selection {
+
+  background:
+    rgba(198,164,106,0.22);
+
+  color:
+    #F5F1E8;
+
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+
+  width: 10px;
+
+}
+
+::-webkit-scrollbar-track {
+
+  background:
+    rgba(255,255,255,0.03);
+
+}
+
+::-webkit-scrollbar-thumb {
+
+  background:
+    rgba(198,164,106,0.34);
+
+  border-radius:
+    999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+  background:
+    rgba(198,164,106,0.52);
+
+}
+</file>
+
+<file path="components/layout/ThemeProvider.tsx">
+"use client";
+
+import {
+  applyThemeVariables,
+} from "@/design/applyTheme";
+
+import {
+  executive,
+} from "@/themes/executive";
+
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
+type ThemeContextType = {
+
+  dark: boolean;
+
+  toggleTheme: () => void;
+
+};
+
+const ThemeContext =
+  createContext<ThemeContextType>({
+    dark: true,
+    toggleTheme: () => {},
+  });
+
+type Props = {
+
+  children: React.ReactNode;
+
+};
+
+export function ThemeProvider({
+  children,
+}: Props) {
+
+  const [mounted, setMounted] =
+    useState(false);
+
+  const [dark, setDark] =
+    useState(true);
+
+  /* LOAD SAVED THEME */
+  useEffect(() => {
+
+    const savedTheme =
+      localStorage.getItem(
+        "nadim-theme"
+      );
+
+    if (savedTheme) {
+
+      setDark(
+        savedTheme === "dark"
+      );
+
+    }
+
+    setMounted(true);
+
+  }, []);
+
+  /* APPLY THEME */
+  useEffect(() => {
+
+    if (!mounted) return;
+
+    const root =
+      document.documentElement;
+
+    root.classList.remove(
+      "light",
+      "dark"
+    );
+
+    root.classList.add(
+      dark
+        ? "dark"
+        : "light"
+    );
+
+    
+    applyThemeVariables(
+        executive
+      );
+
+
+    localStorage.setItem(
+      "nadim-theme",
+      dark
+        ? "dark"
+        : "light"
+    );
+
+  }, [dark, mounted]);
+
+  /* TOGGLE */
+  const toggleTheme = () => {
+
+    setDark((prev) => !prev);
+
+  };
+
+  /* CONTEXT VALUE */
+  const value =
+    useMemo(
+      () => ({
+        dark,
+        toggleTheme,
+      }),
+      [dark]
+    );
+
+  /* PREVENT HYDRATION MISMATCH */
+  if (!mounted) {
+
+    return null;
+
+  }
+
+  return (
+
+    <ThemeContext.Provider
+      value={value}
+    >
+
+      {children}
+
+    </ThemeContext.Provider>
+
+  );
+
+}
+
+export const useTheme = () =>
+  useContext(ThemeContext);
+</file>
+
+<file path="themes/foundation.ts">
+export const foundation = {
+
+  colors: {
+
+    background: "#07181D",
+
+    foreground: "#F5F1E8",
+
+    accent: "#C6A46A",
+
+    muted: "rgba(255,255,255,0.60)",
+
+    surface: "rgba(10,22,25,0.72)",
+
+    surfaceHover:
+      "rgba(255,255,255,0.055)",
+
+    border:
+      "rgba(255,255,255,0.06)",
+
+    borderHover:
+      "rgba(255,255,255,0.09)",
+
+  },
+
+logos: {
+
+  light:
+    "/logos/logo-light.png",
+
+  dark:
+    "/logos/logo-dark.png",
+
+},
+
+
+  brand: {
+
+    name: "NADIM",
+
+  },
+
+  personality: {
+
+    glow:
+      "cinematic",
+
+    surface:
+      "luxury",
+
+    motion:
+      "smooth",
+
+    typography:
+      "elegant",
+
+  },
+
+};
+</file>
+
+<file path="themes/group.ts">
+export const group = {
+
+  colors: {
+
+    background: "#07181D",
+
+    foreground: "#F5F1E8",
+
+    accent: "#C6A46A",
+
+    muted: "rgba(255,255,255,0.60)",
+
+    surface: "rgba(10,22,25,0.72)",
+
+    surfaceHover:
+      "rgba(255,255,255,0.055)",
+
+    border:
+      "rgba(255,255,255,0.06)",
+
+    borderHover:
+      "rgba(255,255,255,0.09)",
+
+  },
+
+  logos: {
+
+  light:
+    "/logos/logo-light.png",
+
+  dark:
+    "/logos/logo-dark.png",
+
+},
+
+
+  brand: {
+
+    name: "NADIM",
+
+  },
+
+  personality: {
+
+    glow:
+      "cinematic",
+
+    surface:
+      "luxury",
+
+    motion:
+      "smooth",
+
+    typography:
+      "elegant",
+
+  },
+
+};
+</file>
+
+<file path="themes/index.ts">
+import { executive }
+from "./executive";
+
+import { industries }
+from "./industries";
+
+import { group }
+from "./group";
+
+import { kenda }
+from "./kenda";
+
+import { foundation }
+from "./foundation";
+
+export const themes = {
+
+  executive,
+
+  industries,
+
+  group,
+
+  kenda,
+
+  foundation,
+
+};
+</file>
+
+<file path="themes/industries.ts">
+export const industries = {
+
+  colors: {
+
+    background: "#07181D",
+
+    foreground: "#F5F1E8",
+
+    accent: "#C6A46A",
+
+    muted: "rgba(255,255,255,0.60)",
+
+    surface: "rgba(10,22,25,0.72)",
+
+    surfaceHover:
+      "rgba(255,255,255,0.055)",
+
+    border:
+      "rgba(255,255,255,0.06)",
+
+    borderHover:
+      "rgba(255,255,255,0.09)",
+
+  },
+
+  logos: {
+
+  light:
+    "/logos/logo-light.png",
+
+  dark:
+    "/logos/logo-dark.png",
+
+},
+
+
+  brand: {
+
+    name: "NADIM",
+
+  },
+
+  personality: {
+
+    glow:
+      "cinematic",
+
+    surface:
+      "luxury",
+
+    motion:
+      "smooth",
+
+    typography:
+      "elegant",
+
+  },
+
+};
+</file>
+
+<file path="app/[employee]/page.tsx">
+import ContactGrid
+from "@/components/cards/ContactGrid";
+
+import Footer
+from "@/components/layout/Footer";
+
+import MapSection
+from "@/components/layout/MapSection";
+
+import type {
+  Metadata,
+} from "next";
+
+import {
+  notFound,
+} from "next/navigation";
+
+import Hero
+from "@/components/hero/Hero";
+
+import FloatingDock
+from "@/components/controls/FloatingDock";
+
+import {
+  getEmployees,
+} from "@/lib/getEmployees";
+
+import {
+  themes,
+} from "@/themes";
+
+type Props = {
+  params: Promise<{
+    employee: string;
+  }>;
+};
+
+export async function generateStaticParams() {
+  const employees = await getEmployees();
+
+  return employees.map((employee: any) => ({
+    employee: employee.slug,
+  }));
+}
+
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata> {
+
+  const { employee } =
+    await params;
+
+  const employees =
+    await getEmployees();
+
+  const data =
+    employees.find(
+      (e: any) =>
+        e.slug === employee
+    );
+
+  if (!data) {
+
+    return {
+      title: "NADIM",
+    };
+
+  }
+
+  return {
+
+    title:
+      `${data.name} — ${data.title}`,
+
+    description:
+      `${data.name} at ${data.company}`,
+
+    icons: {
+      icon: "/logos/logo-light.png",
+    },
+
+  };
+
+}
+
+export default async function EmployeePage({
+  params,
+}: Props) {
+
+  const { employee } =
+    await params;
+
+  const employees =
+    await getEmployees();
+
+  const data =
+    employees.find(
+      (e: any) =>
+        e.slug === employee
+    );
+
+  if (!data) {
+    notFound();
+  }
+
+  const theme = themes[ data.theme as keyof typeof themes ] || themes.executive;
+
+  const contacts: any[] = [
+
+  {
+    type: "phone",
+    title: "Phone",
+    value: data.phone,
+    href: `tel:${data.phone}`,
+  },
+
+  {
+    type: "email",
+    title: "Email",
+    value: data.email,
+    href: `mailto:${data.email}`,
+  },
+
+  {
+    type: "website",
+    title: "Website",
+    value: data.website,
+    href: data.website,
+  },
+
+];
+
+if (data.whatsapp) {
+
+  contacts.push({
+
+    type: "whatsapp",
+
+    title: "WhatsApp",
+
+    value: data.whatsapp,
+
+    href:
+      `https://wa.me/${data.whatsapp}`,
+
+  });
+
+}
+
+if (data.linkedin) {
+
+  contacts.push({
+
+    type: "linkedin",
+
+    title: "LinkedIn",
+
+    value: "Profile",
+
+    href: data.linkedin,
+
+  });
+
+}
+  return (
+
+    <main>
+
+      <Hero
+        name={data.name}
+        title={data.title}
+        theme={theme}
+      />
+
+      <ContactGrid
+        contacts={contacts}
+      />
+
+      <MapSection
+        address={
+          data.address || ""
+        }
+      />
+
+      <FloatingDock
+        employee={{
+          name: data.name,
+          title: data.title,
+          company: data.company,
+          email: data.email,
+          phone: data.phone,
+        }}
+      />
+
+      <Footer />
+
+    </main>
+
+  );
+
+}
+</file>
+
+<file path="components/cards/ContactGrid.tsx">
+"use client";
+
+import {
+
+  FiPhone,
+
+  FiMail,
+
+  FiGlobe,
+
+} from "react-icons/fi";
+
+import {
+  FaWhatsapp,
+  FaLinkedin,
+} from "react-icons/fa";
+
+import ContactCard
+from "./ContactCard";
+
+type Props = {
+
+  contacts: {
+
+    type:
+      | "phone"
+      | "email"
+      | "website"
+      | "whatsapp"
+      | "linkedin";
+
+    title: string;
+
+    value: string;
+
+    href: string;
+
+  }[];
+
+};
+
+const iconMap = {
+
+  phone: FiPhone,
+
+  email: FiMail,
+
+  website: FiGlobe,
+
+  whatsapp: FaWhatsapp,
+
+  linkedin: FaLinkedin,
+
+};
+
+export default function ContactGrid({
+  contacts,
+}: Props) {
+
+  return (
+
+    <section
+      className="
+        relative
+        z-20
+
+        -mt-10
+
+        px-6
+        pb-28
+      "
+    >
+
+      <div
+        className="
+          max-w-5xl
+          mx-auto
+          grid
+          gap-5
+          md:gap-5
+
+          md:grid-cols-2
+        "
+      >
+
+        {contacts.map(
+          (item, index) => {
+
+            const Icon =
+              iconMap[item.type];
+
+            const isLastOdd =
+              contacts.length % 2 !== 0 &&
+              index === contacts.length - 1;
+
+            return (
+
+              <div
+                key={index}
+                className={
+                  isLastOdd
+                    ? "md:col-span-2 md:flex md:justify-center"
+                    : ""
+                }
+              >
+
+                <div
+                  className={
+                    isLastOdd
+                      ? "md:w-[48%]"
+                      : ""
+                  }
+                >
+
+                  <ContactCard
+                    title={item.title}
+                    value={item.value}
+                    href={item.href}
+                    icon={Icon}
+                  />
+
+                </div>
+
+              </div>
+
+            );
+
+          }
+        )}
+
+      </div>
+
+    </section>
+
+  );
+
+}
+</file>
+
+<file path="themes/executive.ts">
+export const executive = {
+
+  colors: {
+
+    background: "#07181D",
+
+    foreground: "#F5F1E8",
+
+    accent: "#C6A46A",
+
+    muted: "rgba(255,255,255,0.60)",
+
+    surface: "rgba(10,22,25,0.72)",
+
+    surfaceHover:
+      "rgba(255,255,255,0.055)",
+
+    border:
+      "rgba(255,255,255,0.06)",
+
+    borderHover:
+      "rgba(255,255,255,0.09)",
+
+  },
+
+logos: {
+
+  light:
+    "/logos/logo-light.png",
+
+  dark:
+    "/logos/logo-dark.png",
+
+},
+
+
+  brand: {
+
+    name: "NADIM",
+
+  },
+
+  personality: {
+
+    glow:
+      "cinematic",
+
+    surface:
+      "luxury",
+
+    motion:
+      "smooth",
+
+    typography:
+      "elegant",
+
+  },
+
+};
+</file>
+
+<file path="design/motion.ts">
+export const motion = {
+
+  smooth:
+    "transition-all duration-500",
+
+  hoverLift:
+    "hover:-translate-y-[4px]",
+
+  glow:
+    "transition-all duration-700",
+
+  icon:
+    "transition-all duration-500",
+
+  fade:
+    "transition-all duration-500",
+
+};
+</file>
+
+<file path="design/system.ts">
+export const design = {
+
+  radius: {
+
+    card:
+      "rounded-[26px] md:rounded-[30px]",
+
+    section:
+      "rounded-[36px]",
+
+    dock:
+      "rounded-full",
+
+  },
+
+  glass: {
+
+    card:
+      "backdrop-blur-2xl",
+
+    dock:
+      "backdrop-blur-xl",
+
+  },
+
+  spacing: {
+
+    cardPadding:
+      "p-7 md:p-10",
+
+    sectionX:
+      "px-6",
+
+  },
+
+  typography: {
+
+    cardTitle:
+      "text-[24px] md:text-[28px]",
+
+    body:
+      "text-[14px] md:text-[15px]",
+
+    icon:
+      "text-[20px] md:text-[34px]",
+
+  },
+
+  shadows: {
+
+    card:
+      `
+        shadow-[0_10px_35px_rgba(0,0,0,0.10)]
+      `,
+
+    cardHover:
+      `
+        hover:shadow-[0_18px_45px_rgba(0,0,0,0.16)]
+      `,
+
+  },
+
+  glow: {
+
+    dark:
+      `
+        bg-[linear-gradient(
+          120deg,
+          rgba(255,255,255,0.10),
+          transparent_40%,
+          rgba(255,255,255,0.04)
+        )]
+      `,
+
+    light:
+      `
+        bg-[linear-gradient(
+          120deg,
+          rgba(255,255,255,0.10),
+          transparent_40%,
+          rgba(255,255,255,0.04)
+        )]
+      `,
+
+    reflective:
+      `
+        bg-[radial-gradient(
+          circle_at_top_left,
+          rgba(255,255,255,0.06),
+          transparent_45%
+        )]
+      `,
+
+  },
+
+  hero: {
+
+    container:
+      "h-[60vh] min-h-[520px]",
+
+    title:
+      "text-[42px] sm:text-[52px] md:text-[82px]",
+
+    subtitle:
+      "text-[12px] md:text-[15px]",
+
+    logo:
+      "w-[150px] h-[150px] md:w-[190px] md:h-[190px]",
+
+    divider:
+      "w-[60px] md:w-[90px]",
+
+  },
+
+  map: {
+
+    title:
+      "text-[28px] md:text-[40px]",
+
+    label:
+      "text-[11px] tracking-[0.28em]",
+
+  },
+
+};
+</file>
+
+<file path="components/cards/ContactCard.tsx">
+"use client";
+import { useTheme } from "@/components/layout/ThemeProvider";
+import { getSurfaceStyles } from "@/design/themeStyles";
+import { IconType } from "react-icons";
+import { design } from "@/design/system";
+import { motion } from "@/design/motion";
+
+export default function ContactCard({ title, value, href, icon: Icon }: { title: string; value: string; href: string; icon: IconType }) {
+  const { dark } = useTheme();
+  const surface = getSurfaceStyles(dark);
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`
+        group relative overflow-hidden border
+        ${design.radius.card} 
+        ${design.glass.card} 
+        ${motion.smooth} 
+        ${motion.hoverLift}
+        ${design.shadows.card}
+        ${surface.background} 
+        ${surface.border} 
+        ${surface.text}
+        transition-all duration-500
+      `}
+    >
+      {/* اللمعة عند الهوفر - فقط تظهر عند تمرير الماوس */}
+      <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-700 ${dark ? design.glow.dark : design.glow.light}`} />
+
+      {/* CONTENT */}
+      <div className={`relative z-10 ${design.spacing.cardPadding}`}>
+        <div className="mb-8 md:mb-12">
+          <div className={`${design.typography.icon} group-hover:text-[var(--accent)] group-hover:scale-110 transition-transform duration-500 ${surface.heading}`}>
+            <Icon />
+          </div>
+        </div>
+        <div>
+          <h3 className={`${design.typography.cardTitle} font-semibold tracking-tight mb-1 ${surface.heading}`}>{title}</h3>
+          <p className={`${design.typography.body} opacity-70`}>{value}</p>
+        </div>
+      </div>
+
+      {/* الخط الذهبي السفلي */}
+      <div className={`absolute bottom-0 left-0 h-[2px] w-0 bg-[var(--accent)] transition-all duration-500 group-hover:w-full`} />
+    </a>
+  );
+}
+</file>
+
+<file path="components/hero/Hero.tsx">
+"use client";
+
+import {
+  useTheme,
+} from "@/components/layout/ThemeProvider";
+
+import {
+  getThemeVariables,
+} from "@/design/themeVariables";
+
+import { design }
+from "@/design/system";
+
+import { motion as fm }
+from "framer-motion";
+
+type Props = {
+
+  name: string;
+
+  title: string;
+
+  theme: any;
+
+};
+
+export default function Hero({
+  name,
+  title,
+  theme,
+}: Props) {
+
+  const { dark } =
+    useTheme();
+
+  const variables =
+    getThemeVariables(dark);
+
+  const logo =
+    dark
+      ? theme.logos.light
+      : theme.logos.dark;
+
+  return (
+
+    <section
+      style={{
+        ...variables,
+
+        background:
+          dark
+            ? theme.colors.background
+            : "#F4F1E8",
+
+        color:
+          dark
+            ? theme.colors.foreground
+            : "#111111",
+      }}
+
+      className={`
+        relative
+
+        ${design.hero.container}
+
+        overflow-hidden
+
+        flex
+        items-center
+        justify-center
+
+        px-6
+      `}
+    >
+
+      {/* PATTERN */}
+      <div
+        className={`
+          absolute
+          inset-0
+
+          pointer-events-none
+
+          ${
+            dark
+              ? "opacity-[0.035]"
+              : "opacity-[0.05]"
+          }
+        `}
+        style={{
+          backgroundImage:
+            dark
+              ? "url('/patterns/pattern-light.svg')"
+              : "url('/patterns/pattern-dark.svg')",
+
+          backgroundSize:
+            "120px 120px",
+        }}
+      />
+
+      {/* CINEMATIC GLOWS */}
+      {dark && (
+
+        <div
+          className="
+            absolute
+            inset-0
+
+            overflow-hidden
+
+            pointer-events-none
+          "
+        >
+
+          {/* GOLD GLOW */}
+          <fm.div
+            animate={{
+              x: [0, 40, 0],
+              y: [0, -20, 0],
+            }}
+            transition={{
+              duration: 18,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="
+              absolute
+              top-[-140px]
+              left-[-120px]
+
+              w-[420px]
+              h-[420px]
+
+              rounded-full
+
+              blur-[120px]
+
+              opacity-[0.12]
+            "
+            style={{
+              background:
+                'radial-gradient(circle,var(--accent),transparent 72%)',
+            }}
+          />
+
+          {/* BLUE GLOW */}
+          <fm.div
+            animate={{
+              x: [0, -30, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{
+              duration: 22,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="
+              absolute
+              bottom-[-220px]
+              right-[-140px]
+
+              w-[500px]
+              h-[500px]
+
+              rounded-full
+
+              blur-[140px]
+
+              opacity-[0.18]
+            "
+            style={{
+              background:
+                'radial-gradient(circle,#0F3A46,transparent 72%)',
+            }}
+          />
+
+        </div>
+
+      )}
+
+      {/* TOP BAR */}
+      <div
+        className="
+          absolute
+          top-0
+          left-0
+
+          w-full
+
+          z-20
+        "
+      >
+
+        <div
+          className="
+            w-full
+
+            px-4
+            md:px-8
+
+            py-8
+
+            flex
+            items-center
+          "
+        >
+
+          <div
+            className="
+              flex
+              items-center
+
+              gap-5
+            "
+          >
+
+            <div className="shrink-0">
+
+              <img
+                src={logo}
+                alt={theme.brand.name}
+                className="
+                  w-[52px]
+                  h-[52px]
+
+                  object-contain
+                "
+              />
+
+            </div>
+
+
+
+              <div
+                className="
+                  absolute
+                  inset-0
+
+                  pointer-events-none
+
+                  opacity-[0.16]
+
+                  blur-[120px]
+                "
+                style={{
+                  background:
+                    "radial-gradient(circle at 20% 20%, #0F3A46, transparent 42%)",
+                }}
+              />
+
+            <div>
+
+              <h2
+                className="
+                  text-[16px]
+
+                  font-semibold
+
+                  tracking-tight
+                "
+              >
+                {theme.brand.name}
+              </h2>
+
+              <p
+                className="
+                  text-[11px]
+
+                  uppercase
+
+                  tracking-[0.28em]
+
+                  mt-1
+                "
+                style={{
+                  color:
+                    dark
+                      ? theme.colors.muted
+                      : "rgba(0,0,0,0.45)",
+                }}
+              >
+                Since 1978
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* HERO CONTENT */}
+      <fm.div
+        initial={{
+          opacity: 0,
+          y: 40,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 1.2,
+        }}
+
+        className="
+          relative
+          z-10
+
+          text-center
+
+          -translate-y-8
+          md:-translate-y-10
+        "
+      >
+
+        {/* MAIN LOGO */}
+        <div className="flex justify-center mb-1">
+
+          <div
+            className={`
+              ${design.hero.logo}
+
+              flex
+              items-center
+              justify-center
+            `}
+          >
+
+            <img
+              src={logo}
+              alt={theme.brand.name}
+              className="
+                w-[190px]
+                h-[190px]
+
+                object-contain
+
+                opacity-95
+              "
+            />
+
+          </div>
+
+        </div>
+
+        {/* NAME */}
+        <h1
+          className={`
+            ${design.hero.title}
+
+            leading-[0.92]
+
+            tracking-[-0.07em]
+
+            font-black
+
+            mb-4
+          `}
+        >
+          {name}
+        </h1>
+
+        {/* DIVIDER */}
+        <div className="flex items-center justify-center gap-6 mb-6">
+
+          <div
+            className={`
+              ${design.hero.divider}
+
+              h-px
+            `}
+            style={{
+              background:
+                `${theme.colors.accent}88`,
+            }}
+          />
+
+          <div
+            className="
+              w-[8px]
+              h-[8px]
+
+              rotate-45
+
+              bg-[var(--accent)]
+            "
+          />
+
+          <div
+            className={`
+              ${design.hero.divider}
+
+              h-px
+            `}
+            style={{
+              background:
+                `${theme.colors.accent}88`,
+            }}
+          />
+
+        </div>
+
+        {/* TITLE */}
+        <p
+          className={`
+            uppercase
+
+            tracking-[0.34em]
+
+            ${design.hero.subtitle}
+          `}
+          style={{
+            color:
+              dark
+                ? theme.colors.muted
+                : "rgba(0,0,0,0.55)",
+          }}
+        >
+          {title}
+        </p>
+
+      </fm.div>
+
+    </section>
+
+  );
+
+}
+</file>
+
+<file path="design/themeStyles.ts">
+export function getSurfaceStyles(dark: boolean) {
+  if (dark) {
+    return {
+      // بدل الشفافية البيضاء، هنستخدم لون الـ Surface الغامق من الثيم
+      background: "bg-[var(--surface)]",
+      backgroundHover: "hover:bg-[var(--surface-hover)]",
+      border: "border-[var(--border)]",
+      borderHover: "hover:border-[var(--border-hover)]",
+      text: "text-[#F5F1E8]",
+      muted: "text-white/55",
+      heading: "text-white",
+    };
+  }
+
+  return {
+    background: "bg-white/70",
+    backgroundHover: "hover:bg-white/90",
+    border: "border-black/[0.05]",
+    borderHover: "hover:border-black/[0.08]",
+    text: "text-[#111111]",
+    muted: "text-black/50",
+    heading: "text-black",
+  };
+}
+</file>
+
+</files>
