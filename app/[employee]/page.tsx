@@ -76,7 +76,7 @@ export async function generateMetadata({
   return {
 
     title:
-      `${data.name} — ${data.title}`,
+      `${data.name} - ${data.title}`,
 
     description:
       `${data.name} at ${data.company}`,
