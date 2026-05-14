@@ -60,9 +60,9 @@ bg-[linear-gradient(145deg,rgba(10,22,25,0.88),rgba(5,14,16,0.94))]
 shadow-[0_12px_40px_rgba(0,0,0,0.24)]
 `
     : `
-border-black/[0.04]
+border-[#07181D]/[0.04]
 
-bg-[linear-gradient(145deg,rgba(255,255,255,0.78),rgba(248,246,241,0.92))]
+bg-[linear-gradient(145deg,rgba(248,244,236,0.78),rgba(236,231,220,0.92))]
 
 shadow-[0_10px_40px_rgba(0,0,0,0.05)]
 `
@@ -92,9 +92,9 @@ border-white/[0.04]
 bg-transparent
 `
     : `
-border-black/[0.03]
+border-[#07181D]/[0.04]
 
-bg-[rgba(255,255,255,0.28)]
+bg-[rgba(255,248,240,0.34)]
 `
 }
 `}
@@ -117,47 +117,72 @@ mb-4
           </p>
 
           <h2
-  className={`
+            className={`
 text-[20px]
-md:text-[20px]
+md:text-[22px]
 
-leading-[1.1]
+leading-[1.12]
 
 font-semibold
 
-tracking-[-0.04em]
+tracking-[-0.045em]
 
-max-w-4xl
+max-w-5xl
 
-opacity-88
+transition-colors
+duration-500
 
 ${
   dark
-    ? "text-white"
-    : "text-[#171316]"
+    ? "text-[#F5F1E8]"
+    : "text-[#07181D]"
 }
+
+opacity-90
 `}
->
-  {address}
-</h2>
+          >
+            {address}
+          </h2>
 
         </div>
 
         {/* MAP */}
-        <iframe
-          src="https://www.google.com/maps?q=30.0914416,31.0241968&z=15&output=embed"
-
+        <div
           className="
+relative
+overflow-hidden
+"
+        >
+
+          <div
+            className="
+absolute
+inset-0
+
+pointer-events-none
+
+bg-[linear-gradient(to_top,rgba(0,0,0,0.04),transparent_25%)]
+"
+          />
+
+          <iframe
+            src="https://www.google.com/maps?q=30.0914416,31.0241968&z=15&output=embed"
+
+            className="
 w-full
 
 h-[360px]
 md:h-[420px]
 
 border-0
-"
 
-          loading="lazy"
-        />
+grayscale-[0.08]
+contrast-[1.02]
+"
+            loading="lazy"
+          />
+
+        </div>
 
       </div>
 

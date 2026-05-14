@@ -46,8 +46,27 @@ export function ThemeProvider({
   const [dark, setDark] =
     useState(true);
 
-  /* LOAD SAVED THEME */
+  /* LOAD THEME */
   useEffect(() => {
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const isOG =
+      params.get("og") === "1";
+
+    /* FORCE DARK FOR OG */
+    if (isOG) {
+
+      setDark(true);
+
+      setMounted(true);
+
+      return;
+
+    }
 
     const savedTheme =
       localStorage.getItem(
@@ -85,11 +104,9 @@ export function ThemeProvider({
         : "light"
     );
 
-    
     applyThemeVariables(
-        executive
-      );
-
+      executive
+    );
 
     localStorage.setItem(
       "nadim-theme",

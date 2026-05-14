@@ -85,6 +85,36 @@ export async function generateMetadata({
       icon: "/logos/logo-light.png",
     },
 
+    openGraph: {
+
+      title:
+        `${data.name} - ${data.title}`,
+
+      description:
+        `${data.name} at ${data.company}`,
+
+      images: [
+        `https://id.nadimfoundation.org/api/og/${data.slug}`,
+      ],
+
+    },
+
+    twitter: {
+
+      card: "summary_large_image",
+
+      title:
+        `${data.name} - ${data.title}`,
+
+      description:
+        `${data.name} at ${data.company}`,
+
+      images: [
+        `https://id.nadimfoundation.org/api/og/${data.slug}`,
+      ],
+
+    },
+
   };
 
 }
@@ -106,7 +136,9 @@ export default async function EmployeePage({
     );
 
   if (!data) {
+
     notFound();
+
   }
 
   const theme =

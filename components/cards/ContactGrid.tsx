@@ -113,8 +113,9 @@ ${
                   <div
                     key={index}
                     className="
-w-[31.5%]
-min-w-[31.5%]
+flex-1
+min-w-[31%]
+max-w-[31.8%]
 "
                   >
 

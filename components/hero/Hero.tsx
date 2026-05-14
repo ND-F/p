@@ -31,58 +31,65 @@ export default function Hero({
 }: Props) {
 
   const { dark } =
-    useTheme();
+  useTheme();
 
-  const variables =
-    getThemeVariables(dark);
+const variables =
+  getThemeVariables(dark);
 
-  const logo =
+const logo =
   dark
-    ? "/logos/logo-light.png"
-    : "/logos/logo-dark.png";
+    ? theme.logos.light
+    : theme.logos.dark;
+
+const topBarLogo =
+  dark
+    ? "/logos/logo-industries-light.png"
+    : "/logos/logo-industries-dark.png";
 
   return (
 
     <section
+      id="og-hero"
+
       style={{
         ...variables,
 
         background:
           dark
             ? theme.colors.background
-            : "#F4F1E8",
+            : "#ECE7DC",
 
         color:
           dark
             ? theme.colors.foreground
-            : "#111111",
+            : "#07181D",
       }}
 
       className={`
-        relative
+relative
 
-        ${design.hero.container}
+${design.hero.container}
 
-        overflow-hidden
+overflow-hidden
 
-        flex
-        items-center
-        justify-center
+flex
+items-center
+justify-center
 
-        px-6
-      `}
+px-6
+`}
     >
 
       {/* PATTERN */}
       <div
-        className={`
-          absolute
-          inset-0
+        className="
+absolute
+inset-0
 
-          pointer-events-none
+pointer-events-none
 
-          opacity-[0.05]
-        `}
+opacity-[0.055]
+"
         style={{
           backgroundImage:
             dark
@@ -94,180 +101,155 @@ export default function Hero({
         }}
       />
 
-      {/* CINEMATIC GLOWS */}
-      {dark && (
+      {/* NOISE */}
+      <div className="noise pointer-events-none absolute inset-0 z-[1]" />
 
-        <div
-          className="
-            absolute
-            inset-0
+      {/* VIGNETTE */}
+      <div
+        className="
+absolute
+inset-0
 
-            overflow-hidden
+pointer-events-none
 
-            pointer-events-none
-          "
-        >
+z-[2]
 
-          {/* GOLD GLOW */}
-          <fm.div
-            animate={{
-              x: [0, 40, 0],
-              y: [0, -20, 0],
-            }}
-            transition={{
-              duration: 18,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="
-              absolute
-              top-[-140px]
-              left-[-120px]
+bg-[radial-gradient(circle,transparent_42%,rgba(0,0,0,0.42)_100%)]
+"
+      />
 
-              w-[420px]
-              h-[420px]
+      {/* CENTER GLOW */}
+      <div
+        className="
+absolute
+left-1/2
+top-1/2
 
-              rounded-full
+-translate-x-1/2
+-translate-y-1/2
 
-              blur-[120px]
+w-[720px]
+h-[280px]
 
-              opacity-[0.18]
-            "
-            style={{
-              background:
-                "radial-gradient(circle,var(--accent),transparent 72%)",
-            }}
-          />
+rounded-full
 
-          {/* BLUE GLOW */}
-          <fm.div
-            animate={{
-              x: [0, -30, 0],
-              y: [0, 30, 0],
-            }}
-            transition={{
-              duration: 22,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="
-              absolute
-              bottom-[-220px]
-              right-[-140px]
+bg-[#C6A46A]/[0.06]
 
-              w-[500px]
-              h-[500px]
+blur-[120px]
 
-              rounded-full
+pointer-events-none
 
-              blur-[140px]
+z-[2]
+"
+      />
 
-              opacity-[0.22]
-            "
-            style={{
-              background:
-                "radial-gradient(circle,#0F3A46,transparent 72%)",
-            }}
-          />
+      {/* CINEMATIC LIGHT */}
+      <fm.div
+        animate={{
+          opacity: [0.4, 0.7, 0.4],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="
+absolute
+inset-0
 
-        </div>
+pointer-events-none
 
-      )}
+z-[2]
+
+bg-[radial-gradient(circle_at_center,rgba(198,164,106,0.08),transparent_46%)]
+"
+      />
 
       {/* TOP BAR */}
       <div
         className="
-          absolute
-          top-0
-          left-0
+absolute
+top-0
+left-0
 
-          w-full
+w-full
 
-          z-20
-        "
+z-20
+"
       >
 
         <div
           className="
-            w-full
+w-full
 
-            px-4
-            md:px-8
+px-4
+md:px-8
 
-            pt-1
-            md:pt-2
+pt-0
+md:pt-2
 
-            flex
-            items-center
-          "
+flex
+items-center
+"
         >
 
           <div
             className="
-              flex
-              items-center
+flex
+items-center
 
-
-              gap-3
-              md:gap-5
-            "
+gap-3
+md:gap-5
+"
           >
 
-            <div className="shrink-0">
+            <img
+              src={topBarLogo}
+              alt={theme.brand.name}
+              className="
+w-[40px]
+h-[40px]
 
-              <img
-                src={logo}
-                alt={theme.brand.name}
-                className="
-                  w-[40px]
-                  h-[40px]
+md:w-[82px]
+md:h-[82px]
 
-                  md:w-[85px]
-                  md:h-[85px]
+object-contain
 
-                  object-contain
-
-                  opacity-90
-                "
-              />
-
-            </div>
+opacity-90
+"
+            />
 
             <div>
 
               <h2
                 className="
-                  text-[14px]
-                  md:text-[16px]
+text-[14px]
+md:text-[16px]
 
-                  font-semibold
+font-semibold
 
-                  tracking-[-0.04em]
+tracking-[-0.04em]
 
-                  leading-none
-                "
+leading-none
+"
               >
                 {theme.brand.name}
               </h2>
 
               <p
                 className="
-                  mt-1.5
+mt-1.5
 
-                  text-[9px]
-                  md:text-[11px]
+text-[9px]
+md:text-[11px]
 
-                  uppercase
+uppercase
 
-                  tracking-[0.24em]
-                  md:tracking-[0.28em]
-                "
-                style={{
-                  color:
-                    dark
-                      ? theme.colors.muted
-                      : "rgba(0,0,0,0.45)",
-                }}
+tracking-[0.24em]
+md:tracking-[0.28em]
+
+opacity-55
+"
               >
                 Since 1978
               </p>
@@ -286,74 +268,74 @@ export default function Hero({
           opacity: 0,
           y: 40,
         }}
+
         animate={{
           opacity: 1,
           y: 0,
         }}
+
         transition={{
           duration: 1.2,
         }}
 
         className="
-          relative
-          z-10
+relative
+z-10
 
-          text-center
+text-center
 
-          -translate-y-10
-          md:-translate-y-6
-        "
+-translate-y-10
+md:-translate-y-6
+"
       >
 
         {/* MAIN LOGO */}
         <div className="flex justify-center mb-0 md:mb-1">
 
-          <div
-            className={`
-              ${design.hero.logo}
+          <img
+            src={logo}
+            alt={theme.brand.name}
+            className="
+w-[145px]
+h-[145px]
 
-              flex
-              items-center
-              justify-center
-            `}
-          >
+md:w-[250px]
+md:h-[250px]
 
-            <img
-              src={logo}
-              alt={theme.brand.name}
-              className="
-                w-[145px]
-                h-[145px]
+object-contain
 
-                md:w-[250px]
-                md:h-[250px]
+opacity-95
 
-                object-contain
-
-                opacity-95
-              "
-            />
-
-          </div>
+drop-shadow-[0_0_60px_rgba(255,255,255,0.03)]
+"
+          />
 
         </div>
 
         {/* NAME */}
         <h1
           className={`
-            ${design.hero.title}
+${design.hero.title}
 
-            whitespace-nowrap
+whitespace-nowrap
 
-            leading-[0.9]
+leading-[0.9]
 
-            tracking-[-0.05em]
+tracking-[-0.05em]
 
-            font-black
+font-black
 
-            mb-3
-            md:mb-4
-          `}
+mb-3
+md:mb-4
+
+${
+  dark
+  ? "text-[#F5F1E8]"
+  : "text-[#07181D]"
+}
+
+drop-shadow-[0_0_40px_rgba(255,255,255,0.04)]
+`}
         >
           {name}
         </h1>
@@ -363,10 +345,10 @@ export default function Hero({
 
           <div
             className={`
-              ${design.hero.divider}
+${design.hero.divider}
 
-              h-px
-            `}
+h-px
+`}
             style={{
               background:
                 `${theme.colors.accent}88`,
@@ -375,21 +357,21 @@ export default function Hero({
 
           <div
             className="
-              w-[7px]
-              h-[7px]
+w-[7px]
+h-[7px]
 
-              rotate-45
+rotate-45
 
-              bg-[var(--accent)]
-            "
+bg-[var(--accent)]
+"
           />
 
           <div
             className={`
-              ${design.hero.divider}
+${design.hero.divider}
 
-              h-px
-            `}
+h-px
+`}
             style={{
               background:
                 `${theme.colors.accent}88`,
@@ -401,18 +383,18 @@ export default function Hero({
         {/* TITLE */}
         <p
           className={`
-            uppercase
+uppercase
 
-            tracking-[0.26em]
-            md:tracking-[0.34em]
+tracking-[0.26em]
+md:tracking-[0.34em]
 
-            ${design.hero.subtitle}
-          `}
+${design.hero.subtitle}
+`}
           style={{
             color:
               dark
-                ? theme.colors.muted
-                : "rgba(0,0,0,0.55)",
+  ? "rgba(245,241,232,0.68)"
+  : "rgba(7,24,29,0.58)"
           }}
         >
           {title}

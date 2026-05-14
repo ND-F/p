@@ -20,15 +20,19 @@ export default function ContactCard({
   href,
   icon: Icon,
 }: Props) {
+
   const { dark } = useTheme();
 
-  const surface = getSurfaceStyles(dark);
+  const surface =
+    getSurfaceStyles(dark);
 
   return (
+
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+
       className={`
 group
 relative
@@ -48,7 +52,7 @@ border
 ${
   dark
     ? "bg-[linear-gradient(145deg,rgba(10,22,25,0.88),rgba(5,14,16,0.94))]"
-    : "bg-[rgba(255,255,255,0.72)]"
+    : "bg-[rgba(248,244,236,0.78)]"
 }
 
 ${design.radius.card}
@@ -69,7 +73,7 @@ hover:bg-[linear-gradient(145deg,rgba(12,26,30,0.94),rgba(7,18,20,0.98))]
 hover:border-white/[0.07]
 `
     : `
-hover:bg-[rgba(255,255,255,0.84)]
+hover:bg-[rgba(252,248,242,0.92)]
 hover:border-black/[0.05]
 `
 }
@@ -78,16 +82,21 @@ transition-all
 duration-500
 `}
     >
+
       {/* GLOW */}
       <div
         className={`
 absolute
 inset-0
+
 opacity-0
 group-hover:opacity-100
+
 pointer-events-none
+
 transition-all
 duration-700
+
 ${
   dark
     ? design.glow.dark
@@ -101,8 +110,11 @@ ${
         className="
 absolute
 inset-0
+
 pointer-events-none
+
 opacity-40
+
 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.05),transparent_42%)]
 "
       />
@@ -122,10 +134,12 @@ p-7
 md:p-8
 "
       >
+
         <div>
-          {/* ICON */}
+
+          {/* ICON + LABEL */}
           <div
-  className="
+            className="
 flex
 items-center
 gap-3
@@ -133,9 +147,10 @@ gap-3
 mb-10
 md:mb-12
 "
->
-  <div
-    className={`
+          >
+
+            <div
+              className={`
 text-[22px]
 md:text-[28px]
 
@@ -147,12 +162,12 @@ duration-500
 group-hover:text-[var(--accent)]
 group-hover:scale-105
 `}
-  >
-    <Icon />
-  </div>
+            >
+              <Icon />
+            </div>
 
-  <span
-    className="
+            <span
+              className="
 text-[11px]
 md:text-[12px]
 
@@ -160,37 +175,52 @@ uppercase
 
 tracking-[0.18em]
 
-opacity-45
+text-[#C6A46A]
+opacity-70
 
 font-medium
 "
-  >
-    {title}
-  </span>
-</div>
+            >
+              {title}
+            </span>
+
+          </div>
 
           {/* VALUE */}
           <div>
+
             <p
-              className="
-text-[12px]
-md:text-[18px]
+              className={`
+text-[13px]
+md:text-[19px]
 
 font-medium
 
-leading-[1.28]
+leading-[1.32]
 
 tracking-[-0.03em]
 
-opacity-70
-
 break-words
-"
+
+transition-colors
+duration-500
+
+${
+  dark
+    ? "text-[#E7E1D6]"
+    : "text-[#07181D]"
+}
+
+opacity-82
+`}
             >
               {value}
             </p>
+
           </div>
+
         </div>
+
       </div>
 
       {/* GOLD LINE */}
@@ -211,6 +241,9 @@ duration-500
 group-hover:w-full
 "
       />
+
     </a>
+
   );
+
 }
