@@ -212,8 +212,8 @@ export async function GET(
 
     console.error(error);
 
-    return new Response(
-      "OG generation failed",
+return new Response(
+  String(error),
       {
         status: 500,
       }
