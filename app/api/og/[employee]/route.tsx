@@ -2,6 +2,29 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
+async function getEmployeeData(
+  slug: string
+) {
+
+  const res = await fetch(
+    "https://opensheet.elk.sh/2PACX-1vS0iSZW9diQdZYYORE2r09vXXXXXXXXXXXX/sheet1",
+    {
+      next: {
+        revalidate: 300,
+      },
+    }
+  );
+
+  const data =
+    await res.json();
+
+  return data.find(
+    (item: any) =>
+      item.slug === slug
+  );
+
+}
+
 export async function GET(
   req: Request,
   context: any
@@ -10,10 +33,57 @@ export async function GET(
   const params =
     await context.params;
 
+  const slug =
+    params.employee;
+
   const employee =
-    decodeURIComponent(
-      params.employee || "Executive"
+    await getEmployeeData(
+      slug
     );
+
+  /* =========================
+     DYNAMIC DATA
+  ========================= */
+
+  const fullName =
+    employee?.name ||
+    "Executive";
+
+  const position =
+    employee?.position ||
+    employee?.title ||
+    "Managing Director";
+
+  const theme =
+    employee?.theme ||
+    "foundation";
+
+  /* =========================
+     DYNAMIC LOGO
+  ========================= */
+
+  const logos: any = {
+
+    foundation:
+      "https://id.nadimfoundation.org/logos/foundation-light.png",
+
+    industries:
+      "https://id.nadimfoundation.org/logos/industries-light.png",
+
+    group:
+      "https://id.nadimfoundation.org/logos/group-light.png",
+
+    kenda:
+      "https://id.nadimfoundation.org/logos/kenda-light.png",
+
+    executive:
+      "https://id.nadimfoundation.org/logos/logo-light.png",
+
+  };
+
+  const logo =
+    logos[theme] ||
+    logos.foundation;
 
   return new ImageResponse(
 
@@ -37,84 +107,107 @@ export async function GET(
             "radial-gradient(circle at center,#07232A 0%,#050D10 75%)",
 
           color: "#F5F1E8",
+
+          fontFamily:
+            "Arial",
         }}
       >
 
-        {/* BACKGROUND GLOW */}
+        {/* CENTER GLOW */}
         <div
           style={{
             position: "absolute",
             inset: 0,
 
             background:
-              "radial-gradient(circle at center, rgba(198,164,106,0.05), transparent 60%)",
+              "radial-gradient(circle at center, rgba(198,164,106,0.06), transparent 58%)",
           }}
         />
 
-        {/* TOP LOGO */}
+        {/* VIGNETTE */}
         <div
           style={{
             position: "absolute",
-            top: "70px",
+            inset: 0,
 
-            display: "flex",
-
-            fontSize: "42px",
-            fontWeight: 700,
-
-            color: "#F5F1E8",
-
-            letterSpacing: "-0.03em",
-
-            zIndex: 5,
+            background:
+              "radial-gradient(circle, transparent 40%, rgba(0,0,0,0.55) 100%)",
           }}
-        >
-          NADIM
-        </div>
+        />
+
+        {/* LOGO */}
+        <img
+          src={logo}
+          alt="logo"
+
+          width={340}
+
+          style={{
+            objectFit:
+              "contain",
+
+            marginBottom:
+              "42px",
+
+            opacity: 0.96,
+          }}
+        />
 
         {/* NAME */}
         <div
           style={{
             display: "flex",
 
-            fontSize: "140px",
-            fontWeight: 900,
+            fontSize: "104px",
+
+            fontWeight: 800,
 
             lineHeight: 1,
 
-            color: "#FFFFFF",
+            letterSpacing:
+              "-0.04em",
 
-            zIndex: 10,
+            color:
+              "#F5F1E8",
 
-            marginTop: "10px",
+            textAlign:
+              "center",
+
+            paddingLeft:
+              "80px",
+
+            paddingRight:
+              "80px",
+
+            textShadow:
+              "0 0 40px rgba(255,255,255,0.06)",
           }}
         >
-          {employee.charAt(0).toUpperCase() +
-            employee.slice(1)}
+          {fullName}
         </div>
 
-        {/* GOLD DIVIDER */}
+        {/* DIVIDER */}
         <div
           style={{
             display: "flex",
-            alignItems: "center",
+
+            alignItems:
+              "center",
 
             gap: "24px",
 
             marginTop: "34px",
             marginBottom: "34px",
-
-            zIndex: 5,
           }}
         >
 
           <div
             style={{
-              width: "180px",
+              width: "170px",
               height: "1px",
 
               background:
-                "rgba(198,164,106,0.55)",
+                "rgba(198,164,106,0.5)",
             }}
           />
 
@@ -133,46 +226,44 @@ export async function GET(
 
           <div
             style={{
-              width: "180px",
+              width: "170px",
               height: "1px",
 
               background:
-                "rgba(198,164,106,0.55)",
+                "rgba(198,164,106,0.5)",
             }}
           />
 
         </div>
 
-        {/* SUBTITLE */}
+        {/* POSITION */}
         <div
           style={{
             display: "flex",
 
-            fontSize: "32px",
+            fontSize: "30px",
 
-            letterSpacing: "0.32em",
+            letterSpacing:
+              "0.22em",
 
-            textTransform: "uppercase",
+            textTransform:
+              "uppercase",
 
             color:
               "rgba(245,241,232,0.72)",
 
-            zIndex: 5,
+            textAlign:
+              "center",
+
+            paddingLeft:
+              "120px",
+
+            paddingRight:
+              "120px",
           }}
         >
-          Executive Identity
+          {position}
         </div>
-
-        {/* VIGNETTE */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-
-            background:
-              "radial-gradient(circle, transparent 35%, rgba(0,0,0,0.48) 100%)",
-          }}
-        />
 
       </div>
     ),
