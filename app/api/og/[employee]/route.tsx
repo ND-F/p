@@ -1,3 +1,4 @@
+
 import { ImageResponse } from "next/og";
 import { readFile } from "fs/promises";
 import path from "path";
@@ -8,55 +9,95 @@ export async function GET(
   req: Request,
   { params }: any
 ) {
+
   try {
-    /* EMPLOYEE SLUG */
+
+    /* ========================================== */
+    /* EMPLOYEE */
+    /* ========================================== */
+
     const employee =
+
       decodeURIComponent(
         params?.employee || ""
       )
-        .trim()
-        .toLowerCase();
 
+      .trim()
+      .toLowerCase();
+
+    /* ========================================== */
     /* FETCH SHEET */
+    /* ========================================== */
+
     const res = await fetch(
+
       "https://opensheet.elk.sh/1vvdDuKXNEG-J4oCLW1Xsu_Ur9Cgl0AMX9iai0Tqwmxk/Sheet1",
+
       {
         cache: "no-store",
       }
+
     );
 
-    const data = await res.json();
+    const data =
+      await res.json();
 
     const employees =
-      Array.isArray(data)
-        ? data
-        : [];
 
+      Array.isArray(data)
+      ? data
+      : [];
+
+    /* ========================================== */
     /* FIND PERSON */
+    /* ========================================== */
+
     const person =
-      employees.find((item: any) => {
-        const slug =
-          String(item?.slug || "")
+
+      employees.find(
+        (item: any) => {
+
+          const slug =
+
+            String(
+              item?.slug || ""
+            )
+
             .trim()
             .toLowerCase();
 
-        return slug === employee;
-      });
+          return (
+            slug === employee
+          );
 
-    if (!person) {
-      return new Response(
-        "Employee not found",
-        {
-          status: 404,
         }
       );
+
+    if (!person) {
+
+      return new Response(
+
+        `Employee not found: ${employee}`,
+
+        {
+          status:404,
+        }
+
+      );
+
     }
 
-    /* CLEAN VALUES */
-    const clean = (v: any) =>
+    /* ========================================== */
+    /* CLEAN */
+    /* ========================================== */
+
+    const clean = (v:any) =>
+
       String(v || "")
-        .replace(/\s+/g, " ")
-        .trim();
+
+      .replace(/\s+/g," ")
+
+      .trim();
 
     const name =
       clean(person.name);
@@ -68,24 +109,35 @@ export async function GET(
       clean(person.company);
 
     const theme =
-      clean(person.theme)
-        .toLowerCase();
 
+      clean(person.theme)
+      .toLowerCase();
+
+    /* ========================================== */
     /* LOGO */
+    /* ========================================== */
+
     const logoName =
+
       theme
-        ? `${theme}-light.png`
-        : "foundation-light.png";
+      ? `${theme}-light.png`
+      : "foundation-light.png";
 
     let logoBase64 = "";
 
     try {
+
       const logoPath =
+
         path.join(
+
           process.cwd(),
+
           "public",
           "logos",
+
           logoName
+
         );
 
       const logoBuffer =
@@ -94,155 +146,257 @@ export async function GET(
         );
 
       logoBase64 =
+
         `data:image/png;base64,${logoBuffer.toString("base64")}`;
-    } catch (e) {
+
+    } catch(e){
+
       console.log(
-        "Logo not found:",
+        "Logo missing:",
         logoName
       );
+
     }
 
+    /* ========================================== */
+    /* IMAGE */
+    /* ========================================== */
+
     return new ImageResponse(
+
       (
+
         <div
+
           style={{
-            width: "1200px",
-            height: "630px",
 
-            display: "flex",
-            flexDirection: "column",
+            width:"1200px",
+            height:"630px",
 
-            justifyContent: "center",
-            alignItems: "center",
+            display:"flex",
 
-            position: "relative",
+            flexDirection:"column",
 
-            overflow: "hidden",
+            justifyContent:"center",
+            alignItems:"center",
+
+            position:"relative",
+
+            overflow:"hidden",
 
             background:
               "linear-gradient(180deg,#07181D 0%,#041116 100%)",
 
-            color: "#F5F1E8",
+            color:"#F5F1E8",
+
           }}
+
         >
+
           {/* GLOW */}
+
           <div
+
             style={{
-              position: "absolute",
 
-              width: "700px",
-              height: "700px",
+              position:"absolute",
 
-              borderRadius: "9999px",
+              width:"700px",
+              height:"700px",
+
+              borderRadius:"9999px",
 
               background:
                 "rgba(198,164,106,0.08)",
 
               filter:
                 "blur(120px)",
+
             }}
+
           />
 
           {/* LOGO */}
-          {logoBase64 ? (
-            <img
-              src={logoBase64}
-              width={320}
-              height={90}
-              style={{
-                objectFit: "contain",
-                marginBottom: "42px",
-              }}
-            />
-          ) : (
-            <div
-              style={{
-                fontSize: 38,
-                letterSpacing: "6px",
-                marginBottom: "42px",
-                opacity: 0.9,
-              }}
-            >
-              {company}
-            </div>
-          )}
+
+          {
+
+            logoBase64
+
+            ? (
+
+              <div
+
+                style={{
+
+                  width:"320px",
+                  height:"90px",
+
+                  marginBottom:"42px",
+
+                  backgroundImage:
+                    `url(${logoBase64})`,
+
+                  backgroundSize:
+                    "contain",
+
+                  backgroundRepeat:
+                    "no-repeat",
+
+                  backgroundPosition:
+                    "center",
+
+                  display:"flex",
+
+                }}
+
+              />
+
+            )
+
+            : (
+
+              <div
+
+                style={{
+
+                  display:"flex",
+
+                  fontSize:38,
+
+                  letterSpacing:"6px",
+
+                  marginBottom:"42px",
+
+                  opacity:0.9,
+
+                }}
+
+              >
+
+                {company}
+
+              </div>
+
+            )
+
+          }
 
           {/* NAME */}
+
           <div
+
             style={{
-              fontSize: 82,
-              fontWeight: 700,
 
-              letterSpacing: "-2px",
+              display:"flex",
 
-              color: "#F5F1E8",
+              fontSize:82,
 
-              textAlign: "center",
+              fontWeight:700,
+
+              letterSpacing:"-2px",
+
+              color:"#F5F1E8",
+
+              textAlign:"center",
 
               textShadow:
                 "0 0 40px rgba(255,255,255,0.08)",
 
-              maxWidth: "1000px",
+              maxWidth:"1000px",
 
-              paddingLeft: "60px",
-              paddingRight: "60px",
+              paddingLeft:"60px",
+              paddingRight:"60px",
+
             }}
+
           >
+
             {name}
+
           </div>
 
           {/* DIVIDER */}
+
           <div
+
             style={{
-              display: "flex",
-              alignItems: "center",
 
-              gap: "18px",
+              display:"flex",
 
-              marginTop: "28px",
-              marginBottom: "24px",
+              alignItems:"center",
+
+              gap:"18px",
+
+              marginTop:"28px",
+              marginBottom:"24px",
+
             }}
+
           >
+
             <div
+
               style={{
-                width: "120px",
-                height: "1px",
+
+                width:"120px",
+                height:"1px",
 
                 background:
                   "rgba(198,164,106,0.5)",
+
+                display:"flex",
+
               }}
+
             />
 
             <div
+
               style={{
-                width: "10px",
-                height: "10px",
+
+                width:"10px",
+                height:"10px",
 
                 transform:
                   "rotate(45deg)",
 
-                background:
-                  "#C6A46A",
+                background:"#C6A46A",
+
+                display:"flex",
+
               }}
+
             />
 
             <div
+
               style={{
-                width: "120px",
-                height: "1px",
+
+                width:"120px",
+                height:"1px",
 
                 background:
                   "rgba(198,164,106,0.5)",
+
+                display:"flex",
+
               }}
+
             />
+
           </div>
 
           {/* TITLE */}
-          <div
-            style={{
-              fontSize: 28,
 
-              letterSpacing: "8px",
+          <div
+
+            style={{
+
+              display:"flex",
+
+              fontSize:28,
+
+              letterSpacing:"8px",
 
               textTransform:
                 "uppercase",
@@ -250,25 +404,34 @@ export async function GET(
               color:
                 "rgba(245,241,232,0.72)",
 
-              textAlign: "center",
+              textAlign:"center",
 
-              marginBottom: "14px",
+              marginBottom:"14px",
 
-              paddingLeft: "40px",
-              paddingRight: "40px",
+              paddingLeft:"40px",
+              paddingRight:"40px",
 
-              maxWidth: "1000px",
+              maxWidth:"1000px",
+
             }}
+
           >
+
             {title}
+
           </div>
 
           {/* COMPANY */}
-          <div
-            style={{
-              fontSize: 22,
 
-              letterSpacing: "5px",
+          <div
+
+            style={{
+
+              display:"flex",
+
+              fontSize:22,
+
+              letterSpacing:"5px",
 
               color:
                 "rgba(198,164,106,0.85)",
@@ -276,27 +439,41 @@ export async function GET(
               textTransform:
                 "uppercase",
 
-              textAlign: "center",
+              textAlign:"center",
+
             }}
+
           >
+
             {company}
+
           </div>
+
         </div>
+
       ),
 
       {
-        width: 1200,
-        height: 630,
+        width:1200,
+        height:630,
       }
+
     );
-  } catch (error) {
+
+  } catch(error){
+
     console.error(error);
 
     return new Response(
+
       `OG generation failed:\n\n${String(error)}`,
+
       {
-        status: 500,
+        status:500,
       }
+
     );
+
   }
+
 }
