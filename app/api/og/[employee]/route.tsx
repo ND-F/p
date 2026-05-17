@@ -12,7 +12,9 @@ export async function GET(
   try {
 
     const employee =
-      params.employee;
+  decodeURIComponent(
+    params?.employee || ""
+  ).trim().toLowerCase();
 
     /* FETCH SHEET */
     const res =
@@ -32,10 +34,12 @@ export async function GET(
         : [];
 
     const person =
-      employees.find(
-        (item: any) =>
-          item.slug === employee
-      );
+  employees.find(
+    (item: any) =>
+      item?.slug
+        ?.trim()
+        ?.toLowerCase() === employee
+  );
 
     if (!person) {
 
