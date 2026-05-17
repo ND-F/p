@@ -4,11 +4,16 @@ export const runtime = "edge";
 
 export async function GET(
   req: Request,
-  { params }: any
+  context: any
 ) {
 
+  const params =
+    await context.params;
+
   const employee =
-    params.employee;
+    decodeURIComponent(
+      params.employee || "Executive"
+    );
 
   return new ImageResponse(
 
@@ -26,64 +31,63 @@ export async function GET(
 
           position: "relative",
 
+          overflow: "hidden",
+
           background:
             "linear-gradient(180deg,#07181D 0%,#050D10 100%)",
 
           color: "#F5F1E8",
-
-          overflow: "hidden",
         }}
       >
 
-        {/* BG PATTERN */}
+        {/* GLOW */}
         <div
           style={{
             position: "absolute",
             inset: 0,
 
-            opacity: 0.08,
-
-            backgroundImage:
-              "radial-gradient(circle at center, rgba(198,164,106,0.15), transparent 60%)",
+            background:
+              "radial-gradient(circle at center, rgba(198,164,106,0.05), transparent 60%)",
           }}
         />
 
         {/* LOGO */}
         <div
           style={{
+            position: "absolute",
+            top: 70,
+
+            display: "flex",
+
             fontSize: 42,
             fontWeight: 700,
 
-            letterSpacing: "-0.04em",
-
-            marginBottom: 40,
-
-            zIndex: 2,
+            color: "#F5F1E8",
           }}
         >
           NADIM
         </div>
 
         {/* NAME */}
-        <div
-          style={{
-            fontSize: 110,
-            fontWeight: 800,
+<div
+  style={{
+    display: "flex",
 
-            letterSpacing: "-0.06em",
+    fontSize: "110px",
+    fontWeight: 800,
 
-            color: "#F5F1E8",
+    color: "#FFFFFF",
 
-            textTransform: "capitalize",
+    lineHeight: 1,
 
-            zIndex: 2,
+    zIndex: 10,
 
-            textShadow:
-              "0 0 40px rgba(255,255,255,0.05)",
-          }}
-        >
-          {employee}
-        </div>
+    marginTop: "10px",
+  }}
+>
+  {employee.charAt(0).toUpperCase() +
+    employee.slice(1)}
+</div>
 
         {/* LINE */}
         <div
@@ -91,29 +95,27 @@ export async function GET(
             width: 420,
             height: 1,
 
-            background:
-              "rgba(198,164,106,0.5)",
-
-            marginTop: 42,
+            marginTop: 36,
             marginBottom: 34,
 
-            zIndex: 2,
+            background:
+              "rgba(198,164,106,0.55)",
           }}
         />
 
         {/* TITLE */}
         <div
           style={{
-            fontSize: 34,
+            display: "flex",
 
-            letterSpacing: "0.35em",
+            fontSize: 32,
+
+            letterSpacing: "0.32em",
 
             textTransform: "uppercase",
 
             color:
               "rgba(245,241,232,0.72)",
-
-            zIndex: 2,
           }}
         >
           Executive Identity
