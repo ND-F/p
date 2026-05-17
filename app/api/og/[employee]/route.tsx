@@ -58,27 +58,38 @@ export async function GET(
 
     }
 
-    /* CLEAN VALUES */
-    const name =
-      String(
-        person?.name || ""
-      ).trim();
+    /* SAFE VALUE GETTER */
+const getValue = (
+  obj: any,
+  key: string
+) => {
 
-    const title =
-      String(
-        person?.title || ""
-      ).trim();
+  const foundKey =
+    Object.keys(obj).find(
+      (k) =>
+        k.trim().toLowerCase() ===
+        key.toLowerCase()
+    );
 
-    const company =
-      String(
-        person?.company || ""
-      ).trim();
+  return foundKey
+    ? String(obj[foundKey] || "").trim()
+    : "";
 
-    const theme =
-      String(
-        person?.theme ||
-        "foundation"
-      ).trim();
+};
+
+/* CLEAN VALUES */
+const name =
+  getValue(person, "name");
+
+const title =
+  getValue(person, "title");
+
+const company =
+  getValue(person, "company");
+
+const theme =
+  getValue(person, "theme") ||
+  "foundation";
 
     /* LOGO FILE */
     const logoName =
