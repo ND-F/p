@@ -1,9 +1,6 @@
-
 import { ImageResponse } from "next/og";
-import { readFile } from "fs/promises";
-import path from "path";
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 export async function GET(
   req: Request,
@@ -34,7 +31,7 @@ export async function GET(
       "https://opensheet.elk.sh/1vvdDuKXNEG-J4oCLW1Xsu_Ur9Cgl0AMX9iai0Tqwmxk/Sheet1",
 
       {
-        cache: "no-store",
+        cache:"no-store",
       }
 
     );
@@ -55,7 +52,7 @@ export async function GET(
     const person =
 
       employees.find(
-        (item: any) => {
+        (item:any) => {
 
           const slug =
 
@@ -72,6 +69,10 @@ export async function GET(
 
         }
       );
+
+    /* ========================================== */
+    /* NOT FOUND */
+    /* ========================================== */
 
     if (!person) {
 
@@ -117,46 +118,17 @@ export async function GET(
     /* LOGO */
     /* ========================================== */
 
-    const logoName =
+    const logoUrl =
 
-      theme
-      ? `${theme}-light.png`
-      : "foundation-light.png";
+      theme === "industries"
 
-    let logoBase64 = "";
+      ? "https://raw.githubusercontent.com/ND-F/p/main/public/logos/industries-light.png"
 
-    try {
+      : theme === "group"
 
-      const logoPath =
+      ? "https://raw.githubusercontent.com/ND-F/p/main/public/logos/group-light.png"
 
-        path.join(
-
-          process.cwd(),
-
-          "public",
-          "logos",
-
-          logoName
-
-        );
-
-      const logoBuffer =
-        await readFile(
-          logoPath
-        );
-
-      logoBase64 =
-
-        `data:image/png;base64,${logoBuffer.toString("base64")}`;
-
-    } catch(e){
-
-      console.log(
-        "Logo missing:",
-        logoName
-      );
-
-    }
+      : "https://raw.githubusercontent.com/ND-F/p/main/public/logos/foundation-light.png";
 
     /* ========================================== */
     /* IMAGE */
@@ -189,11 +161,13 @@ export async function GET(
 
             color:"#F5F1E8",
 
+            fontFamily:"sans-serif",
+
           }}
 
         >
 
-          {/* GLOW */}
+          {/* glow */}
 
           <div
 
@@ -216,72 +190,26 @@ export async function GET(
 
           />
 
-          {/* LOGO */}
+          {/* logo */}
 
-          {
+          <img
 
-            logoBase64
+            src={logoUrl}
 
-            ? (
+            width="320"
+            height="90"
 
-              <div
+            style={{
 
-                style={{
+              objectFit:"contain",
 
-                  width:"320px",
-                  height:"90px",
+              marginBottom:"42px",
 
-                  marginBottom:"42px",
+            }}
 
-                  backgroundImage:
-                    `url(${logoBase64})`,
+          />
 
-                  backgroundSize:
-                    "contain",
-
-                  backgroundRepeat:
-                    "no-repeat",
-
-                  backgroundPosition:
-                    "center",
-
-                  display:"flex",
-
-                }}
-
-              />
-
-            )
-
-            : (
-
-              <div
-
-                style={{
-
-                  display:"flex",
-
-                  fontSize:38,
-
-                  letterSpacing:"6px",
-
-                  marginBottom:"42px",
-
-                  opacity:0.9,
-
-                }}
-
-              >
-
-                {company}
-
-              </div>
-
-            )
-
-          }
-
-          {/* NAME */}
+          {/* name */}
 
           <div
 
@@ -315,7 +243,7 @@ export async function GET(
 
           </div>
 
-          {/* DIVIDER */}
+          {/* divider */}
 
           <div
 
@@ -344,8 +272,6 @@ export async function GET(
                 background:
                   "rgba(198,164,106,0.5)",
 
-                display:"flex",
-
               }}
 
             />
@@ -362,8 +288,6 @@ export async function GET(
 
                 background:"#C6A46A",
 
-                display:"flex",
-
               }}
 
             />
@@ -378,15 +302,13 @@ export async function GET(
                 background:
                   "rgba(198,164,106,0.5)",
 
-                display:"flex",
-
               }}
 
             />
 
           </div>
 
-          {/* TITLE */}
+          {/* title */}
 
           <div
 
@@ -421,7 +343,7 @@ export async function GET(
 
           </div>
 
-          {/* COMPANY */}
+          {/* company */}
 
           <div
 
