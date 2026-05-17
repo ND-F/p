@@ -58,6 +58,27 @@ async function generate(){
     });
 
   /* ========================================== */
+  /* PATTERN */
+  /* ========================================== */
+
+  const patternPath = path.join(
+    process.cwd(),
+    "public",
+    "patterns",
+    "pattern-dark.svg"
+  );
+
+  const patternSvg =
+    fs.readFileSync(
+      patternPath,
+      "utf8"
+    );
+
+  const patternBase64 =
+
+    `data:image/svg+xml;base64,${Buffer.from(patternSvg).toString("base64")}`;
+
+  /* ========================================== */
   /* LOOP */
   /* ========================================== */
 
@@ -103,7 +124,7 @@ async function generate(){
         );
 
     /* ========================================== */
-    /* BASE64 */
+    /* LOGO BASE64 */
     /* ========================================== */
 
     const logoBuffer =
@@ -156,7 +177,13 @@ Arial,sans-serif;
 
 color:#F5F1E8;
 
+position:relative;
+
 }
+
+/* ========================================== */
+/* WRAP */
+/* ========================================== */
 
 .wrap{
 
@@ -175,39 +202,136 @@ overflow:hidden;
 
 }
 
+/* ========================================== */
+/* PATTERN */
+/* ========================================== */
+
+.pattern{
+
+position:absolute;
+inset:0;
+
+background-image:
+url("${patternBase64}");
+
+background-size:260px;
+
+background-repeat:repeat;
+
+opacity:0.08;
+
+mix-blend-mode:screen;
+
+}
+
+/* ========================================== */
+/* OVERLAY */
+/* ========================================== */
+
+.overlay{
+
+position:absolute;
+inset:0;
+
+background:
+linear-gradient(
+180deg,
+rgba(7,24,29,0.18) 0%,
+rgba(4,17,22,0.58) 100%
+);
+
+}
+
+/* ========================================== */
+/* GLOW */
+/* ========================================== */
+
 .glow{
 
 position:absolute;
 
-width:700px;
-height:700px;
+width:760px;
+height:760px;
 
 border-radius:9999px;
 
 background:
-rgba(198,164,106,0.08);
+radial-gradient(
+circle,
+rgba(198,164,106,0.10) 0%,
+rgba(198,164,106,0.04) 42%,
+transparent 72%
+);
 
 filter:blur(120px);
 
 }
 
-.logo{
+/* ========================================== */
+/* VIGNETTE */
+/* ========================================== */
 
-width:320px;
+.vignette{
 
-margin-bottom:42px;
+position:absolute;
+inset:0;
 
-object-fit:contain;
+box-shadow:
+inset 0 0 180px rgba(0,0,0,0.52);
+
+pointer-events:none;
 
 }
 
+/* ========================================== */
+/* CONTENT */
+/* ========================================== */
+
+.content{
+
+position:relative;
+z-index:5;
+
+display:flex;
+flex-direction:column;
+
+align-items:center;
+justify-content:center;
+
+}
+
+/* ========================================== */
+/* LOGO */
+/* ========================================== */
+
+.logo{
+
+width:330px;
+
+margin-bottom:52px;
+
+object-fit:contain;
+
+filter:
+drop-shadow(
+0 0 28px rgba(255,255,255,0.04)
+);
+
+}
+
+/* ========================================== */
+/* NAME */
+/* ========================================== */
+
 .name{
 
-font-size:82px;
+font-size:86px;
 
 font-weight:700;
 
-letter-spacing:-2px;
+letter-spacing:-3px;
+
+line-height:1;
 
 text-align:center;
 
@@ -215,10 +339,16 @@ max-width:1000px;
 
 padding:0 60px;
 
+color:#F5F1E8;
+
 text-shadow:
-0 0 40px rgba(255,255,255,0.08);
+0 0 40px rgba(255,255,255,0.06);
 
 }
+
+/* ========================================== */
+/* DIVIDER */
+/* ========================================== */
 
 .divider{
 
@@ -226,8 +356,8 @@ display:flex;
 align-items:center;
 gap:18px;
 
-margin-top:28px;
-margin-bottom:24px;
+margin-top:34px;
+margin-bottom:28px;
 
 }
 
@@ -237,7 +367,7 @@ width:120px;
 height:1px;
 
 background:
-rgba(198,164,106,0.5);
+rgba(198,164,106,0.45);
 
 }
 
@@ -251,22 +381,29 @@ rotate(45deg);
 
 background:#C6A46A;
 
+box-shadow:
+0 0 18px rgba(198,164,106,0.30);
+
 }
+
+/* ========================================== */
+/* TITLE */
+/* ========================================== */
 
 .title{
 
 font-size:28px;
 
-letter-spacing:8px;
+letter-spacing:10px;
 
 text-transform:uppercase;
 
 color:
-rgba(245,241,232,0.72);
+rgba(245,241,232,0.74);
 
 text-align:center;
 
-margin-bottom:14px;
+margin-bottom:16px;
 
 padding:0 40px;
 
@@ -274,14 +411,18 @@ max-width:1000px;
 
 }
 
+/* ========================================== */
+/* COMPANY */
+/* ========================================== */
+
 .company{
 
 font-size:22px;
 
-letter-spacing:5px;
+letter-spacing:6px;
 
 color:
-rgba(198,164,106,0.85);
+rgba(198,164,106,0.92);
 
 text-transform:uppercase;
 
@@ -295,7 +436,15 @@ text-transform:uppercase;
 
 <div class="wrap">
 
+<div class="pattern"></div>
+
+<div class="overlay"></div>
+
 <div class="glow"></div>
+
+<div class="vignette"></div>
+
+<div class="content">
 
 <img
 class="logo"
@@ -326,6 +475,8 @@ ${person.company || ""}
 
 </div>
 
+</div>
+
 </body>
 </html>
 
@@ -340,7 +491,7 @@ ${person.company || ""}
     );
 
     await page.waitForTimeout(
-      300
+      500
     );
 
     const buffer =
