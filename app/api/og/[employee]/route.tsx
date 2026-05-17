@@ -1,23 +1,27 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "fs/promises";
+import path from "path";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export async function GET(
   req: Request,
   { params }: any
 ) {
+
   try {
 
     const employee =
       params.employee;
 
-    /* FETCH EMPLOYEE DATA */
-    const res = await fetch(
-      "https://opensheet.elk.sh/2PACX-1vS0iSZW9diQdZYYORE2r09vW0l5q1x0L4X3Z6v4WQ/Sheet1",
-      {
-        cache: "no-store",
-      }
-    );
+    /* FETCH DATA */
+    const res =
+      await fetch(
+        "https://opensheet.elk.sh/2PACX-1vS0iSZW9diQdZYYORE2r09vW0l5q1x0L4X3Z6v4WQ/Sheet1",
+        {
+          cache: "no-store",
+        }
+      );
 
     const data =
       await res.json();
@@ -39,19 +43,20 @@ export async function GET(
 
     }
 
-    /* THEME */
-    const background =
-      "#07181D";
+    /* LOGO FILE */
+    const logoPath =
+      path.join(
+        process.cwd(),
+        "public",
+        "logos",
+        "foundation-light.png"
+      );
 
-    const foreground =
-      "#F5F1E8";
+    const logoBuffer =
+      await readFile(logoPath);
 
-    const accent =
-      "#C6A46A";
-
-    /* LOGO */
-    const logo =
-      "https://id.nadimfoundation.org/logos/logo-light.png";
+    const logoBase64 =
+      `data:image/png;base64,${logoBuffer.toString("base64")}`;
 
     return new ImageResponse(
 
@@ -72,37 +77,13 @@ export async function GET(
             overflow: "hidden",
 
             background:
-              `linear-gradient(
-                180deg,
-                ${background} 0%,
-                #041116 100%
-              )`,
+              "linear-gradient(180deg,#07181D 0%,#041116 100%)",
 
-            color: foreground,
+            color: "#F5F1E8",
           }}
         >
 
-          {/* PATTERN */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-
-              opacity: 0.08,
-
-              backgroundSize:
-                "160px",
-
-              backgroundImage:
-                `radial-gradient(
-                  circle,
-                  rgba(255,255,255,0.08) 1px,
-                  transparent 1px
-                )`,
-            }}
-          />
-
-          {/* CENTER GLOW */}
+          {/* BACKGROUND GLOW */}
           <div
             style={{
               position: "absolute",
@@ -122,7 +103,7 @@ export async function GET(
 
           {/* LOGO */}
           <img
-            src={logo}
+            src={logoBase64}
             width="260"
             height="70"
             style={{
@@ -139,7 +120,7 @@ export async function GET(
 
               letterSpacing: "-2px",
 
-              color: foreground,
+              color: "#F5F1E8",
 
               textAlign: "center",
 
@@ -182,7 +163,7 @@ export async function GET(
                   "rotate(45deg)",
 
                 background:
-                  accent,
+                  "#C6A46A",
               }}
             />
 
@@ -229,6 +210,8 @@ export async function GET(
 
   } catch (error) {
 
+    console.error(error);
+
     return new Response(
       "OG generation failed",
       {
@@ -237,4 +220,5 @@ export async function GET(
     );
 
   }
+
 }
