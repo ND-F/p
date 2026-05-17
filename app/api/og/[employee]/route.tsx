@@ -19,7 +19,7 @@ export async function GET(
         .trim()
         .toLowerCase();
 
-    /* SHEET DATA */
+    /* FETCH SHEET */
     const res =
       await fetch(
         "https://opensheet.elk.sh/1vvdDuKXNEG-J4oCLW1Xsu_Ur9Cgl0AMX9iai0Tqwmxk/Sheet1",
@@ -40,9 +40,11 @@ export async function GET(
     const person =
       employees.find(
         (item: any) =>
-          item?.slug
-            ?.trim()
-            ?.toLowerCase() === employee
+          String(
+            item?.slug || ""
+          )
+            .trim()
+            .toLowerCase() === employee
       );
 
     if (!person) {
@@ -56,10 +58,27 @@ export async function GET(
 
     }
 
-    /* THEME */
+    /* CLEAN VALUES */
+    const name =
+      String(
+        person?.name || ""
+      ).trim();
+
+    const title =
+      String(
+        person?.title || ""
+      ).trim();
+
+    const company =
+      String(
+        person?.company || ""
+      ).trim();
+
     const theme =
-      person?.theme ||
-      "foundation";
+      String(
+        person?.theme ||
+        "foundation"
+      ).trim();
 
     /* LOGO FILE */
     const logoName =
@@ -86,7 +105,7 @@ export async function GET(
       logoBase64 =
         `data:image/png;base64,${logoBuffer.toString("base64")}`;
 
-    } catch {
+    } catch (err) {
 
       console.log(
         "Logo not found:",
@@ -172,7 +191,7 @@ export async function GET(
                 "0 0 40px rgba(255,255,255,0.08)",
             }}
           >
-            {person?.name || ""}
+            {name}
           </div>
 
           {/* DIVIDER */}
@@ -241,7 +260,7 @@ export async function GET(
               marginBottom: "14px",
             }}
           >
-            {person?.title || ""}
+            {title}
           </div>
 
           {/* COMPANY */}
@@ -260,7 +279,7 @@ export async function GET(
               textAlign: "center",
             }}
           >
-            {person?.company || ""}
+            {company}
           </div>
 
         </div>
