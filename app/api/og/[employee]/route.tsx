@@ -11,12 +11,15 @@ export async function GET(
 
   try {
 
+    /* EMPLOYEE SLUG */
     const employee =
-  decodeURIComponent(
-    params?.employee || ""
-  ).trim().toLowerCase();
+      decodeURIComponent(
+        params?.employee || ""
+      )
+        .trim()
+        .toLowerCase();
 
-    /* FETCH SHEET */
+    /* SHEET DATA */
     const res =
       await fetch(
         "https://opensheet.elk.sh/1vvdDuKXNEG-J4oCLW1Xsu_Ur9Cgl0AMX9iai0Tqwmxk/Sheet1",
@@ -33,13 +36,14 @@ export async function GET(
         ? data
         : [];
 
+    /* FIND EMPLOYEE */
     const person =
-  employees.find(
-    (item: any) =>
-      item?.slug
-        ?.trim()
-        ?.toLowerCase() === employee
-  );
+      employees.find(
+        (item: any) =>
+          item?.slug
+            ?.trim()
+            ?.toLowerCase() === employee
+      );
 
     if (!person) {
 
@@ -52,9 +56,14 @@ export async function GET(
 
     }
 
-    /* LOGO BY THEME */
+    /* THEME */
+    const theme =
+      person?.theme ||
+      "foundation";
+
+    /* LOGO FILE */
     const logoName =
-      `${person.theme}-light.png`;
+      `${theme}-light.png`;
 
     const logoPath =
       path.join(
@@ -64,11 +73,27 @@ export async function GET(
         logoName
       );
 
-    const logoBuffer =
-      await readFile(logoPath);
+    /* READ LOGO */
+    let logoBase64 = "";
 
-    const logoBase64 =
-      `data:image/png;base64,${logoBuffer.toString("base64")}`;
+    try {
+
+      const logoBuffer =
+        await readFile(
+          logoPath
+        );
+
+      logoBase64 =
+        `data:image/png;base64,${logoBuffer.toString("base64")}`;
+
+    } catch {
+
+      console.log(
+        "Logo not found:",
+        logoPath
+      );
+
+    }
 
     return new ImageResponse(
 
@@ -114,15 +139,22 @@ export async function GET(
           />
 
           {/* LOGO */}
-          <img
-            src={logoBase64}
-            width="320"
-            height="90"
-            style={{
-              objectFit: "contain",
-              marginBottom: "50px",
-            }}
-          />
+          {
+            logoBase64 && (
+              <img
+                src={logoBase64}
+                width="320"
+                height="90"
+                style={{
+                  objectFit:
+                    "contain",
+
+                  marginBottom:
+                    "50px",
+                }}
+              />
+            )
+          }
 
           {/* NAME */}
           <div
@@ -140,7 +172,7 @@ export async function GET(
                 "0 0 40px rgba(255,255,255,0.08)",
             }}
           >
-            {person.name}
+            {person?.name || ""}
           </div>
 
           {/* DIVIDER */}
@@ -209,7 +241,7 @@ export async function GET(
               marginBottom: "14px",
             }}
           >
-            {person.title}
+            {person?.title || ""}
           </div>
 
           {/* COMPANY */}
@@ -228,7 +260,7 @@ export async function GET(
               textAlign: "center",
             }}
           >
-            {person.company}
+            {person?.company || ""}
           </div>
 
         </div>
@@ -246,7 +278,7 @@ export async function GET(
     console.error(error);
 
     return new Response(
-      String(error),
+      `OG generation failed: ${String(error)}`,
       {
         status: 500,
       }
