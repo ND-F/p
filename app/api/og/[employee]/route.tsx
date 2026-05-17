@@ -4,102 +4,54 @@ export const runtime = "edge";
 
 export async function GET(
   req: Request,
-  context: any
+  { params }: any
 ) {
-
   try {
 
-    const params =
-      await context.params;
-
-    const slug =
+    const employee =
       params.employee;
 
-    /* =========================
-       FETCH EMPLOYEE
-    ========================= */
+    /* FETCH EMPLOYEE DATA */
+    const res = await fetch(
+      "https://opensheet.elk.sh/2PACX-1vS0iSZW9diQdZYYORE2r09vW0l5q1x0L4X3Z6v4WQ/Sheet1",
+      {
+        cache: "no-store",
+      }
+    );
 
-    let employee: any = null;
+    const data =
+      await res.json();
 
-    try {
-
-      const res = await fetch(
-        "https://opensheet.elk.sh/2PACX-1vS0iSZW9diQdZYYORE2r09vXXXXXXXXXXXX/sheet1",
-        {
-          cache: "no-store",
-        }
+    const person =
+      data.find(
+        (item: any) =>
+          item.slug === employee
       );
 
-      const data =
-        await res.json();
+    if (!person) {
 
-      const rows =
-        Array.isArray(data)
-          ? data
-          : [];
-
-      employee =
-        rows.find(
-          (item: any) =>
-            item.slug === slug
-        );
-
-    } catch (err) {
-
-      console.log(
-        "sheet fetch error",
-        err
+      return new Response(
+        "Employee not found",
+        {
+          status: 404,
+        }
       );
 
     }
 
-    /* =========================
-       FALLBACKS
-    ========================= */
+    /* THEME */
+    const background =
+      "#07181D";
 
-    const fullName =
-      employee?.name ||
-      "NADIM";
+    const foreground =
+      "#F5F1E8";
 
-    const position =
-      employee?.position ||
-      employee?.title ||
-      "Executive Director";
+    const accent =
+      "#C6A46A";
 
-    const theme =
-      employee?.theme ||
-      "foundation";
-
-    /* =========================
-       DYNAMIC LOGOS
-    ========================= */
-
-    const logos: any = {
-
-      foundation:
-        "https://id.nadimfoundation.org/logos/foundation-light.png",
-
-      industries:
-        "https://id.nadimfoundation.org/logos/industries-light.png",
-
-      group:
-        "https://id.nadimfoundation.org/logos/group-light.png",
-
-      kenda:
-        "https://id.nadimfoundation.org/logos/kenda-light.png",
-
-      executive:
-        "https://id.nadimfoundation.org/logos/logo-light.png",
-
-    };
-
+    /* LOGO */
     const logo =
-      logos[theme] ||
-      logos.foundation;
-
-    /* =========================
-       OG IMAGE
-    ========================= */
+      "https://id.nadimfoundation.org/logos/logo-light.png";
 
     return new ImageResponse(
 
@@ -112,125 +64,112 @@ export async function GET(
             display: "flex",
             flexDirection: "column",
 
-            alignItems: "center",
             justifyContent: "center",
+            alignItems: "center",
 
             position: "relative",
 
             overflow: "hidden",
 
             background:
-              "linear-gradient(180deg,#07181D 0%,#050D10 100%)",
+              `linear-gradient(
+                180deg,
+                ${background} 0%,
+                #041116 100%
+              )`,
 
-            color:
-              "#F5F1E8",
-
-            fontFamily:
-              "Arial",
+            color: foreground,
           }}
         >
 
-          {/* glow */}
+          {/* PATTERN */}
           <div
             style={{
               position: "absolute",
               inset: 0,
 
-              display: "flex",
+              opacity: 0.08,
 
-              background:
-                "radial-gradient(circle at center, rgba(198,164,106,0.08), transparent 58%)",
+              backgroundSize:
+                "160px",
+
+              backgroundImage:
+                `radial-gradient(
+                  circle,
+                  rgba(255,255,255,0.08) 1px,
+                  transparent 1px
+                )`,
             }}
           />
 
-          {/* vignette */}
+          {/* CENTER GLOW */}
           <div
             style={{
               position: "absolute",
-              inset: 0,
 
-              display: "flex",
+              width: "700px",
+              height: "700px",
+
+              borderRadius: "9999px",
 
               background:
-                "radial-gradient(circle, transparent 40%, rgba(0,0,0,0.50) 100%)",
+                "rgba(198,164,106,0.08)",
+
+              filter:
+                "blur(120px)",
             }}
           />
 
-          {/* logo */}
+          {/* LOGO */}
           <img
             src={logo}
-
-            width={320}
-            height={120}
-
-            alt="logo"
-
+            width="260"
+            height="70"
             style={{
-              objectFit:
-                "contain",
-
-              marginBottom:
-                "48px",
+              objectFit: "contain",
+              marginBottom: "60px",
             }}
           />
 
-          {/* name */}
+          {/* NAME */}
           <div
             style={{
-              display: "flex",
+              fontSize: 88,
+              fontWeight: 700,
 
-              fontSize: "104px",
+              letterSpacing: "-2px",
 
-              fontWeight: 800,
+              color: foreground,
 
-              lineHeight: 1,
-
-              letterSpacing:
-                "-0.05em",
-
-              color:
-                "#F5F1E8",
-
-              textAlign:
-                "center",
-
-              paddingLeft:
-                "80px",
-
-              paddingRight:
-                "80px",
+              textAlign: "center",
 
               textShadow:
-                "0 0 40px rgba(255,255,255,0.06)",
+                "0 0 40px rgba(255,255,255,0.08)",
             }}
           >
-            {fullName}
+            {person.name}
           </div>
 
-          {/* divider */}
+          {/* DIVIDER */}
           <div
             style={{
               display: "flex",
+              alignItems: "center",
 
-              alignItems:
-                "center",
-
-              gap: "24px",
+              gap: "18px",
 
               marginTop: "34px",
-              marginBottom: "34px",
+              marginBottom: "26px",
             }}
           >
 
             <div
               style={{
-                width: "170px",
+                width: "120px",
                 height: "1px",
 
                 background:
                   "rgba(198,164,106,0.5)",
-
-                display: "flex",
               }}
             />
 
@@ -239,39 +178,32 @@ export async function GET(
                 width: "10px",
                 height: "10px",
 
-                background:
-                  "#C6A46A",
-
                 transform:
                   "rotate(45deg)",
 
-                display: "flex",
+                background:
+                  accent,
               }}
             />
 
             <div
               style={{
-                width: "170px",
+                width: "120px",
                 height: "1px",
 
                 background:
                   "rgba(198,164,106,0.5)",
-
-                display: "flex",
               }}
             />
 
           </div>
 
-          {/* position */}
+          {/* POSITION */}
           <div
             style={{
-              display: "flex",
+              fontSize: 30,
 
-              fontSize: "30px",
-
-              letterSpacing:
-                "0.22em",
+              letterSpacing: "10px",
 
               textTransform:
                 "uppercase",
@@ -279,17 +211,10 @@ export async function GET(
               color:
                 "rgba(245,241,232,0.72)",
 
-              textAlign:
-                "center",
-
-              paddingLeft:
-                "120px",
-
-              paddingRight:
-                "120px",
+              textAlign: "center",
             }}
           >
-            {position}
+            {person.position}
           </div>
 
         </div>
@@ -302,22 +227,14 @@ export async function GET(
 
     );
 
-  } catch (error: any) {
+  } catch (error) {
 
     return new Response(
-
-      `
-OG ERROR:
-
-${error?.message}
-      `,
-
+      "OG generation failed",
       {
         status: 500,
       }
-
     );
 
   }
-
 }
