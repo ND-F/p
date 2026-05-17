@@ -14,28 +14,29 @@ export async function GET(
     const employee =
       params.employee;
 
-    /* FETCH DATA */
-    const res = await fetch(
-  "https://opensheet.elk.sh/1vvdDuKXNEG-J4oCLW1Xsu_Ur9Cgl0AMX9iai0Tqwmxk/Sheet1",
-  {
-    cache: "no-store",
-  }
-);
+    /* FETCH SHEET */
+    const res =
+      await fetch(
+        "https://opensheet.elk.sh/1vvdDuKXNEG-J4oCLW1Xsu_Ur9Cgl0AMX9iai0Tqwmxk/Sheet1",
+        {
+          cache: "no-store",
+        }
+      );
 
-const data =
-  await res.json();
+    const data =
+      await res.json();
 
-/* SAFETY */
-const employees =
-  Array.isArray(data)
-    ? data
-    : [];
+    const employees =
+      Array.isArray(data)
+        ? data
+        : [];
 
-const person =
-  employees.find(
-    (item: any) =>
-      item.slug === employee
-  );
+    const person =
+      employees.find(
+        (item: any) =>
+          item.slug === employee
+      );
+
     if (!person) {
 
       return new Response(
@@ -47,13 +48,16 @@ const person =
 
     }
 
-    /* LOGO FILE */
+    /* LOGO BY THEME */
+    const logoName =
+      `${person.theme}-light.png`;
+
     const logoPath =
       path.join(
         process.cwd(),
         "public",
         "logos",
-        "foundation-light.png"
+        logoName
       );
 
     const logoBuffer =
@@ -108,18 +112,18 @@ const person =
           {/* LOGO */}
           <img
             src={logoBase64}
-            width="260"
-            height="70"
+            width="320"
+            height="90"
             style={{
               objectFit: "contain",
-              marginBottom: "60px",
+              marginBottom: "50px",
             }}
           />
 
           {/* NAME */}
           <div
             style={{
-              fontSize: 88,
+              fontSize: 82,
               fontWeight: 700,
 
               letterSpacing: "-2px",
@@ -143,8 +147,8 @@ const person =
 
               gap: "18px",
 
-              marginTop: "34px",
-              marginBottom: "26px",
+              marginTop: "28px",
+              marginBottom: "24px",
             }}
           >
 
@@ -183,12 +187,12 @@ const person =
 
           </div>
 
-          {/* POSITION */}
+          {/* TITLE */}
           <div
             style={{
-              fontSize: 30,
+              fontSize: 28,
 
-              letterSpacing: "10px",
+              letterSpacing: "8px",
 
               textTransform:
                 "uppercase",
@@ -197,9 +201,30 @@ const person =
                 "rgba(245,241,232,0.72)",
 
               textAlign: "center",
+
+              marginBottom: "14px",
             }}
           >
-            {person.position}
+            {person.title}
+          </div>
+
+          {/* COMPANY */}
+          <div
+            style={{
+              fontSize: 22,
+
+              letterSpacing: "5px",
+
+              color:
+                "rgba(198,164,106,0.85)",
+
+              textTransform:
+                "uppercase",
+
+              textAlign: "center",
+            }}
+          >
+            {person.company}
           </div>
 
         </div>
@@ -216,8 +241,8 @@ const person =
 
     console.error(error);
 
-return new Response(
-  String(error),
+    return new Response(
+      String(error),
       {
         status: 500,
       }
