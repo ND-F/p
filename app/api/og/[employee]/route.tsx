@@ -59,37 +59,52 @@ export async function GET(
     }
 
     /* SAFE VALUE GETTER */
-const getValue = (
-  obj: any,
-  key: string
-) => {
+    const getValue = (
+      obj: any,
+      key: string
+    ) => {
 
-  const foundKey =
-    Object.keys(obj).find(
-      (k) =>
-        k.trim().toLowerCase() ===
-        key.toLowerCase()
-    );
+      const foundKey =
+        Object.keys(obj).find(
+          (k) =>
+            k
+              .trim()
+              .toLowerCase() ===
+            key.toLowerCase()
+        );
 
-  return foundKey
-    ? String(obj[foundKey] || "").trim()
-    : "";
+      return foundKey
+        ? String(
+            obj[foundKey] || ""
+          ).trim()
+        : "";
 
-};
+    };
 
-/* CLEAN VALUES */
-const name =
-  getValue(person, "name");
+    /* CLEAN VALUES */
+    const name =
+      getValue(
+        person,
+        "name"
+      ) || "NADIM";
 
-const title =
-  getValue(person, "title");
+    const title =
+      getValue(
+        person,
+        "title"
+      ) || "Executive Director";
 
-const company =
-  getValue(person, "company");
+    const company =
+      getValue(
+        person,
+        "company"
+      ) || "NADIM";
 
-const theme =
-  getValue(person, "theme") ||
-  "foundation";
+    const theme =
+      getValue(
+        person,
+        "theme"
+      ) || "foundation";
 
     /* LOGO FILE */
     const logoName =
@@ -116,7 +131,7 @@ const theme =
       logoBase64 =
         `data:image/png;base64,${logoBuffer.toString("base64")}`;
 
-    } catch (err) {
+    } catch {
 
       console.log(
         "Logo not found:",
@@ -147,6 +162,9 @@ const theme =
               "linear-gradient(180deg,#07181D 0%,#041116 100%)",
 
             color: "#F5F1E8",
+
+            fontFamily:
+              "sans-serif",
           }}
         >
 
@@ -170,7 +188,7 @@ const theme =
 
           {/* LOGO */}
           {
-            logoBase64 && (
+            logoBase64 ? (
               <img
                 src={logoBase64}
                 width="320"
@@ -183,12 +201,25 @@ const theme =
                     "50px",
                 }}
               />
+            ) : (
+              <div
+                style={{
+                  fontSize: 42,
+                  fontWeight: 700,
+                  marginBottom: "50px",
+                  color: "#F5F1E8",
+                }}
+              >
+                NADIM
+              </div>
             )
           }
 
           {/* NAME */}
           <div
             style={{
+              display: "flex",
+
               fontSize: 82,
               fontWeight: 700,
 
@@ -202,7 +233,7 @@ const theme =
                 "0 0 40px rgba(255,255,255,0.08)",
             }}
           >
-            {name}
+            {String(name)}
           </div>
 
           {/* DIVIDER */}
@@ -256,6 +287,8 @@ const theme =
           {/* TITLE */}
           <div
             style={{
+              display: "flex",
+
               fontSize: 28,
 
               letterSpacing: "8px",
@@ -269,14 +302,19 @@ const theme =
               textAlign: "center",
 
               marginBottom: "14px",
+
+              fontFamily:
+                "sans-serif",
             }}
           >
-            {title}
+            {String(title)}
           </div>
 
           {/* COMPANY */}
           <div
             style={{
+              display: "flex",
+
               fontSize: 22,
 
               letterSpacing: "5px",
@@ -288,9 +326,12 @@ const theme =
                 "uppercase",
 
               textAlign: "center",
+
+              fontFamily:
+                "sans-serif",
             }}
           >
-            {company}
+            {String(company)}
           </div>
 
         </div>
