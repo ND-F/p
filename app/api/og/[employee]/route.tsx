@@ -8,9 +8,7 @@ export async function GET(
   req: Request,
   { params }: any
 ) {
-
   try {
-
     /* EMPLOYEE SLUG */
     const employee =
       decodeURIComponent(
@@ -20,108 +18,75 @@ export async function GET(
         .toLowerCase();
 
     /* FETCH SHEET */
-    const res =
-      await fetch(
-        "https://opensheet.elk.sh/1vvdDuKXNEG-J4oCLW1Xsu_Ur9Cgl0AMX9iai0Tqwmxk/Sheet1",
-        {
-          cache: "no-store",
-        }
-      );
+    const res = await fetch(
+      "https://opensheet.elk.sh/1vvdDuKXNEG-J4oCLW1Xsu_Ur9Cgl0AMX9iai0Tqwmxk/Sheet1",
+      {
+        cache: "no-store",
+      }
+    );
 
-    const data =
-      await res.json();
+    const data = await res.json();
 
     const employees =
       Array.isArray(data)
         ? data
         : [];
 
-    /* FIND EMPLOYEE */
+    /* FIND PERSON */
     const person =
-      employees.find(
-        (item: any) =>
-          String(
-            item?.slug || ""
-          )
+      employees.find((item: any) => {
+        const slug =
+          String(item?.slug || "")
             .trim()
-            .toLowerCase() === employee
-      );
+            .toLowerCase();
+
+        return slug === employee;
+      });
 
     if (!person) {
-
       return new Response(
         "Employee not found",
         {
           status: 404,
         }
       );
-
     }
 
-    /* SAFE VALUE GETTER */
-    const getValue = (
-      obj: any,
-      key: string
-    ) => {
-
-      const foundKey =
-        Object.keys(obj).find(
-          (k) =>
-            k
-              .trim()
-              .toLowerCase() ===
-            key.toLowerCase()
-        );
-
-      return foundKey
-        ? String(
-            obj[foundKey] || ""
-          ).trim()
-        : "";
-
-    };
-
     /* CLEAN VALUES */
+    const clean = (v: any) =>
+      String(v || "")
+        .replace(/\s+/g, " ")
+        .trim();
+
     const name =
-      getValue(
-        person,
-        "name"
-      ) || "NADIM";
+      clean(person.name);
 
     const title =
-      getValue(
-        person,
-        "title"
-      ) || "Executive Director";
+      clean(person.title);
 
     const company =
-      getValue(
-        person,
-        "company"
-      ) || "NADIM";
+      clean(person.company);
 
     const theme =
-      getValue(
-        person,
-        "theme"
-      ) || "foundation";
+      clean(person.theme)
+        .toLowerCase();
 
-    /* LOGO FILE */
+    /* LOGO */
     const logoName =
-      `${theme}-light.png`;
+      theme
+        ? `${theme}-light.png`
+        : "foundation-light.png";
 
-    const logoPath =
-      path.join(
-        process.cwd(),
-        "public",
-        "logos",
-        logoName
-      );
-
-    /* READ LOGO */
     let logoBase64 = "";
 
     try {
+      const logoPath =
+        path.join(
+          process.cwd(),
+          "public",
+          "logos",
+          logoName
+        );
 
       const logoBuffer =
         await readFile(
@@ -130,18 +95,14 @@ export async function GET(
 
       logoBase64 =
         `data:image/png;base64,${logoBuffer.toString("base64")}`;
-
-    } catch {
-
+    } catch (e) {
       console.log(
         "Logo not found:",
-        logoPath
+        logoName
       );
-
     }
 
     return new ImageResponse(
-
       (
         <div
           style={{
@@ -162,13 +123,9 @@ export async function GET(
               "linear-gradient(180deg,#07181D 0%,#041116 100%)",
 
             color: "#F5F1E8",
-
-            fontFamily:
-              "sans-serif",
           }}
         >
-
-          {/* BACKGROUND GLOW */}
+          {/* GLOW */}
           <div
             style={{
               position: "absolute",
@@ -187,39 +144,32 @@ export async function GET(
           />
 
           {/* LOGO */}
-          {
-            logoBase64 ? (
-              <img
-                src={logoBase64}
-                width="320"
-                height="90"
-                style={{
-                  objectFit:
-                    "contain",
-
-                  marginBottom:
-                    "50px",
-                }}
-              />
-            ) : (
-              <div
-                style={{
-                  fontSize: 42,
-                  fontWeight: 700,
-                  marginBottom: "50px",
-                  color: "#F5F1E8",
-                }}
-              >
-                NADIM
-              </div>
-            )
-          }
+          {logoBase64 ? (
+            <img
+              src={logoBase64}
+              width={320}
+              height={90}
+              style={{
+                objectFit: "contain",
+                marginBottom: "42px",
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                fontSize: 38,
+                letterSpacing: "6px",
+                marginBottom: "42px",
+                opacity: 0.9,
+              }}
+            >
+              {company}
+            </div>
+          )}
 
           {/* NAME */}
           <div
             style={{
-              display: "flex",
-
               fontSize: 82,
               fontWeight: 700,
 
@@ -231,9 +181,14 @@ export async function GET(
 
               textShadow:
                 "0 0 40px rgba(255,255,255,0.08)",
+
+              maxWidth: "1000px",
+
+              paddingLeft: "60px",
+              paddingRight: "60px",
             }}
           >
-            {String(name)}
+            {name}
           </div>
 
           {/* DIVIDER */}
@@ -248,7 +203,6 @@ export async function GET(
               marginBottom: "24px",
             }}
           >
-
             <div
               style={{
                 width: "120px",
@@ -281,14 +235,11 @@ export async function GET(
                   "rgba(198,164,106,0.5)",
               }}
             />
-
           </div>
 
           {/* TITLE */}
           <div
             style={{
-              display: "flex",
-
               fontSize: 28,
 
               letterSpacing: "8px",
@@ -303,18 +254,18 @@ export async function GET(
 
               marginBottom: "14px",
 
-              fontFamily:
-                "sans-serif",
+              paddingLeft: "40px",
+              paddingRight: "40px",
+
+              maxWidth: "1000px",
             }}
           >
-            {String(title)}
+            {title}
           </div>
 
           {/* COMPANY */}
           <div
             style={{
-              display: "flex",
-
               fontSize: 22,
 
               letterSpacing: "5px",
@@ -326,14 +277,10 @@ export async function GET(
                 "uppercase",
 
               textAlign: "center",
-
-              fontFamily:
-                "sans-serif",
             }}
           >
-            {String(company)}
+            {company}
           </div>
-
         </div>
       ),
 
@@ -341,20 +288,15 @@ export async function GET(
         width: 1200,
         height: 630,
       }
-
     );
-
   } catch (error) {
-
     console.error(error);
 
     return new Response(
-      `OG generation failed: ${String(error)}`,
+      `OG generation failed:\n\n${String(error)}`,
       {
         status: 500,
       }
     );
-
   }
-
 }
