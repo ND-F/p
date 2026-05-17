@@ -41,24 +41,6 @@ async function generate() {
   }
 
   /* ========================================== */
-  /* BROWSER */
-  /* ========================================== */
-
-  const browser =
-    await chromium.launch();
-
-  const page =
-    await browser.newPage({
-
-      viewport: {
-        width: 1200,
-        height: 630,
-        deviceScaleFactor: 3,
-      },
-
-    });
-
-  /* ========================================== */
   /* PATTERN */
   /* ========================================== */
 
@@ -82,6 +64,26 @@ async function generate() {
       .toString("base64")}`;
 
   /* ========================================== */
+  /* BROWSER */
+  /* ========================================== */
+
+  const browser =
+    await chromium.launch({
+      headless: true,
+    });
+
+  const page =
+    await browser.newPage({
+
+      viewport: {
+        width: 1200,
+        height: 630,
+        deviceScaleFactor: 3,
+      },
+
+    });
+
+  /* ========================================== */
   /* LOOP */
   /* ========================================== */
 
@@ -96,7 +98,7 @@ async function generate() {
       ).toLowerCase();
 
     /* ========================================== */
-    /* LOGO PATH */
+    /* LOGO */
     /* ========================================== */
 
     const logoPath =
@@ -126,10 +128,6 @@ async function generate() {
               "logo-foundation-light.png"
             );
 
-    /* ========================================== */
-    /* LOGO BASE64 */
-    /* ========================================== */
-
     const logoBuffer =
       fs.readFileSync(
         logoPath
@@ -146,11 +144,12 @@ async function generate() {
     const html = `
 
 <!DOCTYPE html>
+
 <html>
 
 <head>
 
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 
 <style>
 
@@ -173,11 +172,11 @@ overflow:hidden;
 
 body{
 
+position:relative;
+
 display:flex;
 align-items:center;
 justify-content:center;
-
-position:relative;
 
 background:
 linear-gradient(
@@ -224,27 +223,26 @@ overflow:hidden;
 .pattern{
 
 position:absolute;
-
-inset:-120px;
+inset:0;
 
 background-image:
 url("${patternBase64}");
 
-background-size:340px;
+background-size:
+185px 185px;
 
-background-repeat:repeat;
+background-repeat:
+repeat;
 
-background-position:center;
+background-position:
+center;
 
-opacity:0.045;
+opacity:0.14;
+
+pointer-events:none;
 
 transform:
-rotate(-8deg)
-scale(1.12);
-
-filter:blur(0.2px);
-
-mix-blend-mode:soft-light;
+scale(1.02);
 
 }
 
@@ -256,12 +254,13 @@ mix-blend-mode:soft-light;
 
 position:absolute;
 
-top:-240px;
+top:-220px;
 left:50%;
 
-transform:translateX(-50%);
+transform:
+translateX(-50%);
 
-width:1200px;
+width:1500px;
 height:520px;
 
 background:
@@ -269,15 +268,15 @@ radial-gradient(
 
 ellipse at center,
 
-rgba(198,164,106,0.10) 0%,
-rgba(198,164,106,0.04) 32%,
-transparent 72%
+rgba(198,164,106,0.08) 0%,
+rgba(198,164,106,0.04) 36%,
+transparent 74%
 
 );
 
-filter:blur(60px);
+filter:blur(90px);
 
-opacity:0.8;
+opacity:1;
 
 }
 
@@ -289,6 +288,12 @@ opacity:0.8;
 
 position:absolute;
 
+left:50%;
+top:50%;
+
+transform:
+translate(-50%,-50%);
+
 width:920px;
 height:920px;
 
@@ -299,16 +304,15 @@ radial-gradient(
 
 circle,
 
-rgba(198,164,106,0.12) 0%,
-rgba(198,164,106,0.05) 38%,
-rgba(198,164,106,0.02) 52%,
-transparent 74%
+rgba(198,164,106,0.13) 0%,
+rgba(198,164,106,0.07) 24%,
+rgba(7,24,29,0.00) 70%
 
 );
 
 filter:blur(90px);
 
-opacity:0.9;
+opacity:1;
 
 }
 
@@ -323,16 +327,26 @@ inset:0;
 
 background:
 
-linear-gradient(
-180deg,
-rgba(7,24,29,0.12) 0%,
-rgba(4,17,22,0.34) 100%
+radial-gradient(
+
+circle at center,
+
+rgba(7,24,29,0.00) 0%,
+
+rgba(7,24,29,0.10) 42%,
+
+rgba(4,17,22,0.62) 100%
+
 ),
 
-radial-gradient(
-circle at center,
-rgba(255,255,255,0.015),
-transparent 70%
+linear-gradient(
+
+180deg,
+
+rgba(255,255,255,0.015) 0%,
+
+rgba(0,0,0,0.14) 100%
+
 );
 
 }
@@ -348,9 +362,9 @@ inset:0;
 
 box-shadow:
 
-inset 0 0 220px rgba(0,0,0,0.55),
+inset 0 0 180px rgba(0,0,0,0.34),
 
-inset 0 0 80px rgba(0,0,0,0.35);
+inset 0 0 260px rgba(0,0,0,0.20);
 
 pointer-events:none;
 
@@ -371,7 +385,8 @@ flex-direction:column;
 align-items:center;
 justify-content:center;
 
-padding-top:10px;
+transform:
+translateY(-6px);
 
 }
 
@@ -381,21 +396,23 @@ padding-top:10px;
 
 .logo{
 
-width:320px;
+width:350px;
 
-margin-bottom:54px;
+margin-bottom:58px;
 
 object-fit:contain;
 
 filter:
 
 drop-shadow(
-0 0 24px rgba(255,255,255,0.05)
+0 0 18px rgba(255,255,255,0.04)
 )
 
 drop-shadow(
-0 0 60px rgba(198,164,106,0.04)
+0 0 42px rgba(198,164,106,0.07)
 );
+
+opacity:0.98;
 
 }
 
@@ -405,17 +422,17 @@ drop-shadow(
 
 .name{
 
-font-size:72px;
+font-size:92px;
 
 font-weight:700;
 
-line-height:1;
+line-height:0.95;
 
-letter-spacing:-3px;
+letter-spacing:-4px;
 
 text-align:center;
 
-max-width:1000px;
+max-width:1100px;
 
 padding:0 70px;
 
@@ -423,9 +440,9 @@ color:#F5F1E8;
 
 text-shadow:
 
-0 0 40px rgba(255,255,255,0.05),
+0 0 34px rgba(255,255,255,0.04),
 
-0 2px 10px rgba(0,0,0,0.30);
+0 2px 10px rgba(0,0,0,0.24);
 
 }
 
@@ -439,25 +456,25 @@ display:flex;
 align-items:center;
 gap:18px;
 
-margin-top:34px;
-margin-bottom:28px;
+margin-top:38px;
+margin-bottom:30px;
 
 }
 
 .line{
 
-width:138px;
+width:170px;
 height:1px;
 
 background:
-rgba(198,164,106,0.38);
+rgba(198,164,106,0.34);
 
 }
 
 .diamond{
 
-width:10px;
-height:10px;
+width:11px;
+height:11px;
 
 transform:
 rotate(45deg);
@@ -466,9 +483,9 @@ background:#C6A46A;
 
 box-shadow:
 
-0 0 14px rgba(198,164,106,0.24),
+0 0 18px rgba(198,164,106,0.26),
 
-0 0 30px rgba(198,164,106,0.10);
+0 0 42px rgba(198,164,106,0.10);
 
 }
 
@@ -478,22 +495,24 @@ box-shadow:
 
 .title{
 
-font-size:24px;
+font-size:26px;
 
-letter-spacing:9px;
+font-weight:500;
+
+letter-spacing:10px;
 
 text-transform:uppercase;
 
 color:
-rgba(245,241,232,0.72);
+rgba(245,241,232,0.78);
 
 text-align:center;
 
-margin-bottom:16px;
+margin-bottom:18px;
 
 padding:0 40px;
 
-max-width:1000px;
+max-width:1100px;
 
 }
 
@@ -503,12 +522,14 @@ max-width:1000px;
 
 .company{
 
-font-size:20px;
+font-size:21px;
 
-letter-spacing:5px;
+font-weight:500;
+
+letter-spacing:6px;
 
 color:
-rgba(198,164,106,0.92);
+rgba(198,164,106,0.96);
 
 text-transform:uppercase;
 
@@ -537,7 +558,7 @@ text-transform:uppercase;
 <img
 class="logo"
 src="${logoBase64}"
->
+/>
 
 <div class="name">
 ${person.name || ""}
@@ -575,11 +596,14 @@ ${person.company || ""}
     /* ========================================== */
 
     await page.setContent(
-      html
+      html,
+      {
+        waitUntil: "networkidle",
+      }
     );
 
     await page.waitForTimeout(
-      700
+      1200
     );
 
     const buffer =
