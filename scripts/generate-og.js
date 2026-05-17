@@ -53,7 +53,7 @@ async function generate() {
       viewport: {
         width: 1200,
         height: 630,
-        deviceScaleFactor: 2,
+        deviceScaleFactor: 3,
       },
 
     });
@@ -158,6 +158,7 @@ async function generate() {
 box-sizing:border-box;
 }
 
+html,
 body{
 
 margin:0;
@@ -166,11 +167,17 @@ padding:0;
 width:1200px;
 height:630px;
 
+overflow:hidden;
+
+}
+
+body{
+
 display:flex;
 align-items:center;
 justify-content:center;
 
-overflow:hidden;
+position:relative;
 
 background:
 linear-gradient(
@@ -184,10 +191,10 @@ Arial,sans-serif;
 
 color:#F5F1E8;
 
-position:relative;
-
 -webkit-font-smoothing:antialiased;
-text-rendering:geometricPrecision;
+
+text-rendering:
+geometricPrecision;
 
 }
 
@@ -203,8 +210,6 @@ width:100%;
 height:100%;
 
 display:flex;
-flex-direction:column;
-
 align-items:center;
 justify-content:center;
 
@@ -219,18 +224,91 @@ overflow:hidden;
 .pattern{
 
 position:absolute;
-inset:0;
+
+inset:-120px;
 
 background-image:
 url("${patternBase64}");
 
-background-size:250px;
+background-size:340px;
 
 background-repeat:repeat;
 
-opacity:0.07;
+background-position:center;
 
-mix-blend-mode:screen;
+opacity:0.045;
+
+transform:
+rotate(-8deg)
+scale(1.12);
+
+filter:blur(0.2px);
+
+mix-blend-mode:soft-light;
+
+}
+
+/* ========================================== */
+/* TOP LIGHT */
+/* ========================================== */
+
+.topLight{
+
+position:absolute;
+
+top:-240px;
+left:50%;
+
+transform:translateX(-50%);
+
+width:1200px;
+height:520px;
+
+background:
+radial-gradient(
+
+ellipse at center,
+
+rgba(198,164,106,0.10) 0%,
+rgba(198,164,106,0.04) 32%,
+transparent 72%
+
+);
+
+filter:blur(60px);
+
+opacity:0.8;
+
+}
+
+/* ========================================== */
+/* MAIN GLOW */
+/* ========================================== */
+
+.glow{
+
+position:absolute;
+
+width:920px;
+height:920px;
+
+border-radius:9999px;
+
+background:
+radial-gradient(
+
+circle,
+
+rgba(198,164,106,0.12) 0%,
+rgba(198,164,106,0.05) 38%,
+rgba(198,164,106,0.02) 52%,
+transparent 74%
+
+);
+
+filter:blur(90px);
+
+opacity:0.9;
 
 }
 
@@ -244,36 +322,18 @@ position:absolute;
 inset:0;
 
 background:
+
 linear-gradient(
 180deg,
-rgba(7,24,29,0.14) 0%,
-rgba(4,17,22,0.42) 100%
-);
+rgba(7,24,29,0.12) 0%,
+rgba(4,17,22,0.34) 100%
+),
 
-}
-
-/* ========================================== */
-/* GLOW */
-/* ========================================== */
-
-.glow{
-
-position:absolute;
-
-width:760px;
-height:760px;
-
-border-radius:9999px;
-
-background:
 radial-gradient(
-circle,
-rgba(198,164,106,0.08) 0%,
-rgba(198,164,106,0.03) 42%,
-transparent 72%
+circle at center,
+rgba(255,255,255,0.015),
+transparent 70%
 );
-
-filter:blur(90px);
 
 }
 
@@ -287,7 +347,10 @@ position:absolute;
 inset:0;
 
 box-shadow:
-inset 0 0 180px rgba(0,0,0,0.48);
+
+inset 0 0 220px rgba(0,0,0,0.55),
+
+inset 0 0 80px rgba(0,0,0,0.35);
 
 pointer-events:none;
 
@@ -300,13 +363,15 @@ pointer-events:none;
 .content{
 
 position:relative;
-z-index:5;
+z-index:10;
 
 display:flex;
 flex-direction:column;
 
 align-items:center;
 justify-content:center;
+
+padding-top:10px;
 
 }
 
@@ -316,15 +381,20 @@ justify-content:center;
 
 .logo{
 
-width:310px;
+width:320px;
 
-margin-bottom:48px;
+margin-bottom:54px;
 
 object-fit:contain;
 
 filter:
+
 drop-shadow(
-0 0 18px rgba(255,255,255,0.04)
+0 0 24px rgba(255,255,255,0.05)
+)
+
+drop-shadow(
+0 0 60px rgba(198,164,106,0.04)
 );
 
 }
@@ -335,24 +405,27 @@ drop-shadow(
 
 .name{
 
-font-size:78px;
+font-size:72px;
 
 font-weight:700;
 
-letter-spacing:-3px;
-
 line-height:1;
+
+letter-spacing:-3px;
 
 text-align:center;
 
 max-width:1000px;
 
-padding:0 60px;
+padding:0 70px;
 
 color:#F5F1E8;
 
 text-shadow:
-0 0 26px rgba(255,255,255,0.04);
+
+0 0 40px rgba(255,255,255,0.05),
+
+0 2px 10px rgba(0,0,0,0.30);
 
 }
 
@@ -366,18 +439,18 @@ display:flex;
 align-items:center;
 gap:18px;
 
-margin-top:30px;
-margin-bottom:26px;
+margin-top:34px;
+margin-bottom:28px;
 
 }
 
 .line{
 
-width:120px;
+width:138px;
 height:1px;
 
 background:
-rgba(198,164,106,0.40);
+rgba(198,164,106,0.38);
 
 }
 
@@ -392,7 +465,10 @@ rotate(45deg);
 background:#C6A46A;
 
 box-shadow:
-0 0 14px rgba(198,164,106,0.24);
+
+0 0 14px rgba(198,164,106,0.24),
+
+0 0 30px rgba(198,164,106,0.10);
 
 }
 
@@ -402,7 +478,7 @@ box-shadow:
 
 .title{
 
-font-size:26px;
+font-size:24px;
 
 letter-spacing:9px;
 
@@ -413,7 +489,7 @@ rgba(245,241,232,0.72);
 
 text-align:center;
 
-margin-bottom:14px;
+margin-bottom:16px;
 
 padding:0 40px;
 
@@ -427,12 +503,12 @@ max-width:1000px;
 
 .company{
 
-font-size:21px;
+font-size:20px;
 
 letter-spacing:5px;
 
 color:
-rgba(198,164,106,0.90);
+rgba(198,164,106,0.92);
 
 text-transform:uppercase;
 
@@ -448,9 +524,11 @@ text-transform:uppercase;
 
 <div class="pattern"></div>
 
-<div class="overlay"></div>
+<div class="topLight"></div>
 
 <div class="glow"></div>
+
+<div class="overlay"></div>
 
 <div class="vignette"></div>
 
@@ -501,7 +579,7 @@ ${person.company || ""}
     );
 
     await page.waitForTimeout(
-      600
+      700
     );
 
     const buffer =
@@ -528,8 +606,11 @@ ${person.company || ""}
       .resize(1200, 630)
 
       .png({
+
         quality: 100,
+
         compressionLevel: 0,
+
       })
 
       .toFile(filePath);
