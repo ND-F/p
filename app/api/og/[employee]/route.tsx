@@ -16,7 +16,7 @@ export async function GET(
       params.employee;
 
     /* =========================
-       FETCH DATA
+       FETCH EMPLOYEE
     ========================= */
 
     let employee: any = null;
@@ -33,17 +33,22 @@ export async function GET(
       const data =
         await res.json();
 
+      const rows =
+        Array.isArray(data)
+          ? data
+          : [];
+
       employee =
-        data.find(
+        rows.find(
           (item: any) =>
             item.slug === slug
         );
 
-    } catch (e) {
+    } catch (err) {
 
       console.log(
-        "sheet error",
-        e
+        "sheet fetch error",
+        err
       );
 
     }
@@ -54,7 +59,6 @@ export async function GET(
 
     const fullName =
       employee?.name ||
-      slug ||
       "NADIM";
 
     const position =
@@ -67,7 +71,7 @@ export async function GET(
       "foundation";
 
     /* =========================
-       LOCAL LOGOS
+       DYNAMIC LOGOS
     ========================= */
 
     const logos: any = {
@@ -94,7 +98,7 @@ export async function GET(
       logos.foundation;
 
     /* =========================
-       IMAGE
+       OG IMAGE
     ========================= */
 
     return new ImageResponse(
@@ -108,17 +112,18 @@ export async function GET(
             display: "flex",
             flexDirection: "column",
 
-            justifyContent: "center",
             alignItems: "center",
+            justifyContent: "center",
 
             position: "relative",
 
             overflow: "hidden",
 
             background:
-              "radial-gradient(circle at center,#07232A 0%,#050D10 78%)",
+              "linear-gradient(180deg,#07181D 0%,#050D10 100%)",
 
-            color: "#F5F1E8",
+            color:
+              "#F5F1E8",
 
             fontFamily:
               "Arial",
@@ -131,6 +136,8 @@ export async function GET(
               position: "absolute",
               inset: 0,
 
+              display: "flex",
+
               background:
                 "radial-gradient(circle at center, rgba(198,164,106,0.08), transparent 58%)",
             }}
@@ -142,8 +149,10 @@ export async function GET(
               position: "absolute",
               inset: 0,
 
+              display: "flex",
+
               background:
-                "radial-gradient(circle, transparent 45%, rgba(0,0,0,0.52) 100%)",
+                "radial-gradient(circle, transparent 40%, rgba(0,0,0,0.50) 100%)",
             }}
           />
 
@@ -151,7 +160,8 @@ export async function GET(
           <img
             src={logo}
 
-            width={340}
+            width={320}
+            height={120}
 
             alt="logo"
 
@@ -160,24 +170,26 @@ export async function GET(
                 "contain",
 
               marginBottom:
-                "42px",
+                "48px",
             }}
           />
 
           {/* name */}
           <div
             style={{
+              display: "flex",
+
               fontSize: "104px",
 
               fontWeight: 800,
 
               lineHeight: 1,
 
-              color:
-                "#F5F1E8",
-
               letterSpacing:
                 "-0.05em",
+
+              color:
+                "#F5F1E8",
 
               textAlign:
                 "center",
@@ -217,6 +229,8 @@ export async function GET(
 
                 background:
                   "rgba(198,164,106,0.5)",
+
+                display: "flex",
               }}
             />
 
@@ -230,6 +244,8 @@ export async function GET(
 
                 transform:
                   "rotate(45deg)",
+
+                display: "flex",
               }}
             />
 
@@ -240,6 +256,8 @@ export async function GET(
 
                 background:
                   "rgba(198,164,106,0.5)",
+
+                display: "flex",
               }}
             />
 
@@ -248,6 +266,8 @@ export async function GET(
           {/* position */}
           <div
             style={{
+              display: "flex",
+
               fontSize: "30px",
 
               letterSpacing:
@@ -285,14 +305,17 @@ export async function GET(
   } catch (error: any) {
 
     return new Response(
-      `
-      OG ERROR:
 
-      ${error?.message}
+      `
+OG ERROR:
+
+${error?.message}
       `,
+
       {
         status: 500,
       }
+
     );
 
   }
