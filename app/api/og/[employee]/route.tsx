@@ -15,23 +15,27 @@ export async function GET(
       params.employee;
 
     /* FETCH DATA */
-    const res =
-      await fetch(
-        "https://opensheet.elk.sh/2PACX-1vS0iSZW9diQdZYYORE2r09vW0l5q1x0L4X3Z6v4WQ/Sheet1",
-        {
-          cache: "no-store",
-        }
-      );
+    const res = await fetch(
+  "https://opensheet.elk.sh/2PACX-1vS0iSZW9diQdZYYORE2r09vW0l5q1x0L4X3Z6v4WQ/Sheet1",
+  {
+    cache: "no-store",
+  }
+);
 
-    const data =
-      await res.json();
+const data =
+  await res.json();
 
-    const person =
-      data.find(
-        (item: any) =>
-          item.slug === employee
-      );
+/* SAFETY */
+const employees =
+  Array.isArray(data)
+    ? data
+    : [];
 
+const person =
+  employees.find(
+    (item: any) =>
+      item.slug === employee
+  );
     if (!person) {
 
       return new Response(
