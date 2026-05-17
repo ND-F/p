@@ -16,7 +16,7 @@ export async function GET(
 
     /* FETCH DATA */
     const res = await fetch(
-  "https://opensheet.elk.sh/2PACX-1vS0iSZW9diQdZYYORE2r09vW0l5q1x0L4X3Z6v4WQ/Sheet1",
+  "https://opensheet.elk.sh/1vvdDuKXNEG-J4oCLW1Xsu_Ur9Cgl0AMX9iai0Tqwmxk/Sheet1",
   {
     cache: "no-store",
   }
