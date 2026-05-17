@@ -6,7 +6,7 @@ const sharp = require("sharp");
 const { chromium } =
   require("playwright");
 
-async function generate(){
+async function generate() {
 
   /* ========================================== */
   /* FETCH SHEET */
@@ -31,11 +31,11 @@ async function generate(){
     "og"
   );
 
-  if (!fs.existsSync(outDir)){
+  if (!fs.existsSync(outDir)) {
 
     fs.mkdirSync(
       outDir,
-      { recursive:true }
+      { recursive: true }
     );
 
   }
@@ -50,9 +50,10 @@ async function generate(){
   const page =
     await browser.newPage({
 
-      viewport:{
-        width:1200,
-        height:630,
+      viewport: {
+        width: 1200,
+        height: 630,
+        deviceScaleFactor: 2,
       },
 
     });
@@ -76,13 +77,15 @@ async function generate(){
 
   const patternBase64 =
 
-    `data:image/svg+xml;base64,${Buffer.from(patternSvg).toString("base64")}`;
+    `data:image/svg+xml;base64,${Buffer
+      .from(patternSvg)
+      .toString("base64")}`;
 
   /* ========================================== */
   /* LOOP */
   /* ========================================== */
 
-  for (const person of employees){
+  for (const person of employees) {
 
     if (!person.slug)
       continue;
@@ -100,28 +103,28 @@ async function generate(){
 
       theme === "industries"
 
-      ? path.join(
-          process.cwd(),
-          "public",
-          "logos",
-          "logo-industries-light.png"
-        )
+        ? path.join(
+            process.cwd(),
+            "public",
+            "logos",
+            "logo-industries-light.png"
+          )
 
-      : theme === "group"
+        : theme === "group"
 
-      ? path.join(
-          process.cwd(),
-          "public",
-          "logos",
-          "logo-group-light.png"
-        )
+          ? path.join(
+              process.cwd(),
+              "public",
+              "logos",
+              "logo-group-light.png"
+            )
 
-      : path.join(
-          process.cwd(),
-          "public",
-          "logos",
-          "logo-foundation-light.png"
-        );
+          : path.join(
+              process.cwd(),
+              "public",
+              "logos",
+              "logo-foundation-light.png"
+            );
 
     /* ========================================== */
     /* LOGO BASE64 */
@@ -151,6 +154,10 @@ async function generate(){
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
 body{
 
 margin:0;
@@ -178,6 +185,9 @@ Arial,sans-serif;
 color:#F5F1E8;
 
 position:relative;
+
+-webkit-font-smoothing:antialiased;
+text-rendering:geometricPrecision;
 
 }
 
@@ -214,11 +224,11 @@ inset:0;
 background-image:
 url("${patternBase64}");
 
-background-size:260px;
+background-size:250px;
 
 background-repeat:repeat;
 
-opacity:0.08;
+opacity:0.07;
 
 mix-blend-mode:screen;
 
@@ -236,8 +246,8 @@ inset:0;
 background:
 linear-gradient(
 180deg,
-rgba(7,24,29,0.18) 0%,
-rgba(4,17,22,0.58) 100%
+rgba(7,24,29,0.14) 0%,
+rgba(4,17,22,0.42) 100%
 );
 
 }
@@ -258,12 +268,12 @@ border-radius:9999px;
 background:
 radial-gradient(
 circle,
-rgba(198,164,106,0.10) 0%,
-rgba(198,164,106,0.04) 42%,
+rgba(198,164,106,0.08) 0%,
+rgba(198,164,106,0.03) 42%,
 transparent 72%
 );
 
-filter:blur(120px);
+filter:blur(90px);
 
 }
 
@@ -277,7 +287,7 @@ position:absolute;
 inset:0;
 
 box-shadow:
-inset 0 0 180px rgba(0,0,0,0.52);
+inset 0 0 180px rgba(0,0,0,0.48);
 
 pointer-events:none;
 
@@ -306,15 +316,15 @@ justify-content:center;
 
 .logo{
 
-width:330px;
+width:310px;
 
-margin-bottom:52px;
+margin-bottom:48px;
 
 object-fit:contain;
 
 filter:
 drop-shadow(
-0 0 28px rgba(255,255,255,0.04)
+0 0 18px rgba(255,255,255,0.04)
 );
 
 }
@@ -325,7 +335,7 @@ drop-shadow(
 
 .name{
 
-font-size:86px;
+font-size:78px;
 
 font-weight:700;
 
@@ -342,7 +352,7 @@ padding:0 60px;
 color:#F5F1E8;
 
 text-shadow:
-0 0 40px rgba(255,255,255,0.06);
+0 0 26px rgba(255,255,255,0.04);
 
 }
 
@@ -356,8 +366,8 @@ display:flex;
 align-items:center;
 gap:18px;
 
-margin-top:34px;
-margin-bottom:28px;
+margin-top:30px;
+margin-bottom:26px;
 
 }
 
@@ -367,7 +377,7 @@ width:120px;
 height:1px;
 
 background:
-rgba(198,164,106,0.45);
+rgba(198,164,106,0.40);
 
 }
 
@@ -382,7 +392,7 @@ rotate(45deg);
 background:#C6A46A;
 
 box-shadow:
-0 0 18px rgba(198,164,106,0.30);
+0 0 14px rgba(198,164,106,0.24);
 
 }
 
@@ -392,18 +402,18 @@ box-shadow:
 
 .title{
 
-font-size:28px;
+font-size:26px;
 
-letter-spacing:10px;
+letter-spacing:9px;
 
 text-transform:uppercase;
 
 color:
-rgba(245,241,232,0.74);
+rgba(245,241,232,0.72);
 
 text-align:center;
 
-margin-bottom:16px;
+margin-bottom:14px;
 
 padding:0 40px;
 
@@ -417,12 +427,12 @@ max-width:1000px;
 
 .company{
 
-font-size:22px;
+font-size:21px;
 
-letter-spacing:6px;
+letter-spacing:5px;
 
 color:
-rgba(198,164,106,0.92);
+rgba(198,164,106,0.90);
 
 text-transform:uppercase;
 
@@ -491,11 +501,15 @@ ${person.company || ""}
     );
 
     await page.waitForTimeout(
-      500
+      600
     );
 
     const buffer =
-      await page.screenshot();
+      await page.screenshot({
+
+        type: "png"
+
+      });
 
     /* ========================================== */
     /* SAVE */
@@ -511,9 +525,14 @@ ${person.company || ""}
 
     await sharp(buffer)
 
-    .png()
+      .resize(1200, 630)
 
-    .toFile(filePath);
+      .png({
+        quality: 100,
+        compressionLevel: 0,
+      })
+
+      .toFile(filePath);
 
     console.log(
       `Generated: ${person.slug}.png`
