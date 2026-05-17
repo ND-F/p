@@ -94,7 +94,7 @@ export async function generateMetadata({
         `${data.name} at ${data.company}`,
 
       images: [
-        `https://id.nadimfoundation.org/og/${data.slug}`,
+        `https://id.nadimfoundation.org/og/${data.slug}.png?v=3`,
       ],
 
     },
@@ -110,7 +110,7 @@ export async function generateMetadata({
         `${data.name} at ${data.company}`,
 
       images: [
-  `https://id.nadimfoundation.org/og/${data.slug}.png`,
+  `https://id.nadimfoundation.org/og/${data.slug}.png?v=3`,
 ],
 
     },
