@@ -330,7 +330,7 @@ md:mb-4
 
 ${
   dark
-  ? "text-[#F5F1E8]"
+  ? "text-[#EAE8D8]"
   : "text-[#07181D]"
 }
 
