@@ -1,73 +1,82 @@
 import { NextResponse } from "next/server";
 
-export const runtime = "nodejs";
-
-async function getEmployees() {
-
-  const res = await fetch(
-
-    "https://opensheet.elk.sh/1vvdDuKXNEG-J4oCLW1Xsu_Ur9Cgl0AMX9iai0Tqwmxk/Sheet1",
-
-    {
-      cache: "no-store",
-    }
-
-  );
-
-  return res.json();
-
-}
+import {
+  getEmployees,
+} from "@/lib/getEmployees";
 
 export async function GET(
   req: Request,
-  { params }: any
+  context: {
+    params: Promise<{
+      employee: string;
+    }>;
+  }
 ) {
+
+  const { employee } =
+    await context.params;
 
   const employees =
     await getEmployees();
 
-  const employee =
+  const data =
     employees.find(
       (e: any) =>
-        e.slug === params.employee
+
+        String(e.slug)
+          .trim()
+          .toLowerCase()
+
+        ===
+
+        String(employee)
+          .trim()
+          .toLowerCase()
     );
 
-  if (!employee) {
+  if (!data) {
 
-    return new NextResponse(
+    return new Response(
       "Employee not found",
-      { status:404 }
+      {
+        status: 404,
+      }
     );
 
   }
 
-  const vcf = `
+  const vcard = `
 
 BEGIN:VCARD
 VERSION:3.0
-FN:${employee.name || ""}
-ORG:${employee.company || ""}
-TITLE:${employee.title || ""}
-TEL;TYPE=CELL:${employee.phone || ""}
-EMAIL:${employee.email || ""}
-URL:${employee.website || ""}
-ADR;TYPE=WORK:;;${employee.address || ""}
+FN:${data.name || ""}
+ORG:${data.company || ""}
+TITLE:${data.title || ""}
+TEL;TYPE=CELL:${data.phone || ""}
+EMAIL:${data.email || ""}
+URL:${data.website || ""}
+ADR:${data.address || ""}
 END:VCARD
 
-`.trim();
+`;
 
-  return new NextResponse(vcf, {
+  return new NextResponse(
+    vcard.trim(),
+    {
 
-    headers: {
+      status: 200,
 
-      "Content-Type":
-        "text/vcard",
+      headers: {
 
-      "Content-Disposition":
-        `inline; filename="${employee.slug}.vcf"`,
+        "Content-Type":
+          "text/vcard; charset=utf-8",
 
-    },
+        "Content-Disposition":
+          `attachment; filename="${data.slug}.vcf"`,
 
-  });
+      },
+
+    }
+  );
 
 }
