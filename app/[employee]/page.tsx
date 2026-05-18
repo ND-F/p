@@ -1,3 +1,9 @@
+"use client";
+
+import {
+  useEffect,
+} from "react";
+
 import ContactGrid
 from "@/components/cards/ContactGrid";
 
@@ -110,8 +116,8 @@ export async function generateMetadata({
         `${data.name} at ${data.company}`,
 
       images: [
-  `https://id.nadimfoundation.org/og/${data.slug}.png?v=3`,
-],
+        `https://id.nadimfoundation.org/og/${data.slug}.png?v=3`,
+      ],
 
     },
 
@@ -217,6 +223,44 @@ export default async function EmployeePage({
     data.linkedin,
     (value) => value
   );
+
+  useEffect(() => {
+
+    const isMobile =
+
+      /iPhone|iPad|iPod|Android/i
+      .test(navigator.userAgent);
+
+    if (!isMobile)
+      return;
+
+    const alreadyOpened =
+
+      sessionStorage.getItem(
+        "vcard-opened"
+      );
+
+    if (alreadyOpened)
+      return;
+
+    const timer = setTimeout(() => {
+
+      window.open(
+        `/api/vcard/${data.slug}`,
+        "_self"
+      );
+
+      sessionStorage.setItem(
+        "vcard-opened",
+        "1"
+      );
+
+    }, 1200);
+
+    return () =>
+      clearTimeout(timer);
+
+  }, []);
 
   return (
 
