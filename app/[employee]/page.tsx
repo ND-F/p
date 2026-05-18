@@ -1,8 +1,3 @@
-
-import {
-  useEffect,
-} from "react";
-
 import VCardAutoOpen
 from "@/components/vcard/VCardAutoOpen";
 
@@ -226,51 +221,13 @@ export default async function EmployeePage({
     (value) => value
   );
 
-  useEffect(() => {
-
-    const isMobile =
-
-      /iPhone|iPad|iPod|Android/i
-      .test(navigator.userAgent);
-
-    if (!isMobile)
-      return;
-
-    const alreadyOpened =
-
-      sessionStorage.getItem(
-        "vcard-opened"
-      );
-
-    if (alreadyOpened)
-      return;
-
-    const timer = setTimeout(() => {
-
-      window.open(
-        `/api/vcard/${data.slug}`,
-        "_self"
-      );
-
-      sessionStorage.setItem(
-        "vcard-opened",
-        "1"
-      );
-
-    }, 1200);
-
-    return () =>
-      clearTimeout(timer);
-
-  }, []);
-
   return (
 
     <main>
 
       <VCardAutoOpen
-            slug={data.slug}
-          />
+        slug={data.slug}
+      />
 
       <Hero
         name={data.name}
