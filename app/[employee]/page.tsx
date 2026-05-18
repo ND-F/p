@@ -1,8 +1,10 @@
-"use client";
 
 import {
   useEffect,
 } from "react";
+
+import VCardAutoOpen
+from "@/components/vcard/VCardAutoOpen";
 
 import ContactGrid
 from "@/components/cards/ContactGrid";
@@ -265,6 +267,10 @@ export default async function EmployeePage({
   return (
 
     <main>
+
+      <VCardAutoOpen
+            slug={data.slug}
+          />
 
       <Hero
         name={data.name}
