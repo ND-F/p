@@ -103,7 +103,7 @@ export const design = {
     "text-[38px] sm:text-[54px] md:text-[078px] lg:text-[092px]",
 
   subtitle:
-    "text-[14px] md:text-[19px]",
+    "text-[16px] md:text-[22px]",
 
   logo:
     "w-[150px] h-[150px] md:w-[190px] md:h-[190px]",

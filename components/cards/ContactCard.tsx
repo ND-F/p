@@ -168,17 +168,17 @@ group-hover:scale-105
 
             <span
               className="
-text-[11px]
-md:text-[12px]
+text-[13px]
+md:text-[15px]
 
 uppercase
 
 tracking-[0.18em]
 
 text-[#C6A46A]
-opacity-70
+opacity-90
 
-font-medium
+font-semibold
 "
             >
               {title}
@@ -191,10 +191,10 @@ font-medium
 
             <p
               className={`
-text-[13px]
-md:text-[19px]
+text-[17px]
+md:text-[21px]
 
-font-medium
+font-semibold
 
 leading-[1.32]
 
@@ -211,7 +211,7 @@ ${
     : "text-[#07181D]"
 }
 
-opacity-82
+opacity-95
 `}
             >
               {value}
