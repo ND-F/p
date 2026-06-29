@@ -91,7 +91,7 @@ END:VCARD
           "text/vcard; charset=utf-8",
 
         "Content-Disposition":
-          `inline; filename="${data.slug}.vcf"`,
+          `attachment; filename="${data.slug}.vcf"`,
 
       },
 
